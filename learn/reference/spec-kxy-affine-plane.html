@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spec k[x,y] — the Affine Plane</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+  .wrap { max-width: 60rem; }
+  figure { margin: 1.6rem 0; }
+  figure svg { width: 100%; height: auto; display: block; background: var(--paper);
+    border: 1px solid var(--rule); border-radius: 10px; padding: .6rem; }
+  figcaption { font-size: .82rem; color: var(--ink-soft); margin-top: .5rem; text-align: center; }
+  .svg-txt { font-family: Palatino, Georgia, serif; }
+  .legend { display: flex; flex-wrap: wrap; gap: .4rem 1.3rem; justify-content: center;
+    font-size: .82rem; color: var(--ink-soft); margin-top: .6rem; }
+  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .swatch { width: 22px; border-top: 3px solid; display: inline-block; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+</style>
+<script>window.MathJax = { tex: { inlineMath: [["\\(","\\)"],["$","$"]] } };</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Visual Deep-Dive · companion to <a href="../lessons/0001-spec-as-a-space.html">Lesson 0001</a></p>
+  <h1>$\operatorname{Spec}\,k[x,y]$: the affine plane $\mathbb A^2_k$</h1>
+  <p style="color:var(--ink-soft)">The <em>geometric</em> 2-dimensional spectrum — the natural twin of the
+  arithmetic surface <a href="spec-zx-three-questions.html">$\operatorname{Spec}\mathbb Z[x]$</a>. Take
+  $k$ algebraically closed; then the picture is exactly the classical plane, upgraded with generic points.</p>
+
+  <h2>The three kinds of point</h2>
+  <p>$k[x,y]$ is a 2-dimensional UFD, so its primes come in three heights:</p>
+
+  <figure>
+  <svg viewBox="0 0 760 430" role="img" aria-label="The affine plane with three irreducible curves and several closed points">
+    <text class="svg-txt" x="380" y="24" text-anchor="middle" font-size="13" fill="#7c1d28" font-style="italic">(0): generic point — dim 2, dense in the whole plane</text>
+
+    <!-- axes -->
+    <line x1="75" y1="230" x2="630" y2="230" stroke="#c8c2b4" stroke-width="1.2" marker-end="url(#axp)"/>
+    <line x1="300" y1="410" x2="300" y2="48" stroke="#c8c2b4" stroke-width="1.2" marker-end="url(#axp)"/>
+    <text class="svg-txt" x="624" y="248" font-size="12" fill="#4a4640">x</text>
+    <text class="svg-txt" x="310" y="58" font-size="12" fill="#4a4640">y</text>
+
+    <!-- curves -->
+    <polyline fill="none" stroke="#5b3a86" stroke-width="2.5" points="174,356 498,32"/>
+    <polyline fill="none" stroke="#1f4e5f" stroke-width="2.5" points="174,54 210,140 255,207 300,230 345,207 390,140 426,54"/>
+    <circle cx="300" cy="230" r="90" fill="none" stroke="#7c1d28" stroke-width="2.5"/>
+    <text class="svg-txt" x="468" y="60" text-anchor="middle" font-size="12.5" fill="#5b3a86">V(y−x)</text>
+    <text class="svg-txt" x="150" y="48" text-anchor="middle" font-size="12.5" fill="#1f4e5f">V(y−x²)</text>
+    <text class="svg-txt" x="300" y="345" text-anchor="middle" font-size="12.5" fill="#7c1d28">V(x²+y²−1)</text>
+
+    <!-- closed points -->
+    <circle cx="300" cy="230" r="5" fill="#1a1814"/>
+    <circle cx="390" cy="140" r="5" fill="#1a1814"/>
+    <circle cx="500" cy="120" r="5" fill="#1a1814"/>
+    <text class="svg-txt" x="286" y="250" text-anchor="middle" font-size="11" fill="#1a1814">(0,0)</text>
+    <text class="svg-txt" x="404" y="134" text-anchor="middle" font-size="11" fill="#1a1814">(1,1)</text>
+    <text class="svg-txt" x="500" y="110" text-anchor="middle" font-size="11" fill="#1a1814">(a,b)</text>
+    <text class="svg-txt" x="556" y="128" text-anchor="start" font-size="10.5" fill="#4a4640" font-style="italic">= (x−a, y−b)</text>
+
+    <defs><marker id="axp" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#c8c2b4"/></marker></defs>
+  </svg>
+  <div class="legend">
+    <span><span class="swatch" style="border-color:#5b3a86"></span> $V(y-x)$ a line</span>
+    <span><span class="swatch" style="border-color:#1f4e5f"></span> $V(y-x^2)$ a parabola</span>
+    <span><span class="swatch" style="border-color:#7c1d28"></span> $V(x^2+y^2-1)$ a circle</span>
+    <span><span class="dot" style="background:#1a1814"></span> closed point $(a,b)$</span>
+  </div>
+  <figcaption>Each irreducible curve $V(f)$ is the closure of one height-1 prime $(f)$; each honest point $(a,b)$ is a maximal ideal $(x-a,y-b)$; and one generic point $(0)$ is dense over all of it.</figcaption>
+  </figure>
+
+  <table class="dict">
+    <thead><tr><th class="alg">Prime of $k[x,y]$</th><th class="geo">Geometry</th><th>height / dim</th><th>$\kappa(\mathfrak p)$</th></tr></thead>
+    <tbody>
+      <tr><td class="alg">$(0)$</td><td class="geo">the whole plane (its generic point)</td><td>0 / dim 2</td><td>$k(x,y)$</td></tr>
+      <tr><td class="alg">$(f)$, $f$ irreducible</td><td class="geo">an irreducible curve $\{f=0\}$</td><td>1 / dim 1</td><td>$\operatorname{Frac}\!\big(k[x,y]/(f)\big)$</td></tr>
+      <tr><td class="alg">$(x-a,\,y-b)$</td><td class="geo">the point $(a,b)$</td><td>2 / dim 0</td><td>$k$</td></tr>
+    </tbody>
+  </table>
+  <div class="box warn"><span class="label">Why $k=\bar k$ matters</span>
+  The clean "maximal ideals $=$ points $(a,b)$" is exactly the Nullstellensatz, and it needs $k$
+  algebraically closed. Over $\mathbb R$, e.g., $(x^2+1)$ is also maximal — extra closed points with
+  residue field $\mathbb C$, just like the arithmetic case.</div>
+
+  <h2>Specialization: dimension drops along closures</h2>
+  <p>The three heights are linked by <em>specialization</em> — a point lies in the closure of a more
+  generic one, written $\eta\rightsquigarrow x$. Moving from generic to closed, dimension falls $2\to1\to0$:</p>
+
+  <figure>
+  <svg viewBox="0 0 760 150" role="img" aria-label="A specialization chain from the generic point of the plane to the generic point of a curve to a closed point">
+    <circle cx="120" cy="75" r="6" fill="#7c1d28"/>
+    <text class="svg-txt" x="120" y="50" text-anchor="middle" font-size="12.5" fill="#7c1d28">(0)</text>
+    <text class="svg-txt" x="120" y="105" text-anchor="middle" font-size="11" fill="#4a4640">plane · dim 2</text>
+
+    <line x1="170" y1="75" x2="320" y2="75" stroke="#4a4640" stroke-width="1.3" marker-end="url(#sp)"/>
+    <text class="svg-txt" x="245" y="64" text-anchor="middle" font-size="10.5" fill="#4a4640" font-style="italic">specialize</text>
+
+    <circle cx="380" cy="75" r="6" fill="#1f4e5f"/>
+    <text class="svg-txt" x="380" y="50" text-anchor="middle" font-size="12.5" fill="#1f4e5f">(f)</text>
+    <text class="svg-txt" x="380" y="105" text-anchor="middle" font-size="11" fill="#4a4640">curve · dim 1</text>
+
+    <line x1="430" y1="75" x2="580" y2="75" stroke="#4a4640" stroke-width="1.3" marker-end="url(#sp)"/>
+    <text class="svg-txt" x="505" y="64" text-anchor="middle" font-size="10.5" fill="#4a4640" font-style="italic">specialize</text>
+
+    <circle cx="640" cy="75" r="6" fill="#1a1814"/>
+    <text class="svg-txt" x="640" y="50" text-anchor="middle" font-size="12.5" fill="#1a1814">(x−a,y−b)</text>
+    <text class="svg-txt" x="640" y="105" text-anchor="middle" font-size="11" fill="#4a4640">point · dim 0</text>
+    <defs><marker id="sp" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4a4640"/></marker></defs>
+  </svg>
+  <figcaption>$(0)\rightsquigarrow(f)\rightsquigarrow(x-a,y-b)$ when the point $(a,b)$ lies on the curve $\{f=0\}$ — a maximal chain of primes of length 2, certifying $\dim k[x,y]=2$.</figcaption>
+  </figure>
+
+  <h2>Two ways to be a surface</h2>
+  <p>$\operatorname{Spec} k[x,y]$ and $\operatorname{Spec}\mathbb Z[x]$ are both 2-dimensional, but they get
+  there differently — one geometric, one arithmetic:</p>
+  <table class="ex">
+    <thead><tr><th></th><th>$k[x,y]$ — geometric</th><th>$\mathbb Z[x]$ — arithmetic</th></tr></thead>
+    <tbody>
+      <tr><td>base direction</td><td>$\mathbb A^1_k=\operatorname{Spec} k[x]$</td><td>$\operatorname{Spec}\mathbb Z$ (the primes)</td></tr>
+      <tr><td>closed points</td><td>$(a,b)$, residue field $k$</td><td>$(p,f)$, residue field $\mathbb F_{p^d}$</td></tr>
+      <tr><td>"vertical" curves</td><td>lines $x=a$</td><td>fibers $V(p)=\mathbb A^1_{\mathbb F_p}$</td></tr>
+      <tr><td>generic point</td><td>$\kappa=k(x,y)$</td><td>$\kappa=\mathbb Q(x)$</td></tr>
+    </tbody>
+  </table>
+  <p>This analogy — number fields behaving like function fields of curves — is one of the deep organizing
+  ideas of modern arithmetic geometry.</p>
+
+  <div class="ask">
+    <strong>Want to go further?</strong> Ask me: "what's the local ring at $(0,0)$ here?", "draw a
+    non-reduced scheme like $V(y^2)$," or "how does the structure sheaf assign $k[x,y]_f$ to $D(f)$?"
+  </div>
+
+  <div class="nav">
+    <span><a href="spec-zx-three-questions.html">← Spec ℤ[x] (arithmetic)</a></span>
+    <span><a href="../lessons/0001-spec-as-a-space.html">Lesson 0001</a> · <a href="glossary.html">Glossary</a></span>
+  </div>
+
+  <footer class="course">
+    Visual companion to Lesson 0001 · Schemes self-study · $k$ assumed algebraically closed for the clean picture.
+  </footer>
+</div>
+</body>
+</html>

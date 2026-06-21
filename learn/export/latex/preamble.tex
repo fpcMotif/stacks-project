@@ -1,0 +1,102 @@
+% ============================================================
+% preamble.tex — shared style for the Schemes self-study reader
+% Engine: XeLaTeX / tectonic.  Palatino-style via TeX Gyre Pagella.
+% ============================================================
+\usepackage{fontspec}
+\usepackage{unicode-math}
+% Use the tectonic-bundled defaults (Latin Modern + Latin Modern Math) — the
+% classic TeX book look, guaranteed available without system font lookup.
+
+\usepackage[a4paper,marginparwidth=2.4cm,marginparsep=0.35cm,
+            inner=2.6cm,outer=4.6cm,top=2.6cm,bottom=2.8cm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amsthm,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.markings,backgrounds}
+\usepackage{tikz-cd}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{caption}
+\captionsetup{font=small,labelfont={bf,color=accentB}}
+\usepackage{marginnote}
+\usepackage{hyperref}
+
+% ---- palette (matches the HTML course) ----
+\definecolor{ink}{HTML}{1A1814}
+\definecolor{inksoft}{HTML}{4A4640}
+\definecolor{accent}{HTML}{7C1D28}   % burgundy
+\definecolor{accentB}{HTML}{1F4E5F}  % teal
+\definecolor{algc}{HTML}{5B3A86}     % violet
+\definecolor{good}{HTML}{2F6B3A}
+\definecolor{bad}{HTML}{9A2B2B}
+\definecolor{warnc}{HTML}{B5651D}
+\definecolor{paper2}{HTML}{F5F1E8}
+\definecolor{rulec}{HTML}{D8D2C4}
+
+\hypersetup{colorlinks=true,linkcolor=accentB,urlcolor=accent,citecolor=accent,
+            pdftitle={Schemes: a self-study reader},pdfauthor={Schemes self-study}}
+\color{ink}
+
+% ---- math shortcuts ----
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Frac}{\operatorname{Frac}}
+\newcommand{\colim}{\operatorname*{colim}}
+\newcommand{\Sh}{\operatorname{Sh}}
+\newcommand{\PSh}{\operatorname{PSh}}
+\renewcommand{\AA}{\mathbb{A}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\FF}{\mathbb{F}}
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\sF}{\mathcal{F}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\res}{\kappa}                       % residue field kappa
+\newcommand{\restr}[1]{\!\restriction_{#1}}
+
+% ---- Stacks Project tag + citation helpers ----
+\newcommand{\Tag}[1]{\href{https://stacks.math.columbia.edu/tag/#1}{\texttt{#1}}}
+\newcommand{\scite}[2]{\footnote{#2~(Stacks \Tag{#1}).}}
+\newcommand{\alg}[1]{\textcolor{algc}{#1}}
+\newcommand{\geo}[1]{\textcolor{accentB}{#1}}
+\newcommand{\term}[1]{\textcolor{accent}{\itshape #1}}
+
+% ---- callout boxes ----
+\newtcolorbox{defbox}[1][Definition]{%
+  enhanced,breakable,colback=paper2,colframe=accent,
+  boxrule=0pt,leftrule=3pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+  fonttitle=\bfseries\scshape\color{accent},title={#1}}
+\newtcolorbox{intubox}[1][Intuition]{%
+  enhanced,breakable,colback=accentB!6,colframe=accentB,
+  boxrule=0pt,leftrule=3pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+  fonttitle=\bfseries\scshape\color{accentB},title={#1}}
+\newtcolorbox{warnbox}[1][Warning]{%
+  enhanced,breakable,colback=warnc!8,colframe=warnc,
+  boxrule=0pt,leftrule=3pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+  fonttitle=\bfseries\scshape\color{warnc},title={#1}}
+\newtcolorbox{primarybox}{%
+  enhanced,breakable,colback=paper2,colframe=accentB,boxrule=0.6pt,
+  sharp corners,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+  borderline={0.6pt}{0pt}{accentB,dashed}}
+
+% ---- retrieval-practice quiz item ----
+% \quizitem{stem}{A}{B}{C}{D}{answer letter}{why}
+\newcommand{\quizitem}[7]{%
+  \item #1\par\smallskip
+  \textbf{(A)} #2\quad\textbf{(B)} #3\quad\textbf{(C)} #4\quad\textbf{(D)} #5\par\smallskip
+  {\small\color{good!75!black}\textbf{Answer: #6.}~#7}\par\medskip}
+\newenvironment{quizlist}[1][Retrieval check]%
+  {\par\smallskip\noindent\textbf{\scshape\color{accentB}#1}\begin{enumerate}[leftmargin=1.4em,itemsep=2pt]}%
+  {\end{enumerate}}
+
+% ---- dictionary / worked-example tables use booktabs directly ----
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\theoremstyle{plain}
+\newtheorem{theoremx}{Theorem}[chapter]

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0003 · Stalks &amp; Germs</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Lesson 0003 · Sheaves II</p>
+  <h1>Stalks &amp; germs as directed colimits</h1>
+  <div class="lesson-meta">
+    <span><b>Win:</b> compute a stalk as a colimit and recognize it as a localization $R_{\mathfrak p}$</span>
+    <span><b>Time:</b> ~15 min</span>
+    <span><b>Needs:</b> Lesson 0002; localization</span>
+    <span><b>Ref:</b> <a href="../reference/sheaves.html">Sheaves cheat-sheet</a></span>
+  </div>
+
+  <p>A sheaf records data on every open set. To study behavior <em>at a point</em> $x$, we zoom in:
+  shrink the open set around $x$ and keep only what survives arbitrarily close to $x$. The result is
+  the <strong>stalk</strong> $\mathcal F_x$. This is the lesson where your commutative algebra pays a
+  dividend: the stalk of the structure presheaf is exactly the localization $R_{\mathfrak p}$ — no new
+  object, just an old friend wearing a geometric hat.<sup class="ref">1</sup></p>
+
+  <div class="note"><span class="num">1.</span> Stalks: Stacks Project,
+  <a href="https://stacks.math.columbia.edu/tag/0078">Tag&nbsp;0078</a>.</div>
+
+  <h2>1 · The stalk is a colimit over neighborhoods</h2>
+
+  <div class="box def"><span class="label">Definition — stalk</span>
+  The <strong>stalk</strong> of a presheaf $\mathcal F$ at $x\in X$ is
+  $$\mathcal F_x \;=\; \operatorname*{colim}_{x\in U}\ \mathcal F(U),$$
+  the colimit over all open neighborhoods $U\ni x$, ordered by <strong>reverse inclusion</strong>
+  ($U\ge U'$ iff $U\subseteq U'$), with transition maps the restriction maps of $\mathcal F$.<sup class="ref">2</sup></div>
+
+  <div class="note"><span class="num">2.</span> Defined in the running text of the <em>Stalks</em>
+  section, <a href="https://stacks.math.columbia.edu/tag/0078">Tag&nbsp;0078</a>.</div>
+
+  <div class="box def"><span class="label">Concrete model — germs</span>
+  $\mathcal F_x=\{(U,s):x\in U,\ s\in\mathcal F(U)\}/\!\sim$, where $(U,s)\sim(U',s')$ iff there is an
+  open $U''\subseteq U\cap U'$ with $x\in U''$ and $s|_{U''}=s'|_{U''}$. The class $s_x$ is the
+  <em class="term">germ</em> of $s$ at $x$: it remembers $s$ only arbitrarily near $x$.</div>
+
+  <div class="box intuition"><span class="label">Why "directed" (filtered) is the whole game</span>
+  Any two neighborhoods $U,U'$ of $x$ contain a smaller common one ($U\cap U'$). So any two germs can
+  be represented on a <em>single</em> common $U''$ and then added/multiplied there. That is precisely
+  the directedness that makes localization $S^{-1}R$ work — the stalk colimit and the localization
+  colimit are the same kind of limit-of-shrinking.</div>
+
+  <h2>2 · The payoff: stalk = localization</h2>
+  <p>Take the structure presheaf on $\operatorname{Spec} R$: $\ \mathcal F(D(f))=R_f$, with restriction
+  $R_f\to R_g$ when $D(g)\subseteq D(f)$. Fix a prime $\mathfrak p$.</p>
+
+  <div class="box def"><span class="label">The computation to own</span>
+  The neighborhoods $D(f)$ of $\mathfrak p$ are exactly those with $f\notin\mathfrak p$, and
+  $D(f)\cap D(g)=D(fg)$ keeps the system directed. Hence
+  $$\mathcal F_{\mathfrak p}\;=\;\operatorname*{colim}_{f\notin\mathfrak p} R_f\;=\;R_{\mathfrak p},$$
+  the localization at $\mathfrak p$. Identically for a module: $\widetilde M_{\mathfrak p}=M_{\mathfrak p}$.<sup class="ref">3</sup></div>
+
+  <div class="note"><span class="num">3.</span> This is the load-bearing step of the affine-scheme
+  definition: $\mathcal O_{\operatorname{Spec} R,\,\mathfrak p}=R_{\mathfrak p}$, see
+  <a href="https://stacks.math.columbia.edu/tag/01HV">Tag&nbsp;01HV</a>.</div>
+
+  <figure style="margin:1.4rem 0;text-align:center">
+  <svg width="100%" viewBox="0 0 680 150" role="img" aria-label="Neighborhoods shrinking toward a prime p, with rings R_f mapping forward to the stalk R_p">
+    <line x1="60" y1="80" x2="520" y2="80" stroke="#94a3b8" stroke-width="1.2"/>
+    <circle cx="150" cy="80" r="56" fill="none" stroke="#1f4e5f" stroke-width="1.4"/>
+    <circle cx="220" cy="80" r="38" fill="none" stroke="#1f4e5f" stroke-width="1.4"/>
+    <circle cx="270" cy="80" r="22" fill="none" stroke="#1f4e5f" stroke-width="1.4"/>
+    <circle cx="300" cy="80" r="5" fill="#7c1d28"/>
+    <text x="300" y="64" text-anchor="middle" fill="#7c1d28" font-family="Palatino,Georgia,serif" font-size="13" font-style="italic">𝔭</text>
+    <text x="150" y="84" text-anchor="middle" fill="#1f4e5f" font-family="Palatino,Georgia,serif" font-size="13">D(f)</text>
+    <text x="220" y="86" text-anchor="middle" fill="#1f4e5f" font-family="Palatino,Georgia,serif" font-size="12">D(g)</text>
+    <text x="150" y="135" text-anchor="middle" fill="#5b3a86" font-family="Palatino,Georgia,serif" font-size="13">R_f</text>
+    <text x="265" y="135" text-anchor="middle" fill="#5b3a86" font-family="Palatino,Georgia,serif" font-size="13">⟶ ⋯ ⟶</text>
+    <text x="430" y="135" text-anchor="middle" fill="#7c1d28" font-family="Palatino,Georgia,serif" font-size="14">colim = R₍𝔭₎</text>
+    <text x="430" y="80" text-anchor="middle" fill="#4a4640" font-family="Palatino,Georgia,serif" font-size="12" font-style="italic">shrink U ↘ 𝔭</text>
+    <line x1="345" y1="80" x2="395" y2="80" stroke="#4a4640" stroke-width="1" marker-end="url(#a3)"/>
+    <defs><marker id="a3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4a4640"/></marker></defs>
+  </svg>
+  <figcaption style="font-size:.8rem;color:var(--ink-soft)">Smaller neighborhoods $\Rightarrow$ more localized rings; the colimit is $R_{\mathfrak p}$.</figcaption>
+  </figure>
+
+  <h3>Play: shrink to the point</h3>
+  <p>Slide to localize step by step at $\mathfrak p=(x)$ on the affine line $\mathbb A^1=\operatorname{Spec} k[x]$.
+  Each notch removes a point and inverts one more $(x-a)$; the directed colimit is the local ring $k[x]_{(x)}$.</p>
+  <div class="stalk-demo"></div>
+
+  <h2>3 · Stalks see the local ring — and locality of sections</h2>
+  <ul>
+    <li><strong>Every stalk is a local ring.</strong> $R_{\mathfrak p}$ has the unique maximal ideal
+    $\mathfrak pR_{\mathfrak p}$. That is the literal reason $\operatorname{Spec} R$ is a
+    <em>locally ringed space</em> — the adjective "locally" refers to the stalks being local rings.<sup class="ref">4</sup></li>
+    <li><strong>A section is determined by its germs.</strong> For a <em>sheaf</em>, the map
+    $\mathcal F(U)\to\prod_{x\in U}\mathcal F_x$ is injective — this is exactly the separatedness clause
+    from Lesson 0002. So two sections agreeing as germs everywhere are equal.<sup class="ref">5</sup></li>
+  </ul>
+
+  <div class="note"><span class="num">4.</span> The value of a function $s$ at $x$ lives in the
+  residue field $\kappa(x)=R_{\mathfrak p}/\mathfrak pR_{\mathfrak p}$ — the same residue field from
+  Lesson 0001. The stalk refines that "value" to a whole germ.</div>
+  <div class="note"><span class="num">5.</span> Separatedness via stalks:
+  <a href="https://stacks.math.columbia.edu/tag/007A">Tag&nbsp;007A</a>.</div>
+
+  <hr class="tufte">
+
+  <h2>Retrieve it</h2>
+  <p>Recall first. This quiz also re-touches Lesson 0002 (the sheaf condition) — spacing on purpose.</p>
+
+  <div class="quiz" data-title="Stalks &amp; germs — recall check">
+    <script type="application/json" class="quiz-data">
+[
+  {"stem": "The stalk $\\mathcal F_x$ is the ___ of $\\mathcal F(U)$ over neighborhoods of $x$.",
+   "options": ["colimit", "limit", "product", "kernel"],
+   "answer": 0,
+   "why": "$\\mathcal F_x=\\operatorname{colim}_{x\\in U}\\mathcal F(U)$ — a colimit (direct/filtered), not a limit. Limits glue, colimits localize."},
+  {"stem": "Neighborhoods of $x$ index the colimit ordered by ___ inclusion.",
+   "options": ["reverse", "forward", "strict", "total"],
+   "answer": 0,
+   "why": "Smaller neighborhoods are 'later' in the system ($U\\ge U' \\iff U\\subseteq U'$), so transition maps are restrictions toward $x$."},
+  {"stem": "Two sections have the same germ at $x$ exactly when they agree on ___.",
+   "options": ["a small neighborhood", "the entire space", "a single point", "every closed set"],
+   "answer": 0,
+   "why": "$(U,s)\\sim(U',s')$ iff $s|_{U''}=s'|_{U''}$ on some open $U''\\ni x$. A germ is a section seen arbitrarily near $x$."},
+  {"stem": "For the structure presheaf $D(f)\\mapsto R_f$, the stalk at $\\mathfrak p$ equals ___.",
+   "options": ["the localization R_p", "the quotient R/p", "the fraction Frac(R)", "the completion R-hat"],
+   "answer": 0,
+   "why": "$\\operatorname{colim}_{f\\notin\\mathfrak p} R_f = R_{\\mathfrak p}$. Stalk = localization at the prime — the same colimit you know from algebra."},
+  {"stem": "$\\operatorname{Spec} R$ is a LOCALLY ringed space because every stalk $R_{\\mathfrak p}$ is ___.",
+   "options": ["a local ring", "a global ring", "a quotient field", "a polynomial ring"],
+   "answer": 0,
+   "why": "$R_{\\mathfrak p}$ has the unique maximal ideal $\\mathfrak pR_{\\mathfrak p}$ — that's what 'locally' in 'locally ringed space' means."},
+  {"stem": "In a sheaf, a section over $U$ is completely determined by its ___.",
+   "options": ["germs", "values", "zeros", "covers"],
+   "answer": 0,
+   "why": "Separatedness: $\\mathcal F(U)\\to\\prod_{x\\in U}\\mathcal F_x$ is injective. Germs at all points pin down the section."},
+  {"stem": "The stalk colimit is filtered because any two neighborhoods share a ___ one.",
+   "options": ["smaller", "larger", "disjoint", "closed"],
+   "answer": 0,
+   "why": "$U\\cap U'$ is a smaller common neighborhood, so any two germs live on a common open — the directedness localization needs."},
+  {"stem": "The neighborhoods $D(f)$ of a prime $\\mathfrak p$ are exactly those with ___.",
+   "options": ["f ∉ p", "f ∈ p", "f = 0", "p ⊆ (f)"],
+   "answer": 0,
+   "why": "$\\mathfrak p\\in D(f)\\iff f\\notin\\mathfrak p$ (from Lesson 0001). These are the $f$ inverted in $R_{\\mathfrak p}$."}
+]
+    </script>
+  </div>
+
+  <div class="primary-source">
+    <span class="label">Read next (primary source)</span>
+    <p style="margin:.4rem 0 0">Ravi Vakil, <a href="https://math.stanford.edu/~vakil/216blog/FOAGaug2922public.pdf"><em>The Rising Sea</em></a>,
+    §2.4 (stalks and germs). For the structure-sheaf computation $\mathcal O_{X,\mathfrak p}=R_{\mathfrak p}$
+    spelled out, see <a href="https://stacks.math.columbia.edu/tag/01HV">Tag&nbsp;01HV</a>.</p>
+  </div>
+
+  <div class="ask">
+    <strong>Stuck or curious?</strong> Ask me: "why is a colimit the right tool, not a limit?",
+    "compute the stalk of continuous functions at a point," or "what's the germ of $1/x$ at $0$ — and
+    why doesn't it exist?"
+  </div>
+
+  <div class="nav">
+    <span><a href="0002-presheaves-and-the-sheaf-condition.html">← 0002 · Presheaves</a></span>
+    <span><b>Next:</b> <a href="0004-sheaves-on-a-basis.html">0004 · Sheaves on a basis</a> — the bridge to $\mathcal O_X$</span>
+  </div>
+
+  <footer class="course">
+    Lesson 0003 · Schemes self-study · See the <a href="../reference/sheaves.html">Sheaves cheat-sheet</a>
+    and <a href="../reference/glossary.html">Glossary</a>. Tags resolve at <code>stacks.math.columbia.edu/tag/XXXX</code>.
+  </footer>
+</div>
+
+<script src="../assets/stalk-demo.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

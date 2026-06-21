@@ -1,0 +1,229 @@
+\chapter{Presheaves and the sheaf condition}\label{ch:ch02-presheaves}
+
+\noindent\textit{Win:} decide whether a rule ``is a sheaf'' by checking gluing on a cover.\quad
+\textit{Time:} {\raise.17ex\hbox{$\scriptstyle\sim$}}15 min.\quad
+\textit{Needs:} Lesson 0001 ($D(f)$, opens).
+
+\medskip
+
+Last lesson you turned a ring into a \emph{space}. A space alone is too coarse to do geometry on
+(recall: it isn't even Hausdorff). The missing data --- ``what are the functions on each open
+set?'' --- is packaged by a \textbf{sheaf}. This lesson installs the one axiom that separates a
+sheaf from a mere bookkeeping table: \term{gluing}. It is the exact axiom the structure sheaf
+$\O_{\Spec R}$ will have to satisfy.\scite{006A}{Stacks Project, ch.\ \emph{Sheaves on Spaces}.}
+
+\section{Presheaf = data + restriction}
+
+\begin{defbox}[Definition --- presheaf]
+A \textbf{presheaf} $\sF$ on a space $X$ assigns to every open $U\subseteq X$ a set $\sF(U)$ (its
+\emph{sections}), and to every inclusion $V\subseteq U$ a \textbf{restriction map}
+$\rho^U_V\colon \sF(U)\to\sF(V)$, such that $\rho^U_U=\mathrm{id}$ and
+$\rho^V_W\circ\rho^U_V=\rho^U_W$ for $W\subseteq V\subseteq U$. Write
+$s|_V:=\rho^U_V(s)$.\scite{006E}{Equivalently: a \emph{contravariant} functor from open sets (and
+inclusions) to $\mathbf{Set}$ --- or to $\mathbf{Ab}$, $\mathbf{Ring}$ if sections carry that
+structure.}
+\end{defbox}
+
+\begin{intubox}[Keep this example forever]
+$\sF(U)=\{\text{functions } U\to k\}$ with honest restriction of functions. Every abstract axiom
+below should be checked against this picture. The structure sheaf is just this idea with
+``function'' read algebraically --- $\sF(D(f))=R_f$.
+\end{intubox}
+
+\section{The sheaf condition: glue + locality}
+A presheaf lets you \emph{restrict}. A sheaf also lets you \emph{build global from local}.
+
+\begin{defbox}[Definition --- sheaf]
+A presheaf $\sF$ is a \textbf{sheaf} if for every open cover $U=\bigcup_i U_i$ and every family of
+sections $s_i\in\sF(U_i)$ that \emph{agree on overlaps},
+\[
+  s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}\quad\text{for all }i,j,
+\]
+there is a \textbf{unique} $s\in\sF(U)$ with $s|_{U_i}=s_i$ for all
+$i$.\scite{006T}{The condition splits into two clauses, both required.}
+\end{defbox}
+
+Read the axiom as two independent demands:
+
+\begin{center}
+\begin{tabular}{@{}L{3.4cm}L{6.2cm}L{3.3cm}@{}}
+\toprule
+\geo{Clause} & \alg{What it guarantees} & Name\\
+\midrule
+\geo{at most one glue} & \alg{a section is determined by its restrictions to any cover} &
+  separatedness / locality\\[2pt]
+\geo{at least one glue} & \alg{compatible local data actually patch together} &
+  gluing / existence\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\footnotesize Separatedness as injectivity into the product of stalks: \Tag{007A}
+(stalks: next lesson).\normalsize
+
+\begin{warnbox}[The forced empty-set convention]
+Apply the axiom to the empty cover of $U=\varnothing$: it forces $\sF(\varnothing)$ to be a
+\textbf{single point} (the terminal object). And for a disjoint union $U\sqcup V$ it forces
+$\sF(U\sqcup V)=\sF(U)\times\sF(V)$.\scite{006U}{The ``warning'' remark; the fix --- sheafifying $A$
+to \emph{locally constant} functions --- is the constant sheaf $\underline A$, \Tag{006W}.} This is
+exactly why the \emph{constant presheaf} $U\mapsto A$ with $|A|\ge 2$ is \textbf{not} a sheaf: it
+sends $\varnothing$ to $A$, and two different constants on a disconnected open can't be glued.
+\end{warnbox}
+
+\section{Sheaf or not? The reflex to build}
+Gluing is a real condition, not a formality. The instructive failure to memorize:
+
+\begin{center}
+\begin{tabular}{@{}L{5.1cm}cL{6.6cm}@{}}
+\toprule
+Presheaf on $X$ & Sheaf? & Why\\
+\midrule
+continuous functions $U\to\RR$ & \textcolor{good}{$\checkmark$ yes} &
+  continuity is local; compatible pieces glue uniquely\\[2pt]
+holomorphic / smooth functions, $k$-forms & \textcolor{good}{$\checkmark$ yes} &
+  all checked locally / in charts\\[2pt]
+sections of a map $p\colon E\to X$ & \textcolor{good}{$\checkmark$ yes} &
+  the prototype --- ``sheaf of sections''\\[2pt]
+\textbf{bounded} continuous functions & \textcolor{bad}{$\times$ no} &
+  identity holds, but pieces bounded on $(n{-}1,n{+}1)$ glue to $f(x)=x$ --- unbounded;
+  \emph{gluing fails}\\[2pt]
+functions that \textbf{extend} to all of $X$ & \textcolor{bad}{$\times$ no} &
+  ``extendable'' isn't local: $1/x$ is locally a restriction near each point of $\RR\smallsetminus\{0\}$
+  but doesn't extend; \emph{gluing fails}\\[2pt]
+constant presheaf $U\mapsto A$, $|A|\ge2$ & \textcolor{bad}{$\times$ no} &
+  fails at $\varnothing$ and on disconnected opens; \emph{both clauses}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{intubox}[The bridge to the structure sheaf]
+When you build $\O_{\Spec R}$, the cover will be a standard cover $D(f)=\bigcup_i D(g_i)$, the
+overlaps will be $D(g_i)\cap D(g_j)=D(g_ig_j)$ (from Lesson 0001!), and ``agree on overlaps + glue
+uniquely'' will become a single exact sequence of localizations
+\[
+  0\to R_f\to\textstyle\prod_i R_{g_i}\rightrightarrows\prod_{i,j} R_{g_ig_j}.
+\]
+Drilling existence-and-uniqueness now turns that future step into \emph{recognition}, not new
+learning.
+\end{intubox}
+
+\section{The gluing lab}
+Pick a presheaf, then attempt to glue the compatible local data over its cover. Watch which ones
+patch into a global section and which break --- and on exactly which clause.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[font=\small,
+   sect/.style={line width=1pt},
+   axis/.style={rulec,line width=0.6pt}]
+  % ---------- TOP ROW: continuous functions = sheaf ----------
+  \node[anchor=west,accentB,font=\bfseries\footnotesize] at (-0.2,3.7)
+        {Continuous functions: compatible pieces glue \textcolor{good}{uniquely}};
+  % cover brackets
+  \draw[accentB,line width=1.2pt] (0,2.55)--(3.0,2.55);
+  \draw[accentB,line width=1.2pt] (0,2.45)--(0,2.65);
+  \draw[accentB,line width=1.2pt] (3.0,2.45)--(3.0,2.65);
+  \node[accentB,font=\footnotesize] at (1.5,2.3) {$U_1$};
+  \draw[algc,line width=1.2pt] (2.2,2.95)--(5.2,2.95);
+  \draw[algc,line width=1.2pt] (2.2,2.85)--(2.2,3.05);
+  \draw[algc,line width=1.2pt] (5.2,2.85)--(5.2,3.05);
+  \node[algc,font=\footnotesize] at (4.55,3.2) {$U_2$};
+  % overlap shade
+  \fill[rulec,opacity=0.45] (2.2,3.05) rectangle (3.0,2.45);
+  % the two sections (matching on overlap)
+  \draw[accentB,sect] (0,4.2) .. controls (1.0,4.55) and (2.0,4.35) .. (3.0,4.4);
+  \draw[algc,sect]    (2.2,4.42) .. controls (3.6,4.45) and (4.4,4.6) .. (5.2,4.2);
+  \node[accentB,font=\footnotesize] at (0.8,4.65) {$s_1$};
+  \node[algc,font=\footnotesize]    at (4.6,4.7)  {$s_2$};
+  % glued result arrow
+  \draw[good,-{Stealth[length=2.2mm]},line width=0.7pt] (6.0,4.3)--(6.9,4.3);
+  \draw[good,line width=1.3pt] (7.1,4.2) .. controls (8.3,4.6) and (9.4,4.45) .. (10.6,4.2);
+  \node[good,font=\footnotesize] at (8.85,4.7) {$s\in\sF(U)$};
+  \draw[good,line width=1.2pt] (7.1,3.7)--(10.6,3.7);
+  \draw[good,line width=1.2pt] (7.1,3.6)--(7.1,3.8);
+  \draw[good,line width=1.2pt] (10.6,3.6)--(10.6,3.8);
+  \node[good,font=\footnotesize] at (8.85,3.45) {$U$};
+
+  % ---------- BOTTOM ROW: bounded functions = not a sheaf ----------
+  \node[anchor=west,warnc,font=\bfseries\footnotesize] at (-0.2,1.55)
+        {Bounded functions: bounded pieces glue to an \textcolor{bad}{unbounded} $f(x)=x$};
+  \draw[axis] (0,0.55)--(5.2,0.55);
+  % cover by bounded intervals + bounded local sections (rising line pieces)
+  \draw[accentB,sect] (0,0.7)--(1.7,1.05);
+  \draw[algc,sect]    (1.4,0.98)--(3.3,1.4);
+  \draw[accentB,sect] (3.0,1.33)--(4.7,1.75);
+  \node[inksoft,font=\footnotesize] at (2.6,0.35) {each piece bounded on its interval};
+  % glued result: full line, unbounded
+  \draw[good,-{Stealth[length=2.2mm]},line width=0.7pt] (6.0,1.1)--(6.9,1.1);
+  \draw[bad,{Stealth[length=2.2mm]}-{Stealth[length=2.2mm]},line width=1.1pt] (7.1,0.55)--(10.6,1.9);
+  \node[bad,font=\footnotesize] at (9.4,0.7) {unbounded --- not a section!};
+\end{tikzpicture}
+\caption{The gluing lab: continuous local data patches into a unique global section (top);
+bounded local pieces glue to the unbounded $f(x)=x$, which escapes the presheaf --- gluing fails
+(bottom).}
+\end{figure}
+
+The same template explains the sheaf-condition arithmetic in general. Compatible local sections
+sit in the equalizer of the two restriction maps to the overlaps:
+\[
+\begin{tikzcd}[ampersand replacement=\&,column sep=large]
+\sF(U)\ar[r,"{\prod\,\rho}"] \&[-1ex]
+  \displaystyle\prod_i \sF(U_i)
+  \ar[r,shift left=0.6ex,"\rho_{ij}"]\ar[r,shift right=0.6ex,swap,"\rho_{ji}"] \&[1ex]
+  \displaystyle\prod_{i,j}\sF(U_i\cap U_j)
+\end{tikzcd}
+\]
+
+\bigskip
+\hrule
+\bigskip
+
+\section{Retrieve it}
+Notes closed --- recall from memory. Feedback is instant.
+
+\begin{quizlist}[Presheaves \& sheaves --- recall check]
+\quizitem{A presheaf attaches to each open set its sections plus \rule{1.6em}{0.4pt} maps.}
+  {restriction}{extension}{inclusion}{evaluation}{A}
+  {$\rho^U_V:\sF(U)\to\sF(V)$ for $V\subseteq U$, with $\rho^U_U=\mathrm{id}$ and composites
+   agreeing. Restriction goes from bigger opens to smaller --- contravariant.}
+\quizitem{Categorically, a presheaf is a \rule{1.6em}{0.4pt} functor on opens.}
+  {contravariant}{covariant}{bijective}{continuous}{A}
+  {Inclusions $V\subseteq U$ give maps $\sF(U)\to\sF(V)$ --- the arrow reverses, so the functor is
+   contravariant.}
+\quizitem{Beyond existence of a glued section, the sheaf axiom demands it be \rule{1.6em}{0.4pt}.}
+  {unique}{bounded}{nonzero}{global}{A}
+  {Two clauses: existence (gluing) and uniqueness (separatedness/locality). Uniqueness is what makes
+   a section determined by its restrictions.}
+\quizitem{Continuous real-valued functions on a space form \rule{1.6em}{0.4pt}.}
+  {a genuine sheaf}{a mere presheaf}{no valid presheaf}{a constant sheaf}{A}
+  {Continuity is a local condition, so compatible local functions glue uniquely to a continuous
+   function --- the model sheaf.}
+\quizitem{Bounded continuous functions on $\RR$ form a presheaf that fails \rule{1.6em}{0.4pt}.}
+  {gluing}{identity}{linearity}{restriction}{A}
+  {Identity (separatedness) holds --- it's a sub-presheaf of a sheaf. But bounded pieces on
+   $(n{-}1,n{+}1)$ glue to the unbounded $f(x)=x$, which leaves the presheaf: gluing fails.}
+\quizitem{For the empty cover, the sheaf axiom forces $\sF(\varnothing)$ to be \rule{1.6em}{0.4pt}.}
+  {a single point}{the empty set}{any large set}{two distinct points}{A}
+  {$\sF(\varnothing)$ must be terminal (a one-element set). This is precisely why the constant
+   presheaf with $|A|\ge2$ fails --- it sends $\varnothing$ to $A$.}
+\quizitem{The constant presheaf with a 2-element value on a disconnected open fails: distinct values
+   agree on the \rule{1.6em}{0.4pt} overlap.}
+  {empty}{dense}{whole}{open}{A}
+  {If $U=U_1\sqcup U_2$ the overlap is $\varnothing$, so distinct constants agree there vacuously,
+   yet no single element of $A$ restricts to both --- no glue exists.}
+\quizitem{On $\Spec R$, the overlap of two standard opens $D(f)$ and $D(g)$ is \rule{1.6em}{0.4pt}.}
+  {the open $D(fg)$}{the closed $V(fg)$}{the open $D(f+g)$}{the whole space}{A}
+  {$D(f)\cap D(g)=D(fg)$: overlaps of standard opens are again standard. That closure-under-%
+   intersection is what lets us build $\O_X$ on the basis of $D(f)$'s.}
+\end{quizlist}
+
+\begin{primarybox}
+\textbf{\textsc{\textcolor{accentB}{Read next (primary source)}}}\par\smallskip
+Ravi Vakil, \href{https://math.stanford.edu/~vakil/216blog/FOAGaug2922public.pdf}{\emph{The Rising
+Sea}}, \S2.2 (presheaves and sheaves). For the ``make it feel inevitable'' version, read
+\href{https://agag-gathmann.math.rptu.de/class/alggeom-2021/alggeom-2021.pdf}{Gathmann's notes} on
+the sheaf of regular functions. Ground truth: \Tag{006T}.
+\end{primarybox}
+
+\medskip
+\noindent\textbf{Next:} 0003 $\cdot$ Stalks \& germs --- local data as a colimit.

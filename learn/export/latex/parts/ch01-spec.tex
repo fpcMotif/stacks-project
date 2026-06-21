@@ -1,0 +1,199 @@
+\chapter{$\Spec(R)$: from a ring to a space}\label{ch:ch01-spec}
+
+\noindent\textbf{Win:} turn any ring into a topological space and read off its
+points.\quad\textbf{Time:} \textasciitilde15 min.\quad\textbf{Needs:} prime
+ideals, radicals, localization.
+
+\medskip
+
+You already know the algebra of a commutative ring $R$ --- primes, radicals,
+localization. This lesson installs the one idea that converts \emph{all} of that
+knowledge into geometry: the \term{spectrum} $\Spec(R)$. Everything in scheme
+theory is built on top of this single move, so it's the right first
+brick.\scite{00DZ}{Primary reference: Stacks Project, \emph{Algebra}, ``The spectrum of a ring.''}
+
+\section{The points are the primes}
+
+\begin{defbox}[Definition --- the spectrum]
+$\Spec(R)$ is the \textbf{set of prime ideals} of $R$. Each prime $\fp$ is a
+\term{point} of the space.\scite{00DZ}{Recall a prime $\fp\neq R$ satisfies $ab\in\fp\Rightarrow a\in\fp$ or $b\in\fp$.}
+\end{defbox}
+
+Why primes and not, say, maximal ideals? Because we want the construction to be
+\textbf{functorial}: a ring map $\varphi\colon R\to S$ should give a map of
+spaces. It does --- $\fq\mapsto \varphi^{-1}(\fq)$ --- precisely because the
+preimage of a prime is always prime. (Preimages of maximal ideals need not be
+maximal.)\scite{00E2}{Functoriality of $\Spec$.} Note the arrow \emph{reverses}:
+$\Spec$ is contravariant.
+\[
+\begin{tikzcd}[column sep=large]
+R \arrow[r, "\varphi"] & S \\
+\Spec(R) & \Spec(S) \arrow[l, "\varphi^{-1}"']
+\end{tikzcd}
+\]
+
+\begin{intubox}[Intuition --- a ``point'' is a way of evaluating]
+Think of elements of $R$ as \emph{functions} on the space. At a point $\fp$, the
+value of $f$ lives in the residue field $\res(\fp)=\Frac(R/\fp)$, and
+``$f(\fp)=0$'' means exactly $f\in\fp$. A prime ideal is the set of functions
+vanishing at that point --- that's why primes deserve to be called points.
+\end{intubox}
+
+\section{The closed sets are $V(I)$}
+
+\begin{defbox}[Definition --- vanishing sets]
+For an ideal $I\subseteq R$, $\;V(I)=\{\fp\in\Spec(R)\mid I\subseteq\fp\}$ ---
+the points where ``every function in $I$ vanishes.'' The \textbf{Zariski
+topology} declares the sets $V(I)$ to be exactly the closed
+sets.\scite{00E0}{These really form a topology: arbitrary $\cap$, finite $\cup$, $\emptyset$ and the whole space.}
+\end{defbox}
+
+Two facts make this a faithful dictionary back to algebra:
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Only the radical matters:} $V(I)=V(\sqrt I)$, since
+  $\fp\supseteq I \iff \fp\supseteq\sqrt I$. So radical ideals
+  $\leftrightarrow$ closed sets, order-\emph{reversingly}.\scite{00E5}{$V(I)=V(\sqrt I)$ and the closed-set calculus.}
+  \item \textbf{Inclusion reverses:} $I\subseteq J \Rightarrow V(I)\supseteq
+  V(J)$. More constraints $=$ fewer points.
+\end{itemize}
+
+\begin{defbox}[Definition --- distinguished opens]
+$D(f)=\{\fp\mid f\notin\fp\}=\Spec(R)\mathbin{\backslash} V(f)$, the locus where $f$ is
+``nonzero.'' These form a \textbf{basis} for the topology, and crucially
+$D(f)\cong\Spec(R_f)$: \emph{localizing the ring $=$ restricting to an
+open.}\scite{00E4}{$D(f)$ a basis and $D(f)\cong\Spec(R_f)$; also $\Spec(R)$ is always quasi-compact, Stacks \Tag{00E8}.}
+\end{defbox}
+
+\section{Two kinds of point: closed vs.\ generic}
+
+The Zariski topology is \textbf{not Hausdorff} --- points need not be closed,
+and that's a feature.
+
+\begin{center}
+\begin{tabular}{@{}L{0.24\linewidth} L{0.40\linewidth} L{0.26\linewidth}@{}}
+\toprule
+\geo{\textbf{Point type}} & \alg{\textbf{Which prime}} &
+\textbf{Closure $\overline{\{\fp\}}=V(\fp)$} \\
+\midrule
+\geo{closed point} & \alg{maximal ideal $\fm$} & just itself \\
+\geo{generic point} & \alg{minimal prime (e.g.\ $(0)$ in a domain)} & a whole
+irreducible component \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For a domain, $(0)$ is prime and its closure is the entire space: a single
+\term{generic point} whose ``smear'' is everywhere.\scite{00ES}{Irreducible closed sets $\leftrightarrow$ their unique generic points.}
+Irreducible closed sets correspond bijectively to their unique generic points
+--- geometry and algebra locked together.
+
+\section{See it: four spectra}
+
+\begin{center}
+\begin{tabular}{@{}L{0.22\linewidth} L{0.50\linewidth} L{0.20\linewidth}@{}}
+\toprule
+$R$ & $\Spec(R)$ & \textbf{Shape} \\
+\midrule
+a field $k$ & one point $(0)$ & a dot \\
+$\ZZ$ & generic $(0)$ $+$ one closed point $(p)$ per prime $p$ & ``arithmetic
+line'' \\
+$\CC[x]$ & generic $(0)$ $+$ closed $(x-a)$ for each $a\in\CC$ & the affine line
+$\AA^1$ \\
+$k[x]/(x^2)$ & one point $(x)$ --- but with nilpotents & a ``fat'' point \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+
+\noindent The ``arithmetic line'' $\Spec(\ZZ)$ and the affine line
+$\Spec(\CC[x])$ share the same shape: a row of closed points, plus one generic
+point whose closure is everything.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  % base line
+  \draw[rulec,thick] (-0.4,0) -- (10.4,0);
+  % closed points
+  \foreach \x/\lbl in {0.6/(2),1.8/(3),3.0/(5),4.2/(7),5.4/(11),6.6/(13)} {
+    \fill[accent] (\x,0) circle (2.2pt);
+    \node[below=2pt,font=\footnotesize,accent] at (\x,0) {$\lbl$};
+  }
+  \node[below=2pt,font=\footnotesize,inksoft] at (7.6,0) {$\cdots$};
+  % generic point: drawn as a smeared / open mark to the right, dense everywhere
+  \node[above=10pt,font=\footnotesize,accentB] at (9.4,0) {generic point $(0)$};
+  \draw[accentB,thick] (8.6,0.0) .. controls (9.0,0.42) and (9.2,0.0) .. (9.4,0.18);
+  \fill[accentB] (9.4,0.18) circle (1.6pt);
+  \node[above=8pt,font=\footnotesize\itshape,accent] at (3.4,0) {closed points: the primes $(p)$};
+  \node[below=20pt,font=\footnotesize,inksoft] at (5.0,0)
+       {$\Spec(\ZZ)$: closed points $(2),(3),(5),\dots$ and a dense generic point $(0)$};
+\end{tikzpicture}
+\end{center}
+
+The last row is the payoff of using \emph{all} primes and remembering the ring:
+$k[x]/(x^2)$ and $k$ have the same single point but are different schemes --- the
+nilpotent $x$ records an infinitesimal ``thickening'' invisible to the set of
+points alone. Hold onto that; it's where schemes beat classical varieties.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  % plain point: Spec k
+  \fill[ink] (0,0) circle (2.4pt);
+  \node[below=4pt,font=\footnotesize] at (0,0) {$\Spec(k)$: a dot};
+  % fat point: Spec k[x]/(x^2)
+  \begin{scope}[xshift=5cm]
+    \shade[inner color=algc!45,outer color=paper2] (0,0) circle (10pt);
+    \draw[algc,thick] (0,0) circle (10pt);
+    \fill[algc] (0,0) circle (2.4pt);
+    \node[below=14pt,font=\footnotesize] at (0,0)
+         {$\Spec\bigl(k[x]/(x^2)\bigr)$: a ``fat'' point};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\section*{Retrieve it}
+
+Close your notes first --- recall, don't reread. Each answer gives feedback
+instantly.
+
+\begin{quizlist}[$\Spec(R)$ --- recall check]
+  \quizitem{The points of $\Spec(R)$ are the \underline{\hspace{3em}} of $R$.}
+    {prime ideals}{maximal ideals}{radical ideals}{principal ideals}{A}
+    {By definition a point is a prime ideal. Maximal ideals give only the closed
+     points; $(0)$ in a domain is a point but not maximal.}
+  \quizitem{A closed set $V(I)$ depends on the ideal $I$ only through its \underline{\hspace{3em}}.}
+    {radical}{nilradical}{generators}{dimension}{A}
+    {$V(I)=V(\sqrt I)$, because $\fp\supseteq I \iff \fp\supseteq\sqrt I$.
+     Radical ideals biject with closed sets.}
+  \quizitem{$\Spec$ of a field has exactly \underline{\hspace{3em}}.}
+    {one point}{two points}{no points}{many points}{A}
+    {A field's only prime ideal is $(0)$, so its spectrum is a single point.}
+  \quizitem{The distinguished opens $D(f)$ form a \underline{\hspace{3em}} for the topology.}
+    {basis}{subbasis}{filter}{cover}{A}
+    {Every open is a union of $D(f)$'s, so they are a basis --- and
+     $D(f)\cong\Spec(R_f)$.}
+  \quizitem{If $I\subseteq J$, then $V(I)$ \underline{\hspace{3em}} $V(J)$.}
+    {contains}{equals}{misses}{splits}{A}
+    {More functions forced to vanish means fewer points: the correspondence
+     reverses inclusions, so $V(I)\supseteq V(J)$.}
+  \quizitem{For a domain $R$, the generic point of $\Spec(R)$ is \underline{\hspace{3em}}.}
+    {the zero ideal}{a maximal ideal}{the unit ideal}{every closed point}{A}
+    {In a domain $(0)$ is prime and its closure is the whole space, so $(0)$ is
+     the dense generic point.}
+  \quizitem{The closed points of $\Spec(\ZZ)$ correspond to \underline{\hspace{3em}}.}
+    {the prime numbers}{all the integers}{the zero ideal}{the unit ideals}{A}
+    {Maximal ideals of $\ZZ$ are $(p)$ for $p$ prime; $(0)$ is the (non-closed)
+     generic point.}
+  \quizitem{$\Spec\bigl(k[x]/(x^2)\bigr)$ has exactly \underline{\hspace{3em}}.}
+    {one point}{two points}{no points}{four points}{A}
+    {The only prime is $(x)$ --- one point --- but the nilpotent $x$ makes it a
+     ``fat'' point, a different scheme from $\Spec(k)$.}
+\end{quizlist}
+
+\begin{primarybox}
+\textbf{\textsc{\textcolor{accentB}{Read next (primary source)}}}\par\smallskip
+Ravi Vakil, \emph{The Rising Sea}, the chapter \textbf{``The spectrum of a
+ring''} (\S3.2--3.5). Do at least the exercises on computing $\Spec$ for small
+rings --- that's where the picture sticks. Ground truth in the Stacks Project,
+\Tag{00DZ}.
+\end{primarybox}

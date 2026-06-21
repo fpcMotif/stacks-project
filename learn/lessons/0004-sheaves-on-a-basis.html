@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0004 · Sheaves on a Basis</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Lesson 0004 · Sheaves III</p>
+  <h1>Sheaves on a basis: the extend-off-basis bridge</h1>
+  <div class="lesson-meta">
+    <span><b>Win:</b> build a sheaf on $\operatorname{Spec} R$ by defining it only on the $D(f)$'s</span>
+    <span><b>Time:</b> ~15 min</span>
+    <span><b>Needs:</b> Lessons 0002–0003</span>
+    <span><b>Ref:</b> <a href="../reference/sheaves.html">Sheaves cheat-sheet</a></span>
+  </div>
+
+  <p>Here is the practical problem. To define $\mathcal O_{\operatorname{Spec} R}$ we know what we want
+  on standard opens — $\mathcal O(D(f))=R_f$ — but specifying sections on <em>every</em> weird open set
+  directly would be a nightmare. The fix is a theorem with real teeth: <strong>a sheaf is determined by
+  its values on a basis.</strong> Define it on the $D(f)$'s, check the axiom on those, and a unique
+  genuine sheaf on all of $\operatorname{Spec} R$ comes for free.<sup class="ref">1</sup></p>
+
+  <div class="note"><span class="num">1.</span> Stacks Project, <em>Bases and sheaves</em>,
+  <a href="https://stacks.math.columbia.edu/tag/009H">Tag&nbsp;009H</a> (section).</div>
+
+  <h2>1 · A presheaf on a basis carries <em>less</em> data</h2>
+  <p>Recall a <strong>basis</strong> $\mathcal B$ of opens: every open is a union of basis elements. For
+  $\operatorname{Spec} R$ the standard opens $D(f)$ are a basis, and they are <strong>closed under
+  intersection</strong> since $D(f)\cap D(g)=D(fg)$ (Lesson 0001) — a major convenience.</p>
+
+  <div class="box def"><span class="label">Definition — (pre)sheaf on a basis</span>
+  A <strong>presheaf on $\mathcal B$</strong> assigns sections and restriction maps only to basis
+  elements (with identity and transitivity).<sup class="ref">2</sup> It is a <strong>sheaf on
+  $\mathcal B$</strong> if it satisfies the gluing axiom for covers of basis elements by basis
+  elements — re-covering each overlap $U_i\cap U_j$ by basis pieces.<sup class="ref">3</sup></div>
+
+  <div class="note"><span class="num">2.</span> <a href="https://stacks.math.columbia.edu/tag/009I">Tag&nbsp;009I</a>.
+  <strong>Warning:</strong> a presheaf on $\mathcal B$ holds genuinely <em>less</em> information than a
+  presheaf on all opens — the two notions differ.</div>
+  <div class="note"><span class="num">3.</span> The sheaf-on-a-basis condition:
+  <a href="https://stacks.math.columbia.edu/tag/009J">Tag&nbsp;009J</a>.</div>
+
+  <div class="box warn"><span class="label">You only ever check finite covers</span>
+  It suffices to verify the axiom on a <em>cofinal</em> system of covers.<sup class="ref">4</sup> Each
+  $D(f)\cong\operatorname{Spec}(R_f)$ is <strong>quasi-compact</strong> (Lesson 0001), so finite standard
+  covers $D(f)=\bigcup_{i=1}^{n} D(g_i)$ are cofinal. You never have to wrestle an infinite cover.</div>
+
+  <div class="note"><span class="num">4.</span> Cofinal systems of coverings:
+  <a href="https://stacks.math.columbia.edu/tag/009K">Tag&nbsp;009K</a>.</div>
+
+  <h2>2 · The bridge theorem: extend off the basis</h2>
+
+  <div class="box def"><span class="label">Theorem — extend off the basis</span>
+  A sheaf $\mathcal F$ on a basis $\mathcal B$ extends to a <strong>unique</strong> sheaf
+  $\mathcal F^{\mathrm{ext}}$ on $X$ with $\mathcal F^{\mathrm{ext}}(U)=\mathcal F(U)$ for $U\in\mathcal B$,
+  compatibly with restriction. In fact restriction-to-$\mathcal B$ is an <strong>equivalence of
+  categories</strong> $\operatorname{Sh}(X)\xrightarrow{\sim}\operatorname{Sh}(\mathcal B)$, and stalks are
+  unchanged: $\mathcal F^{\mathrm{ext}}_x=\mathcal F_x$.<sup class="ref">5</sup></div>
+
+  <div class="note"><span class="num">5.</span> Extend-off-basis:
+  <a href="https://stacks.math.columbia.edu/tag/009N">Tag&nbsp;009N</a>; the equivalence
+  $\operatorname{Sh}(X)\simeq\operatorname{Sh}(\mathcal B)$: <a href="https://stacks.math.columbia.edu/tag/009O">Tag&nbsp;009O</a>.</div>
+
+  <p>Mechanically, $\mathcal F^{\mathrm{ext}}(U)$ is reconstructed as the sections that are
+  <em>locally given by basis data</em> — compatible germs from $\mathcal B$ — exactly the construction
+  that uniqueness forces. The content of the theorem is that this works and is unique.</p>
+
+  <h2>3 · Assemble the structure sheaf</h2>
+  <p>Everything now snaps together. To build $\mathcal O_{\operatorname{Spec} R}$:</p>
+  <table class="ex">
+    <thead><tr><th>Step</th><th>What you do</th><th>From</th></tr></thead>
+    <tbody>
+      <tr><td>1. define on basis</td><td>$\mathcal O(D(f))=R_f$, restriction $R_f\to R_g$ for $D(g)\subseteq D(f)$</td><td>0002 + 0001</td></tr>
+      <tr><td>2. check axiom</td><td>finite cover $D(f)=\bigcup D(g_i)$ $\Leftrightarrow$ the $g_i$ generate the unit ideal in $R_f$; gluing $=$ exactness of $0\to R_f\to\prod R_{g_i}\rightrightarrows\prod R_{g_ig_j}$</td><td>0002 (basis form)</td></tr>
+      <tr><td>3. read stalks</td><td>$\mathcal O_{\mathfrak p}=\operatorname{colim}_{f\notin\mathfrak p}R_f=R_{\mathfrak p}$, a local ring</td><td>0003</td></tr>
+      <tr><td>4. extend</td><td>unique sheaf $\mathcal O_{\operatorname{Spec} R}$ on all opens</td><td>this lesson</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box intuition"><span class="label">You have arrived</span>
+  Steps 1–4 <em>are</em> the definition of the structure sheaf<sup class="ref">6</sup>, and an
+  <strong>affine scheme</strong> is the pair $(\operatorname{Spec} R,\ \mathcal O_{\operatorname{Spec} R})$
+  — a locally ringed space.<sup class="ref">7</sup> Notice everything genuinely <em>new</em> in step 2 is
+  commutative algebra you already own: unit-ideal generation and an exact sequence of localizations.
+  The sheaf theory was all front-loaded into Lessons 0002–0004. The next lesson is pure assembly.</div>
+
+  <div class="note"><span class="num">6.</span> Structure sheaf definition:
+  <a href="https://stacks.math.columbia.edu/tag/01HU">Tag&nbsp;01HU</a>;
+  it is a sheaf: <a href="https://stacks.math.columbia.edu/tag/01HV">Tag&nbsp;01HV</a>.</div>
+  <div class="note"><span class="num">7.</span> Affine scheme:
+  <a href="https://stacks.math.columbia.edu/tag/01HW">Tag&nbsp;01HW</a>.</div>
+
+  <hr class="tufte">
+
+  <h2>Retrieve it</h2>
+  <p>Recall first. This quiz interleaves Lessons 0001–0003 — that mixing is what builds retention.</p>
+
+  <div class="quiz" data-title="Sheaves on a basis — recall check">
+    <script type="application/json" class="quiz-data">
+[
+  {"stem": "The standard opens $D(f)$ of $\\operatorname{Spec} R$ form a ___ closed under intersection.",
+   "options": ["basis", "cover", "filter", "chain"],
+   "answer": 0,
+   "why": "They are a basis for the Zariski topology, and $D(f)\\cap D(g)=D(fg)$ keeps intersections in the family."},
+  {"stem": "Compared with a presheaf on all opens, a presheaf on a basis carries ___ data.",
+   "options": ["less", "more", "equal", "no"],
+   "answer": 0,
+   "why": "A basis presheaf only knows basis elements — strictly less information. (The SHEAF notions, however, end up equivalent.)"},
+  {"stem": "Because $D(f)$ is quasi-compact, it suffices to check the sheaf axiom on ___ covers.",
+   "options": ["finite", "infinite", "closed", "dense"],
+   "answer": 0,
+   "why": "Finite standard covers are cofinal, so verifying the basis axiom on finite covers $D(f)=\\bigcup_{i=1}^n D(g_i)$ is enough."},
+  {"stem": "Extend-off-basis produces, from a sheaf on $\\mathcal B$, a ___ sheaf on $X$.",
+   "options": ["unique", "larger", "trivial", "constant"],
+   "answer": 0,
+   "why": "The extension exists and is unique; restriction-back-to-the-basis is an equivalence $\\operatorname{Sh}(X)\\simeq\\operatorname{Sh}(\\mathcal B)$."},
+  {"stem": "Restriction to the basis gives an ___ between $\\operatorname{Sh}(X)$ and $\\operatorname{Sh}(\\mathcal B)$.",
+   "options": ["equivalence", "inclusion", "inequality", "embedding"],
+   "answer": 0,
+   "why": "It is an equivalence of categories — basis data and full sheaf data are interchangeable."},
+  {"stem": "To build $\\mathcal O$ on $\\operatorname{Spec} R$ you specify sections only on the ___.",
+   "options": ["standard opens", "closed points", "generic points", "whole space"],
+   "answer": 0,
+   "why": "Define $\\mathcal O(D(f))=R_f$ on standard opens, check the basis axiom, then extend uniquely."},
+  {"stem": "Extending off the basis leaves the ___ at every point unchanged.",
+   "options": ["stalk", "section", "value", "cover"],
+   "answer": 0,
+   "why": "The extension has $\\mathcal F^{\\mathrm{ext}}_x=\\mathcal F_x$ — so $\\mathcal O_{\\mathfrak p}=R_{\\mathfrak p}$ survives the extension (Lesson 0003)."},
+  {"stem": "$\\mathcal O_{\\operatorname{Spec} R}$ is the basis presheaf $D(f)\\mapsto R_f$ made into a sheaf via ___.",
+   "options": ["the basis theorem", "the snake lemma", "the Zorn lemma", "the Yoneda lemma"],
+   "answer": 0,
+   "why": "The extend-off-basis theorem turns the verified basis sheaf into the unique structure sheaf on all opens."}
+]
+    </script>
+  </div>
+
+  <div class="primary-source">
+    <span class="label">Read next (primary source)</span>
+    <p style="margin:.4rem 0 0">Stacks Project, <em>Bases and sheaves</em>,
+    <a href="https://stacks.math.columbia.edu/tag/009H">Tag&nbsp;009H</a> — the cleanest fully-proved
+    statement of extend-off-basis. For the structure-sheaf construction done live, Vakil
+    <a href="https://math.stanford.edu/~vakil/216blog/FOAGaug2922public.pdf"><em>Rising Sea</em></a> §4.1,
+    or Borcherds' video walk-through.</p>
+  </div>
+
+  <div class="ask">
+    <strong>Stuck or curious?</strong> Ask me: "why does $D(f)=\bigcup D(g_i)$ mean the $g_i$ generate
+    the unit ideal?", "walk me through the exact sequence in step 2," or "are we ready for the structure
+    sheaf lesson?"
+  </div>
+
+  <div class="nav">
+    <span><a href="0003-stalks-and-germs.html">← 0003 · Stalks</a></span>
+    <span><b>Next:</b> 0005 · The structure sheaf &amp; the affine scheme (<a href="https://stacks.math.columbia.edu/tag/01HW">Tag&nbsp;01HW</a>) — pure assembly</span>
+  </div>
+
+  <footer class="course">
+    Lesson 0004 · Schemes self-study · See the <a href="../reference/sheaves.html">Sheaves cheat-sheet</a>
+    and <a href="../reference/glossary.html">Glossary</a>. Tags resolve at <code>stacks.math.columbia.edu/tag/XXXX</code>.
+  </footer>
+</div>
+
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

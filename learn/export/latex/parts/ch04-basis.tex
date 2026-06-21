@@ -1,0 +1,167 @@
+\chapter{Sheaves on a basis}\label{ch:ch04-basis}
+
+\noindent\textit{Schemes Self-Study \,\textperiodcentered\, Lesson 0004 \,\textperiodcentered\, Sheaves III}
+
+\begin{primarybox}
+\textbf{Win:} build a sheaf on $\Spec R$ by defining it only on the $D(f)$'s.\quad
+\textbf{Time:} \textasciitilde15 min.\quad
+\textbf{Needs:} Lessons 0002--0003.\quad
+\textbf{Ref:} Sheaves cheat-sheet.
+\end{primarybox}
+
+\noindent Here is the practical problem. To define $\O_{\Spec R}$ we know what we want on standard
+opens --- $\O(D(f))=R_f$ --- but specifying sections on \emph{every} weird open set directly would be a
+nightmare. The fix is a theorem with real teeth: \textbf{a sheaf is determined by its values on a
+basis.} Define it on the $D(f)$'s, check the axiom on those, and a unique genuine sheaf on all of
+$\Spec R$ comes for free.\scite{009H}{Stacks Project, \emph{Bases and sheaves} (section).}
+
+\section{A presheaf on a basis carries \emph{less} data}
+
+Recall a \term{basis} $\mathcal B$ of opens: every open is a union of basis elements. For $\Spec R$
+the standard opens $D(f)$ are a basis, and they are \textbf{closed under intersection} since
+$D(f)\cap D(g)=D(fg)$ (Lesson 0001) --- a major convenience.
+
+\begin{defbox}[Definition --- (pre)sheaf on a basis]
+A \term{presheaf on $\mathcal B$} assigns sections and restriction maps only to basis elements (with
+identity and transitivity).\scite{009I}{\textbf{Warning:} a presheaf on $\mathcal B$ holds genuinely
+\emph{less} information than a presheaf on all opens --- the two notions differ.} It is a \term{sheaf
+on $\mathcal B$} if it satisfies the gluing axiom for covers of basis elements by basis elements ---
+re-covering each overlap $U_i\cap U_j$ by basis pieces.\scite{009J}{The sheaf-on-a-basis condition.}
+\end{defbox}
+
+\begin{warnbox}[You only ever check finite covers]
+It suffices to verify the axiom on a \emph{cofinal} system of covers.\scite{009K}{Cofinal systems of
+coverings.} Each $D(f)\cong\Spec(R_f)$ is \textbf{quasi-compact} (Lesson 0001), so finite standard
+covers $D(f)=\bigcup_{i=1}^{n} D(g_i)$ are cofinal. You never have to wrestle an infinite cover.
+\end{warnbox}
+
+The sheaf axiom on the basis is an equalizer condition: a section of $\sF$ over $D(f)$ is exactly a
+compatible family of sections over a finite cover by standard opens.
+
+\begin{figure}[h]
+\centering
+\begin{tikzcd}[column sep=2.4em]
+\sF\bigl(D(f)\bigr) \arrow[r] &
+\displaystyle\prod_i \sF\bigl(D(g_i)\bigr) \arrow[r,shift left=0.7ex] \arrow[r,shift right=0.7ex] &
+\displaystyle\prod_{i,j} \sF\bigl(D(g_i)\cap D(g_j)\bigr)
+\end{tikzcd}
+\caption{The sheaf-on-a-basis condition as an equalizer: $\sF(D(f))$ is the equalizer of the two
+restriction maps into the overlaps, for a finite standard cover $D(f)=\bigcup_i D(g_i)$.}
+\end{figure}
+
+\section{The bridge theorem: extend off the basis}
+
+\begin{defbox}[Theorem --- extend off the basis]
+A sheaf $\sF$ on a basis $\mathcal B$ extends to a \textbf{unique} sheaf $\sF^{\mathrm{ext}}$ on $X$
+with $\sF^{\mathrm{ext}}(U)=\sF(U)$ for $U\in\mathcal B$, compatibly with restriction. In fact
+restriction-to-$\mathcal B$ is an \textbf{equivalence of categories}
+$\Sh(X)\xrightarrow{\sim}\Sh(\mathcal B)$, and stalks are unchanged:
+$\sF^{\mathrm{ext}}_x=\sF_x$.\scite{009N}{Extend-off-basis: \Tag{009N}; the equivalence
+$\Sh(X)\simeq\Sh(\mathcal B)$: \Tag{009O}.}
+\end{defbox}
+
+Mechanically, $\sF^{\mathrm{ext}}(U)$ is reconstructed as the sections that are \emph{locally given by
+basis data} --- compatible germs from $\mathcal B$ --- exactly the construction that uniqueness forces.
+The content of the theorem is that this works and is unique.
+
+\section{Assemble the structure sheaf}
+
+Everything now snaps together. To build $\O_{\Spec R}$:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}L{3.0cm} L{7.6cm} L{2.2cm}@{}}
+\toprule
+\textbf{\geo{Step}} & \textbf{\geo{What you do}} & \textbf{\geo{From}} \\
+\midrule
+1. define on basis &
+$\O(D(f))=R_f$, restriction $R_f\to R_g$ for $D(g)\subseteq D(f)$ &
+0002 + 0001 \\[2pt]
+2. check axiom &
+finite cover $D(f)=\bigcup D(g_i)$ $\Leftrightarrow$ the $g_i$ generate the unit ideal in $R_f$;
+gluing $=$ exactness of $0\to R_f\to\prod R_{g_i}\rightrightarrows\prod R_{g_ig_j}$ &
+0002 (basis form) \\[2pt]
+3. read stalks &
+$\O_{\fp}=\colim_{f\notin\fp}R_f=R_{\fp}$, a local ring &
+0003 \\[2pt]
+4. extend &
+unique sheaf $\O_{\Spec R}$ on all opens &
+this lesson \\
+\bottomrule
+\end{tabular}
+\caption{The four-step recipe for the structure sheaf of $\Spec R$.}
+\end{table}
+
+The verification in step~2 is the exactness of a single sequence of localizations --- pure commutative
+algebra:
+
+\begin{figure}[h]
+\centering
+\begin{tikzcd}[column sep=2.4em]
+0 \arrow[r] &
+R_f \arrow[r] &
+\displaystyle\prod_i R_{g_i} \arrow[r,shift left=0.7ex] \arrow[r,shift right=0.7ex] &
+\displaystyle\prod_{i,j} R_{g_i g_j}
+\end{tikzcd}
+\caption{Gluing for $\O_{\Spec R}$ is the exactness of this sequence, when the $g_i$ generate the unit
+ideal of $R_f$.}
+\end{figure}
+
+\begin{intubox}[You have arrived]
+Steps 1--4 \emph{are} the definition of the structure sheaf,\scite{01HU}{Structure sheaf definition:
+\Tag{01HU}; it is a sheaf: \Tag{01HV}.} and an \term{affine scheme} is the pair
+$(\Spec R,\ \O_{\Spec R})$ --- a locally ringed space.\scite{01HW}{Affine scheme.} Notice everything
+genuinely \emph{new} in step~2 is commutative algebra you already own: unit-ideal generation and an
+exact sequence of localizations. The sheaf theory was all front-loaded into Lessons 0002--0004. The
+next lesson is pure assembly.
+\end{intubox}
+
+\section{Retrieve it}
+
+Recall first. This quiz interleaves Lessons 0001--0003 --- that mixing is what builds retention.
+
+\begin{quizlist}[Sheaves on a basis --- recall check]
+\quizitem
+  {The standard opens $D(f)$ of $\Spec R$ form a \underline{\hspace{2.2em}} closed under intersection.}
+  {basis}{cover}{filter}{chain}{A}
+  {They are a basis for the Zariski topology, and $D(f)\cap D(g)=D(fg)$ keeps intersections in the family.}
+\quizitem
+  {Compared with a presheaf on all opens, a presheaf on a basis carries \underline{\hspace{2.2em}} data.}
+  {less}{more}{equal}{no}{A}
+  {A basis presheaf only knows basis elements --- strictly less information. (The \textsc{sheaf} notions, however, end up equivalent.)}
+\quizitem
+  {Because $D(f)$ is quasi-compact, it suffices to check the sheaf axiom on \underline{\hspace{2.2em}} covers.}
+  {finite}{infinite}{closed}{dense}{A}
+  {Finite standard covers are cofinal, so verifying the basis axiom on finite covers $D(f)=\bigcup_{i=1}^n D(g_i)$ is enough.}
+\quizitem
+  {Extend-off-basis produces, from a sheaf on $\mathcal B$, a \underline{\hspace{2.2em}} sheaf on $X$.}
+  {unique}{larger}{trivial}{constant}{A}
+  {The extension exists and is unique; restriction-back-to-the-basis is an equivalence $\Sh(X)\simeq\Sh(\mathcal B)$.}
+\quizitem
+  {Restriction to the basis gives an \underline{\hspace{2.2em}} between $\Sh(X)$ and $\Sh(\mathcal B)$.}
+  {equivalence}{inclusion}{inequality}{embedding}{A}
+  {It is an equivalence of categories --- basis data and full sheaf data are interchangeable.}
+\quizitem
+  {To build $\O$ on $\Spec R$ you specify sections only on the \underline{\hspace{2.2em}}.}
+  {standard opens}{closed points}{generic points}{whole space}{A}
+  {Define $\O(D(f))=R_f$ on standard opens, check the basis axiom, then extend uniquely.}
+\quizitem
+  {Extending off the basis leaves the \underline{\hspace{2.2em}} at every point unchanged.}
+  {stalk}{section}{value}{cover}{A}
+  {The extension has $\sF^{\mathrm{ext}}_x=\sF_x$ --- so $\O_{\fp}=R_{\fp}$ survives the extension (Lesson 0003).}
+\quizitem
+  {$\O_{\Spec R}$ is the basis presheaf $D(f)\mapsto R_f$ made into a sheaf via \underline{\hspace{2.2em}}.}
+  {the basis theorem}{the snake lemma}{the Zorn lemma}{the Yoneda lemma}{A}
+  {The extend-off-basis theorem turns the verified basis sheaf into the unique structure sheaf on all opens.}
+\end{quizlist}
+
+\begin{primarybox}
+\textbf{\textsc{Read next (primary source)}}\\[2pt]
+Stacks Project, \emph{Bases and sheaves}, \Tag{009H} --- the cleanest fully-proved statement of
+extend-off-basis. For the structure-sheaf construction done live, Vakil
+\href{https://math.stanford.edu/~vakil/216blog/FOAGaug2922public.pdf}{\emph{Rising Sea}} \S4.1, or
+Borcherds' video walk-through.
+\end{primarybox}
+
+\noindent\textbf{Up next:} 0005 \,\textperiodcentered\, The structure sheaf \& the affine scheme
+(\Tag{01HW}) --- pure assembly.

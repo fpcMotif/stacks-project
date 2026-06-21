@@ -1,0 +1,39 @@
+\documentclass[11pt,oneside]{book}
+\input{preamble}
+
+\begin{document}
+
+% ---- title page ----
+\begin{titlepage}
+\centering
+\vspace*{4cm}
+{\scshape\large A self-study reader\par}
+\vspace{1.2cm}
+{\bfseries\Huge Schemes\par}
+\vspace{0.6cm}
+{\Large\color{accentB} Sheaves, spectra, and the structure sheaf\par}
+\vspace{2.2cm}
+{\large from a commutative-algebra background, scheme-first\par}
+\vspace{1.4cm}
+{\color{inksoft} Generated from the interactive course in \texttt{learn/}.\\[2pt]
+Citations resolve at \texttt{stacks.math.columbia.edu/tag/XXXX}.\par}
+\vfill
+{\color{inksoft}\small Typeset with Xe\LaTeX{} (tectonic) · diagrams in Ti\textit{k}Z / tikz-cd\par}
+\end{titlepage}
+
+\tableofcontents
+\cleardoublepage
+
+\part{Lessons}
+\input{parts/ch01-spec}
+\input{parts/ch02-presheaves}
+\input{parts/ch03-stalks}
+\input{parts/ch04-basis}
+
+\part{Visual deep-dives \& reference}
+\input{parts/refC-spec-zx}
+\input{parts/refD-spec-kxy}
+\input{parts/refB-sheaves}
+\input{parts/refA-glossary}
+
+\end{document}

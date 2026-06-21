@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0002 · Presheaves &amp; the Sheaf Condition</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Lesson 0002 · Sheaves I</p>
+  <h1>Presheaves &amp; the sheaf condition</h1>
+  <div class="lesson-meta">
+    <span><b>Win:</b> decide whether a rule "is a sheaf" by checking gluing on a cover</span>
+    <span><b>Time:</b> ~15 min</span>
+    <span><b>Needs:</b> Lesson 0001 ($D(f)$, opens)</span>
+    <span><b>Ref:</b> <a href="../reference/sheaves.html">Sheaves cheat-sheet</a></span>
+  </div>
+
+  <p>Last lesson you turned a ring into a <em>space</em>. A space alone is too coarse to do geometry
+  on (recall: it isn't even Hausdorff). The missing data — "what are the functions on each open
+  set?" — is packaged by a <strong>sheaf</strong>. This lesson installs the one axiom that
+  separates a sheaf from a mere bookkeeping table: <em class="term">gluing</em>. It is the exact
+  axiom the structure sheaf $\mathcal O_{\operatorname{Spec} R}$ will have to satisfy.<sup class="ref">1</sup></p>
+
+  <div class="note"><span class="num">1.</span> Stacks Project, ch. <em>Sheaves on Spaces</em>,
+  <a href="https://stacks.math.columbia.edu/tag/006A">Tag&nbsp;006A</a>.</div>
+
+  <h2>1 · Presheaf = data + restriction</h2>
+
+  <div class="box def"><span class="label">Definition — presheaf</span>
+  A <strong>presheaf</strong> $\mathcal F$ on a space $X$ assigns to every open $U\subseteq X$ a set
+  $\mathcal F(U)$ (its <em>sections</em>), and to every inclusion $V\subseteq U$ a
+  <strong>restriction map</strong> $\rho^U_V\colon \mathcal F(U)\to\mathcal F(V)$, such that
+  $\rho^U_U=\mathrm{id}$ and $\rho^V_W\circ\rho^U_V=\rho^U_W$ for $W\subseteq V\subseteq U$.
+  Write $s|_V:=\rho^U_V(s)$.<sup class="ref">2</sup></div>
+
+  <div class="note"><span class="num">2.</span> <a href="https://stacks.math.columbia.edu/tag/006E">Tag&nbsp;006E</a>.
+  Equivalently: a <em>contravariant</em> functor from open sets (and inclusions) to $\mathbf{Set}$
+  — or to $\mathbf{Ab}$, $\mathbf{Ring}$ if sections carry that structure.</div>
+
+  <div class="box intuition"><span class="label">Keep this example forever</span>
+  $\mathcal F(U)=\{\text{functions } U\to k\}$ with honest restriction of functions. Every abstract
+  axiom below should be checked against this picture. The structure sheaf is just this idea with
+  "function" read algebraically — $\mathcal F(D(f))=R_f$.</div>
+
+  <h2>2 · The sheaf condition: glue + locality</h2>
+  <p>A presheaf lets you <em>restrict</em>. A sheaf also lets you <em>build global from local</em>.</p>
+
+  <div class="box def"><span class="label">Definition — sheaf</span>
+  A presheaf $\mathcal F$ is a <strong>sheaf</strong> if for every open cover $U=\bigcup_i U_i$ and
+  every family of sections $s_i\in\mathcal F(U_i)$ that <em>agree on overlaps</em>,
+  $$s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}\quad\text{for all }i,j,$$
+  there is a <strong>unique</strong> $s\in\mathcal F(U)$ with $s|_{U_i}=s_i$ for all $i$.<sup class="ref">3</sup></div>
+
+  <div class="note"><span class="num">3.</span> <a href="https://stacks.math.columbia.edu/tag/006T">Tag&nbsp;006T</a>.
+  The condition splits into two clauses, both required.</div>
+
+  <p>Read the axiom as two independent demands:</p>
+  <table class="dict">
+    <thead><tr><th class="geo">Clause</th><th class="alg">What it guarantees</th><th>Name</th></tr></thead>
+    <tbody>
+      <tr><td class="geo">at most one glue</td><td class="alg">a section is determined by its restrictions to any cover</td><td>separatedness / locality<sup class="ref">4</sup></td></tr>
+      <tr><td class="geo">at least one glue</td><td class="alg">compatible local data actually patch together</td><td>gluing / existence</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><span class="num">4.</span> Separatedness as injectivity into the product of
+  stalks: <a href="https://stacks.math.columbia.edu/tag/007A">Tag&nbsp;007A</a> (stalks: next lesson).</div>
+
+  <div class="box warn"><span class="label">The forced empty-set convention</span>
+  Apply the axiom to the empty cover of $U=\varnothing$: it forces $\mathcal F(\varnothing)$ to be a
+  <strong>single point</strong> (the terminal object). And for a disjoint union $U\sqcup V$ it forces
+  $\mathcal F(U\sqcup V)=\mathcal F(U)\times\mathcal F(V)$.<sup class="ref">5</sup> This is exactly why
+  the <em>constant presheaf</em> $U\mapsto A$ with $|A|\ge 2$ is <strong>not</strong> a sheaf: it sends
+  $\varnothing$ to $A$, and two different constants on a disconnected open can't be glued.</div>
+
+  <div class="note"><span class="num">5.</span> <a href="https://stacks.math.columbia.edu/tag/006U">Tag&nbsp;006U</a>
+  (the "warning" remark). The fix — sheafifying $A$ to <em>locally constant</em> functions — is the
+  constant sheaf $\underline A$, <a href="https://stacks.math.columbia.edu/tag/006W">Tag&nbsp;006W</a>.</div>
+
+  <h2>3 · Sheaf or not? The reflex to build</h2>
+  <p>Gluing is a real condition, not a formality. The instructive failure to memorize:</p>
+  <table class="ex">
+    <thead><tr><th>Presheaf on $X$</th><th>Sheaf?</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>continuous functions $U\to\mathbb R$</td><td>✓ yes</td><td>continuity is local; compatible pieces glue uniquely</td></tr>
+      <tr><td>holomorphic / smooth functions, $k$-forms</td><td>✓ yes</td><td>all checked locally / in charts</td></tr>
+      <tr><td>sections of a map $p\colon E\to X$</td><td>✓ yes</td><td>the prototype — "sheaf of sections"</td></tr>
+      <tr><td><strong>bounded</strong> continuous functions</td><td>✗ no</td><td>identity holds, but pieces bounded on $(n{-}1,n{+}1)$ glue to $f(x)=x$ — unbounded; <em>gluing fails</em></td></tr>
+      <tr><td>functions that <strong>extend</strong> to all of $X$</td><td>✗ no</td><td>"extendable" isn't local: $1/x$ is locally a restriction near each point of $\mathbb R\setminus\{0\}$ but doesn't extend; <em>gluing fails</em></td></tr>
+      <tr><td>constant presheaf $U\mapsto A$, $|A|\ge2$</td><td>✗ no</td><td>fails at $\varnothing$ and on disconnected opens; <em>both clauses</em></td></tr>
+    </tbody>
+  </table>
+
+  <div class="box intuition"><span class="label">The bridge to the structure sheaf</span>
+  When you build $\mathcal O_{\operatorname{Spec} R}$, the cover will be a standard cover
+  $D(f)=\bigcup_i D(g_i)$, the overlaps will be $D(g_i)\cap D(g_j)=D(g_ig_j)$ (from Lesson 0001!),
+  and "agree on overlaps + glue uniquely" will become a single exact sequence of localizations
+  $$0\to R_f\to\textstyle\prod_i R_{g_i}\rightrightarrows\prod_{i,j} R_{g_ig_j}.$$
+  Drilling existence-and-uniqueness now turns that future step into <em>recognition</em>, not new learning.</div>
+
+  <h2>Play: the gluing lab</h2>
+  <p>Pick a presheaf, then press <em>Attempt to glue</em> the compatible local data over its cover. Watch
+  which ones patch into a global section and which break — and on exactly which clause.</p>
+  <div class="glue-lab"></div>
+
+  <hr class="tufte">
+
+  <h2>Retrieve it</h2>
+  <p>Notes closed — recall from memory. Feedback is instant.</p>
+
+  <div class="quiz" data-title="Presheaves &amp; sheaves — recall check">
+    <script type="application/json" class="quiz-data">
+[
+  {"stem": "A presheaf attaches to each open set its sections plus ___ maps.",
+   "options": ["restriction", "extension", "inclusion", "evaluation"],
+   "answer": 0,
+   "why": "$\\rho^U_V:\\mathcal F(U)\\to\\mathcal F(V)$ for $V\\subseteq U$, with $\\rho^U_U=\\mathrm{id}$ and composites agreeing. Restriction goes from bigger opens to smaller — contravariant."},
+  {"stem": "Categorically, a presheaf is a ___ functor on opens.",
+   "options": ["contravariant", "covariant", "bijective", "continuous"],
+   "answer": 0,
+   "why": "Inclusions $V\\subseteq U$ give maps $\\mathcal F(U)\\to\\mathcal F(V)$ — the arrow reverses, so the functor is contravariant."},
+  {"stem": "Beyond existence of a glued section, the sheaf axiom demands it be ___.",
+   "options": ["unique", "bounded", "nonzero", "global"],
+   "answer": 0,
+   "why": "Two clauses: existence (gluing) and uniqueness (separatedness/locality). Uniqueness is what makes a section determined by its restrictions."},
+  {"stem": "Continuous real-valued functions on a space form ___.",
+   "options": ["a genuine sheaf", "a mere presheaf", "no valid presheaf", "a constant sheaf"],
+   "answer": 0,
+   "why": "Continuity is a local condition, so compatible local functions glue uniquely to a continuous function — the model sheaf."},
+  {"stem": "Bounded continuous functions on $\\mathbb R$ form a presheaf that fails ___.",
+   "options": ["gluing", "identity", "linearity", "restriction"],
+   "answer": 0,
+   "why": "Identity (separatedness) holds — it's a sub-presheaf of a sheaf. But bounded pieces on $(n{-}1,n{+}1)$ glue to the unbounded $f(x)=x$, which leaves the presheaf: gluing fails."},
+  {"stem": "For the empty cover, the sheaf axiom forces $\\mathcal F(\\varnothing)$ to be ___.",
+   "options": ["a single point", "the empty set", "any large set", "two distinct points"],
+   "answer": 0,
+   "why": "$\\mathcal F(\\varnothing)$ must be terminal (a one-element set). This is precisely why the constant presheaf with $|A|\\ge2$ fails — it sends $\\varnothing$ to $A$."},
+  {"stem": "The constant presheaf with a 2-element value on a disconnected open fails: distinct values agree on the ___ overlap.",
+   "options": ["empty", "dense", "whole", "open"],
+   "answer": 0,
+   "why": "If $U=U_1\\sqcup U_2$ the overlap is $\\varnothing$, so distinct constants agree there vacuously, yet no single element of $A$ restricts to both — no glue exists."},
+  {"stem": "On $\\operatorname{Spec} R$, the overlap of two standard opens $D(f)$ and $D(g)$ is ___.",
+   "options": ["the open D(fg)", "the closed V(fg)", "the open D(f+g)", "the whole space"],
+   "answer": 0,
+   "why": "$D(f)\\cap D(g)=D(fg)$: overlaps of standard opens are again standard. That closure-under-intersection is what lets us build $\\mathcal O_X$ on the basis of $D(f)$'s."}
+]
+    </script>
+  </div>
+
+  <div class="primary-source">
+    <span class="label">Read next (primary source)</span>
+    <p style="margin:.4rem 0 0">Ravi Vakil, <a href="https://math.stanford.edu/~vakil/216blog/FOAGaug2922public.pdf"><em>The Rising Sea</em></a>,
+    §2.2 (presheaves and sheaves). For the "make it feel inevitable" version, read
+    <a href="https://agag-gathmann.math.rptu.de/class/alggeom-2021/alggeom-2021.pdf">Gathmann's notes</a>
+    on the sheaf of regular functions. Ground truth:
+    <a href="https://stacks.math.columbia.edu/tag/006T">Tag&nbsp;006T</a>.</p>
+  </div>
+
+  <div class="ask">
+    <strong>Stuck or curious?</strong> Ask me: "why is 'sections of a map' the prototype sheaf?",
+    "show me the gluing failure for $1/x$ concretely," or "quiz me on five more presheaves." I'm your
+    teacher between lessons.
+  </div>
+
+  <div class="nav">
+    <span><a href="0001-spec-as-a-space.html">← 0001 · Spec(R)</a></span>
+    <span><b>Next:</b> <a href="0003-stalks-and-germs.html">0003 · Stalks &amp; germs</a> — local data as a colimit</span>
+  </div>
+
+  <footer class="course">
+    Lesson 0002 · Schemes self-study · See the <a href="../reference/sheaves.html">Sheaves cheat-sheet</a>
+    and <a href="../reference/glossary.html">Glossary</a>. Tags resolve at <code>stacks.math.columbia.edu/tag/XXXX</code>.
+  </footer>
+</div>
+
+<script src="../assets/sheaf-explorer.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+\chapter{Three questions about Spec, visually}\label{ch:refC-spec-zx}
+
+\noindent\textit{The three questions that make $\Spec$ click --- drawn, then fully
+explained. Each builds directly on Lesson 0001 (points $=$ primes, $V(I)$, $D(f)$,
+generic/closed points, residue fields).}
+
+\section{Draw me $\Spec\ZZ[x]$}\label{sec:zx-draw}
+
+This is Mumford's \term{arithmetic surface} --- the friendliest 2-dimensional
+spectrum. Because $\ZZ[x]$ is a UFD, its height-1 primes are exactly the principal
+primes $(g)$ with $g$ irreducible, and there are only \textbf{two kinds} of
+irreducible element --- so only two kinds of ``curve.''
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[x=1pt,y=-1pt,scale=0.82,every node/.style={font=\small}]
+  % frame
+  \fill[paper2] (90,40) rectangle (650,340);
+  \draw[rulec] (90,40) rectangle (650,340);
+  % generic-point label
+  \node[accent,font=\itshape\footnotesize,anchor=south] at (370,32)
+    {$(0)$: generic point --- $\dim 2$, dense in all of $\Spec\ZZ[x]$};
+  % vertical fibers V(p)
+  \foreach \x in {170,270,370,470} \draw[accentB,line width=1.6pt] (\x,48)--(\x,332);
+  \draw[gray,line width=1.2pt,dashed] (590,48)--(590,332);
+  \node[inksoft] at (530,200) {$\cdots$};
+  \node[inksoft,font=\itshape\scriptsize] at (590,62) {$\AA^1_{\QQ}$};
+  % horizontal curves V(f)
+  \draw[algc,line width=1.6pt] (96,110)--(644,110);
+  \draw[algc,line width=1.6pt]
+    (96,252) .. controls (150,227) and (210,277) .. (270,254)
+             .. controls (330,232) and (410,277) .. (470,252)
+             .. controls (530,232) and (600,274) .. (644,252);
+  \node[algc,font=\footnotesize,anchor=south] at (126,108) {$V(x)$};
+  \node[algc,font=\footnotesize,anchor=south] at (150,250) {$V(x^2+1)$};
+  \node[inksoft,font=\itshape\scriptsize] at (600,300) {a 2-to-1 cover $\downarrow$};
+  % closed points on V(x)
+  \foreach \x in {170,270,370,470} \fill[accent] (\x,110) circle (3.6pt);
+  \node[accent,font=\scriptsize,anchor=north] at (170,118) {$(2,x)$};
+  \node[accent,font=\scriptsize,anchor=north] at (470,118) {$(7,x)$};
+  % projection arrows
+  \foreach \x in {170,270,370,470,590}
+    \draw[gray,dashed,-{Stealth[length=4pt]}] (\x,340)--(\x,368);
+  \node[inksoft,font=\itshape\footnotesize,anchor=west] at (606,358) {$\pi$};
+  % base Spec Z
+  \draw[inksoft,line width=1pt,-{Stealth[length=5pt]}] (90,375)--(660,375);
+  \node[inksoft,font=\scriptsize,anchor=south west] at (92,373) {$\Spec\ZZ$};
+  \foreach \x in {170,270,370,470} \fill[inksoft] (\x,375) circle (3pt);
+  \draw[inksoft,line width=1pt] (590,375) circle (3pt);
+  \node[inksoft,font=\scriptsize,anchor=north] at (170,383) {$(2)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (270,383) {$(3)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (370,383) {$(5)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (470,383) {$(7)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (590,383) {$(0)$};
+\end{tikzpicture}}
+\par\smallskip
+{\footnotesize\color{inksoft}
+\textcolor{accentB}{\rule[0.25ex]{1.6em}{1.5pt}}\ vertical $V(p)$ (a prime $p$, $\dim 1$)\quad
+\textcolor{algc}{\rule[0.25ex]{1.6em}{1.5pt}}\ horizontal $V(f)$ (irreducible $f$, $\dim 1$)\quad
+\textcolor{accent}{$\bullet$}\ closed point $(p,f)$ (maximal, $\dim 0$)}
+\caption{$\Spec\ZZ[x]$ fibers over $\Spec\ZZ$ via $\pi$. The fiber over $(p)$ is the
+vertical line $V(p)=\AA^1_{\FF_p}$; the fiber over the generic point $(0)$ is
+$\AA^1_{\QQ}$.}
+\end{figure}
+
+The points sort cleanly by dimension:
+
+\begin{center}
+\begin{tabular}{@{}L{3.5cm}L{4.6cm}cl@{}}
+\toprule
+\textcolor{algc}{Prime of $\ZZ[x]$} & \textcolor{accentB}{Geometry} & \textbf{dim} & \textbf{residue field}\\
+\midrule
+\alg{$(0)$} & \geo{the one generic point, dense everywhere} & $2$ & $\QQ(x)$\\
+\alg{$(p)$} & \geo{vertical line $V(p)=\AA^1_{\FF_p}$} & $1$ & $\FF_p(x)$\\
+\alg{$(f)$, $f$ irred.\ primitive} & \geo{horizontal curve} & $1$ & a number field\\
+\alg{$(p,f)$, $\bar f$ irred.\ mod $p$} & \geo{closed point (curve $\cap$ line)} & $0$ & finite $\FF_{p^{\deg\bar f}}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{intubox}[The arithmetic hiding in the picture]
+How a horizontal curve $V(f)$ meets a vertical line $V(p)$ is governed by how $f$
+factors mod $p$. The curve $V(x^2+1)$ is literally $\Spec\ZZ[i]$, a 2-to-1 cover of
+$\Spec\ZZ$ --- and its fiber over each prime is the splitting of that prime in the
+Gaussian integers:
+\end{intubox}
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[x=1pt,y=-1pt,scale=0.82,every node/.style={font=\small}]
+  \node[inksoft,font=\itshape\footnotesize] at (380,22)
+    {fibers of $V(x^2+1)=\Spec\ZZ[i]$ over $\Spec\ZZ$};
+  % connectors
+  \draw[gray!50,dashed] (160,195)--(160,100);
+  \draw[gray!50,dashed] (280,195)--(280,100);
+  \draw[gray!50,dashed] (400,195)--(400,80);
+  \draw[gray!50,dashed] (400,195)--(400,120);
+  \draw[gray!50,dashed] (520,195)--(520,100);
+  \draw[gray!50,dashed] (630,195)--(630,100);
+  % fiber points
+  \draw[accent,line width=1.6pt] (160,100) circle (4.4pt);
+  \fill[accent] (160,100) circle (1.8pt);
+  \fill[accentB] (280,100) circle (4pt);
+  \fill[good] (400,80) circle (4pt);
+  \fill[good] (400,120) circle (4pt);
+  \fill[accentB] (520,100) circle (4pt);
+  \fill[accentB] (630,100) circle (4pt);
+  \node[accent,font=\scriptsize,anchor=south] at (160,76) {ramified};
+  \node[accentB,font=\scriptsize,anchor=south] at (280,80) {inert $\cdot\ \FF_9$};
+  \node[good,font=\scriptsize,anchor=south] at (400,60) {split $\cdot\ \FF_5\times 2$};
+  \node[accentB,font=\scriptsize,anchor=south] at (520,80) {inert $\cdot\ \FF_{49}$};
+  \node[accentB,font=\scriptsize,anchor=south] at (630,80) {inert $\cdot\ \FF_{121}$};
+  \node[good,font=\itshape\scriptsize] at (430,138) {$5=(2+i)(2-i)$};
+  % base
+  \draw[inksoft,line width=1pt,-{Stealth[length=5pt]}] (80,195)--(690,195);
+  \node[inksoft,font=\scriptsize,anchor=south west] at (82,193) {$\Spec\ZZ$};
+  \foreach \x in {160,280,400,520,630} \fill[inksoft] (\x,195) circle (3pt);
+  \node[inksoft,font=\scriptsize,anchor=north] at (160,203) {$(2)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (280,203) {$(3)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (400,203) {$(5)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (520,203) {$(7)$};
+  \node[inksoft,font=\scriptsize,anchor=north] at (630,203) {$(11)$};
+\end{tikzpicture}}
+\par\smallskip
+{\footnotesize\color{inksoft}
+\textcolor{good}{$\bullet$}\ split: $p\equiv1\ (4)$, two points\quad
+\textcolor{accentB}{$\bullet$}\ inert: $p\equiv3\ (4)$, one point $\FF_{p^2}$\quad
+\textcolor{accent}{$\circ$}\ ramified: $p=2$}
+\caption{One irreducible curve, but a degree-2 cover: $p$ splits ($\equiv1$), is
+inert ($\equiv3$), or ramifies ($=2$) --- the same data as factoring $x^2+1$ mod
+$p$, i.e.\ primes in $\ZZ[i]$.}
+\end{figure}
+
+So the closed points \emph{are} the maximal ideals $(p,f)$, with
+$\ZZ[x]/(p,f)=\FF_p[x]/(\bar f)$ a finite field --- and one wiggling curve quietly
+encodes a chapter of number theory.
+
+\section{Why isn't $\Spec(R)$ Hausdorff?}\label{sec:zx-hausdorff}
+
+Hausdorff means any two distinct points sit in \emph{disjoint} open neighborhoods.
+The Zariski topology has far too few opens for that --- for two reasons, both
+visible already in $\Spec\ZZ$.
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[x=1pt,y=-1pt,scale=0.78,every node/.style={font=\small}]
+  \begin{scope}
+    \node[good,font=\footnotesize] at (180,24) {$\RR$ --- Hausdorff $\checkmark$};
+    \draw[gray,line width=1pt] (30,140)--(330,140);
+    \draw[accentB,fill=accentB!10] (115,140) ellipse (48pt and 30pt);
+    \draw[accentB,fill=accentB!10] (245,140) ellipse (48pt and 30pt);
+    \fill[ink] (115,140) circle (3.2pt);
+    \fill[ink] (245,140) circle (3.2pt);
+    \node[ink,font=\footnotesize,anchor=north] at (115,148) {$a$};
+    \node[ink,font=\footnotesize,anchor=north] at (245,148) {$b$};
+    \node[inksoft,font=\itshape\scriptsize] at (180,200) {disjoint open intervals --- gap between};
+    \node[good,font=\bfseries\footnotesize] at (180,224) {can separate any two points};
+  \end{scope}
+  \begin{scope}[xshift=380pt]
+    \node[bad,font=\footnotesize] at (180,24) {$\Spec\ZZ$ --- not Hausdorff $\times$};
+    % generic point smear
+    \draw[accent!40,dashed,fill=accent!7] (190,140) ellipse (165pt and 16pt);
+    \draw[gray,line width=1pt] (30,140)--(330,140);
+    % overlapping opens
+    \draw[bad,fill=bad!10] (135,140) ellipse (80pt and 34pt);
+    \draw[bad,fill=bad!10] (225,140) ellipse (80pt and 34pt);
+    \fill[accent] (120,140) circle (3.2pt);
+    \fill[accent] (225,140) circle (3.2pt);
+    \fill[inksoft] (300,140) circle (2.5pt);
+    \node[accent,font=\footnotesize,anchor=south] at (120,128) {$(2)$};
+    \node[accent,font=\footnotesize,anchor=south] at (225,128) {$(3)$};
+    \node[accent,font=\itshape\scriptsize] at (46,166) {$(0)$};
+    \node[inksoft,font=\itshape\scriptsize] at (180,200) {opens are cofinite --- they always overlap};
+    \node[accent,font=\itshape\scriptsize] at (180,216) {\dots and the generic point $(0)$ is inside every open};
+    \node[bad,font=\bfseries\footnotesize] at (180,236) {any two nonempty opens overlap};
+  \end{scope}
+\end{tikzpicture}}
+\caption{On $\RR$ any two points are separated by disjoint opens; on $\Spec\ZZ$ every
+nonempty open is cofinite, so any two of them overlap --- and the generic point lives
+in all of them.}
+\end{figure}
+
+Pinning down the two reasons:
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Points need not be closed.} Hausdorff $\Rightarrow$ $T_1$ (every
+  point closed). But the generic point $(0)$ of a domain has closure the
+  \emph{whole space} --- and $(0)\in D(f)$ for every $f\neq0$, so it sits inside
+  \emph{every} nonempty open. You can never wall it off.
+  \item \textbf{Nonempty opens always meet.} For an irreducible $\Spec(R)$ (e.g.\ $R$
+  a domain), $D(f)\cap D(g)=D(fg)\neq\varnothing$ whenever $f,g\neq0$. In $\Spec\ZZ$
+  the only proper closed sets are \emph{finite} sets of primes, so every nonempty
+  open is cofinite, and two cofinite sets always intersect.
+\end{itemize}
+
+\begin{primarybox}
+\centering
+$\Spec(R)$ is Hausdorff $\iff$ it is $T_1$ $\iff$ every prime is maximal
+$\iff$ $\dim R = 0$.
+\end{primarybox}
+
+So the only Hausdorff spectra are the dimension-0 ones: a field gives a single
+point; an Artinian ring gives a finite discrete set; a Boolean ring gives a
+Cantor-like Stone space. Everything with actual geometric dimension is \emph{not}
+Hausdorff --- and that's by design. The Zariski topology is deliberately coarse;
+the geometric richness is moved into the structure sheaf $\O_X$ instead. Generic
+points aren't a bug --- they let you speak of ``the behavior at the generic
+point,'' i.e.\ the function field.
+
+\section{What's the residue field at $(p)$?}\label{sec:zx-residue}
+
+An element $f\in R$ behaves like a \emph{function} on $\Spec(R)$. Its value at a
+point $\fp$ lives in the \textbf{residue field}
+
+\begin{primarybox}
+\centering
+$\displaystyle \res(\fp)\;=\;\Frac(R/\fp)\;=\;R_{\fp}/\fp R_{\fp},
+\qquad\text{and}\qquad f(\fp):=\big[f\big]\in\res(\fp).$
+\end{primarybox}
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[x=1pt,y=-1pt,scale=0.82,every node/.style={font=\small}]
+  \node[inksoft,font=\footnotesize] at (380,24)
+    {``evaluate the function $n$ at the point $(p)$'' $=$ ``reduce $n$ mod $p$''};
+  % source box
+  \draw[algc,line width=1pt,fill=paper2,rounded corners=6pt] (60,70) rectangle (240,150);
+  \node[algc,font=\large] at (150,96) {$n\in\ZZ$};
+  \node[inksoft,font=\itshape\scriptsize] at (150,124) {a function on $\Spec\ZZ$};
+  % arrow
+  \draw[accentB,line width=1.1pt,-{Stealth[length=5pt]}] (250,110)--(378,110);
+  \node[accentB,font=\scriptsize,anchor=south] at (315,104) {at $(p)$: $n\mapsto n\bmod p$};
+  % target circle
+  \draw[accentB,line width=1pt,fill=accentB!8] (470,110) circle (52pt);
+  \node[accentB,font=\large] at (470,104) {$\FF_p$};
+  \node[inksoft,font=\itshape\scriptsize] at (470,128) {$=\res((p))$};
+  % example box
+  \draw[good,line width=1pt,fill=paper2,rounded corners=6pt] (556,74) rectangle (726,146);
+  \node[good,font=\footnotesize] at (641,100) {$100$ at $(7)$};
+  \node[ink,font=\footnotesize] at (641,124) {$=2\quad(100=14\cdot7+2)$};
+  % footnote line
+  \node[inksoft,font=\itshape\scriptsize] at (470,196)
+    {since $\ZZ/(p)$ is already a field, $\res((p))=\FF_p$; at the generic point $\res((0))=\QQ$};
+\end{tikzpicture}}
+\caption{The residue field at $(p)\in\Spec\ZZ$ is $\FF_p$ --- so ``reducing $n$ mod
+$p$'' is \emph{literally} evaluating the function $n$ at the point $(p)$.}
+\end{figure}
+
+\begin{intubox}[Try it]
+Evaluate the integer $n$ at the point $(p)$. For example, $100 = 14\cdot 7 + 2$, so
+the function $100$ evaluates to $2$ at the point $(7)$; the value lives in the residue
+field $\res((7))=\FF_7$. The point $(N)$ is a genuine point with residue field
+$\FF_N$ only when $N$ is prime --- for composite $N$, $\ZZ/(N)$ is not a field.
+\end{intubox}
+
+The pattern generalizes: \textbf{closed points carry small (finite) residue fields;
+generic points carry big transcendental ones.} The local ring $R_{\fp}$ reveals the
+dimension through its residue field. Reading it off the arithmetic surface from
+\hyperref[sec:zx-draw]{Q1}:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Point} & $\res(\fp)$ & \textbf{flavor}\\
+\midrule
+$(0)$ --- generic, $\dim 2$ & $\QQ(x)$ & function field, transcendental\\
+$(p)$ --- vertical line & $\FF_p(x)$ & function field over $\FF_p$\\
+$(f)$ --- horizontal curve & $\Frac(\ZZ[x]/(f))$ & a number field\\
+$(p,f)$ --- closed point & $\FF_{p^{\deg\bar f}}$ & a finite field\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+And here Q1 and Q3 fuse: at the closed point $(p,x^2+1)$ over an \emph{inert} prime
+the residue field is $\FF_{p^2}$, while over a \emph{split} prime the two points each
+have residue field $\FF_p$ --- the residue field \emph{is} the splitting type.
+
+\begin{intubox}[Want to go further?]
+Ask me: ``draw $\Spec k[x,y]$,'' ``what does the local ring $R_{(p)}$ look like for
+$\ZZ$?'', or ``show the structure sheaf's value on a $D(f)$ here.'' I'm your teacher
+between lessons.
+\end{intubox}

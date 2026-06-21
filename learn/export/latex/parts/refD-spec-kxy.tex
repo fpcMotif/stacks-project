@@ -1,0 +1,125 @@
+\chapter{\texorpdfstring{$\Spec k[x,y]$}{Spec k[x,y]}: the affine plane}\label{ch:refD-spec-kxy}
+
+The \geo{geometric} 2-dimensional spectrum --- the natural twin of the arithmetic
+surface $\Spec\ZZ[x]$. Take $k$ algebraically closed; then the picture is exactly
+the classical plane, upgraded with generic points.
+
+\section{The three kinds of point}
+
+$k[x,y]$ is a 2-dimensional UFD, so its primes come in three heights:
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  % axes
+  \draw[rulec,->] (-3.6,-1.55) -- (4.0,-1.55) node[right,inksoft,font=\small]{$x$};
+  \draw[rulec,->] (0,-2.3) -- (0,2.55) node[above,inksoft,font=\small]{$y$};
+
+  % the line V(y-x)
+  \draw[algc,line width=1.1pt] (-2.2,-2.0) -- (2.55,2.45);
+  \node[algc,font=\small] at (-2.6,2.35) {$V(y-x)$};
+
+  % the parabola V(y-x^2)
+  \draw[accentB,line width=1.1pt,domain=-1.55:1.55,smooth,variable=\t]
+        plot ({\t},{\t*\t-1.55});
+  \node[accentB,font=\small] at (-3.0,1.0) {$V(y-x^2)$};
+
+  % the circle V(x^2+y^2-1)
+  \draw[accent,line width=1.1pt] (0,-0.55) circle (1.4);
+  \node[accent,font=\small] at (0,-2.55) {$V(x^2+y^2-1)$};
+
+  % closed points
+  \fill[ink] (0,-0.55) circle (2.2pt) node[below left,ink,font=\scriptsize]{$(0,0)$};
+  \fill[ink] (1.0,0.45) circle (2.2pt) node[above right,ink,font=\scriptsize]{$(1,1)$};
+  \fill[ink] (2.1,0.95) circle (2.2pt);
+  \node[ink,font=\scriptsize,anchor=south] at (2.4,1.05) {$(a,b)$};
+  \node[inksoft,font=\scriptsize\itshape,anchor=west] at (2.7,0.75) {$=(x-a,\,y-b)$};
+
+  % generic point caption inside
+  \node[accent,font=\small\itshape] at (0.4,2.95) {$(0)$: generic point --- $\dim 2$, dense in the whole plane};
+\end{tikzpicture}}
+\caption*{\small\textcolor{algc}{\rule[0.3ex]{1.2em}{1.5pt}}~$V(y-x)$ a line \quad
+\textcolor{accentB}{\rule[0.3ex]{1.2em}{1.5pt}}~$V(y-x^2)$ a parabola\\[1pt]
+\textcolor{accent}{\rule[0.3ex]{1.2em}{1.5pt}}~$V(x^2+y^2-1)$ a circle \quad
+\textcolor{ink}{$\bullet$}~closed point $(a,b)$\\[3pt]
+Each irreducible curve $V(f)$ is the closure of one height-1 prime $(f)$;
+each honest point $(a,b)$ is a maximal ideal $(x-a,y-b)$; and one generic point $(0)$ is
+dense over all of it.}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{@{}L{2.7cm}L{4.0cm}L{2.0cm}L{3.0cm}@{}}
+\toprule
+\alg{Prime of $k[x,y]$} & \geo{Geometry} & height / dim & $\res(\fp)$ \\
+\midrule
+\alg{$(0)$} & \geo{the whole plane (its generic point)} & 0 / dim 2 & $k(x,y)$ \\
+\alg{$(f)$, $f$ irreducible} & \geo{an irreducible curve $\{f=0\}$} & 1 / dim 1 & $\Frac\!\big(k[x,y]/(f)\big)$ \\
+\alg{$(x-a,\,y-b)$} & \geo{the point $(a,b)$} & 2 / dim 0 & $k$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warnbox}[Why $k=\bar k$ matters]
+The clean ``maximal ideals $=$ points $(a,b)$'' is exactly the Nullstellensatz, and it
+needs $k$ algebraically closed. Over $\RR$, e.g., $(x^2+1)$ is also maximal --- extra closed
+points with residue field $\CC$, just like the arithmetic case.
+\end{warnbox}
+
+\section{Specialization: dimension drops along closures}
+
+The three heights are linked by \term{specialization} --- a point lies in the closure of a
+more generic one, written $\eta\rightsquigarrow x$. Moving from generic to closed, dimension
+falls $2\to1\to0$:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Stealth,node distance=2.6cm]
+  \node (a) {};
+  \node[accent,font=\small] (a0) {$(0)$};
+  \node[inksoft,font=\scriptsize,below=2pt of a0] {plane $\cdot$ dim 2};
+  \fill[accent] (a0.south)++(0,-0.0) circle (0pt);
+
+  \node[accentB,font=\small,right=3.0cm of a0] (f) {$(f)$};
+  \node[inksoft,font=\scriptsize,below=2pt of f] {curve $\cdot$ dim 1};
+
+  \node[ink,font=\small,right=3.0cm of f] (p) {$(x-a,y-b)$};
+  \node[inksoft,font=\scriptsize,below=2pt of p] {point $\cdot$ dim 0};
+
+  % dots above each label
+  \fill[accent] ($(a0.north)+(0,0.18)$) circle (2.4pt);
+  \fill[accentB] ($(f.north)+(0,0.18)$) circle (2.4pt);
+  \fill[ink] ($(p.north)+(0,0.18)$) circle (2.4pt);
+
+  \draw[inksoft,->] ($(a0.east)+(0.25,0.18)$) -- node[above,inksoft,font=\scriptsize\itshape]{specialize} ($(f.west)+(-0.25,0.18)$);
+  \draw[inksoft,->] ($(f.east)+(0.25,0.18)$) -- node[above,inksoft,font=\scriptsize\itshape]{specialize} ($(p.west)+(-0.25,0.18)$);
+\end{tikzpicture}
+\caption*{\small $(0)\rightsquigarrow(f)\rightsquigarrow(x-a,y-b)$ when the point $(a,b)$ lies on
+the curve $\{f=0\}$ --- a maximal chain of primes of length 2, certifying $\dim k[x,y]=2$.}
+\end{figure}
+
+\section{Two ways to be a surface}
+
+$\Spec k[x,y]$ and $\Spec\ZZ[x]$ are both 2-dimensional, but they get there differently ---
+one geometric, one arithmetic:
+
+\begin{center}
+\begin{tabular}{@{}L{2.6cm}L{4.6cm}L{4.6cm}@{}}
+\toprule
+ & \geo{$k[x,y]$ --- geometric} & \alg{$\ZZ[x]$ --- arithmetic} \\
+\midrule
+base direction & $\AA^1_k=\Spec k[x]$ & $\Spec\ZZ$ (the primes) \\
+closed points & $(a,b)$, residue field $k$ & $(p,f)$, residue field $\FF_{p^d}$ \\
+``vertical'' curves & lines $x=a$ & fibers $V(p)=\AA^1_{\FF_p}$ \\
+generic point & $\res=k(x,y)$ & $\res=\QQ(x)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This analogy --- number fields behaving like function fields of curves --- is one of the deep
+organizing ideas of modern arithmetic geometry.
+
+\begin{intubox}[Want to go further?]
+Ask me: ``what's the local ring at $(0,0)$ here?'', ``draw a non-reduced scheme like $V(y^2)$,''
+or ``how does the structure sheaf assign $k[x,y]_f$ to $D(f)$?''
+\end{intubox}

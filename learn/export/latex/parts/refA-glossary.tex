@@ -1,0 +1,213 @@
+\chapter{Glossary and the algebra--geometry dictionary}\label{ch:refA-glossary}
+
+\noindent The canonical vocabulary for this course. Terms here are used consistently
+across all lessons. Every entry links to the \href{https://stacks.math.columbia.edu/}{Stacks
+Project} tag that pins it down precisely. Built to print on one or two pages for quick reference.
+
+\section{Core terms}
+
+\begin{defbox}[Spectrum --- $\Spec(R)$]
+The set of all \textbf{prime ideals} of a (commutative, unital) ring $R$, equipped with the
+Zariski topology. The fundamental object: it turns a ring into a space.
+\term{A point of $\Spec(R)$ is a prime ideal $\fp$.}\hfill\Tag{00DZ}
+\end{defbox}
+
+\begin{defbox}[$V(I)$ --- vanishing / closed set]
+For an ideal (or subset) $I\subseteq R$, $V(I)=\{\fp\in\Spec(R)\mid I\subseteq\fp\}$. These are
+exactly the \textbf{closed sets} of the Zariski topology. Think ``points where every function
+in $I$ vanishes.''\hfill\Tag{00E0}
+\end{defbox}
+
+\begin{defbox}[$D(f)$ --- distinguished / standard open]
+$D(f)=\{\fp\mid f\notin\fp\}=\Spec(R)\smallsetminus V(f)$: the locus where $f$ is ``nonzero.'' The
+$D(f)$ form a \textbf{basis} for the topology, and $D(f)\cong\Spec(R_f)$.\hfill\Tag{00E4}
+\end{defbox}
+
+\begin{defbox}[Zariski topology]
+The topology on $\Spec(R)$ whose closed sets are the $V(I)$. It is generally \textbf{not
+Hausdorff}; it is always quasi-compact.\hfill\Tag{00E0}
+\end{defbox}
+
+\begin{defbox}[Generic point]
+A point whose closure is a whole irreducible closed set. For an integral domain, the prime $(0)$
+is a generic point dense in all of $\Spec(R)$. Irreducible closed subsets $\leftrightarrow$ their
+unique generic points.\hfill\Tag{00ES}
+\end{defbox}
+
+\begin{defbox}[Closed point]
+A point $\{\fp\}$ that is closed, i.e.\ $\fp$ is a \textbf{maximal ideal}. In $\Spec(R)$,
+$\overline{\{\fp\}}=V(\fp)$.\hfill\Tag{00E5}
+\end{defbox}
+
+\begin{defbox}[Quasi-compact]
+Every open cover has a finite subcover (the term ``compact'' is reserved for quasi-compact $+$
+Hausdorff in this field). $\Spec(R)$ is always quasi-compact.\hfill\Tag{00E8}
+\end{defbox}
+
+\begin{defbox}[Structure sheaf $\O_X$ \textnormal{(\emph{preview, lesson 0002})}]
+The sheaf of rings on $X=\Spec(R)$ with $\O_X(D(f))=R_f$; its stalk at $\fp$ is the local ring
+$R_{\fp}$. Makes $X$ a \textbf{locally ringed space}.\hfill\Tag{01HR}
+\end{defbox}
+
+\begin{defbox}[Affine scheme \textnormal{(\emph{preview, lesson 0002})}]
+A locally ringed space isomorphic to $(\Spec(R),\O_{\Spec(R)})$. A \textbf{scheme} is a space
+locally isomorphic to affine schemes.\hfill\Tag{01HW}
+\end{defbox}
+
+\section{Sheaf terms}
+
+\begin{defbox}[Presheaf]
+An assignment $U\mapsto\sF(U)$ (sections) on opens, with restriction maps
+$\rho^U_V\colon\sF(U)\to\sF(V)$ for $V\subseteq U$ satisfying $\rho^U_U=\mathrm{id}$ and
+$\rho^V_W\rho^U_V=\rho^U_W$ --- a contravariant functor on opens. $s|_V:=\rho^U_V(s)$.\hfill\Tag{006E}
+\end{defbox}
+
+\begin{defbox}[Sheaf]
+A presheaf in which compatible local sections glue \textbf{uniquely}: for any cover
+$U=\bigcup U_i$ and $s_i$ agreeing on overlaps, a unique $s\in\sF(U)$ restricts to each $s_i$.
+Two clauses: \emph{gluing} (existence) and \emph{separatedness/locality} (uniqueness).\hfill\Tag{006T}
+\end{defbox}
+
+\begin{defbox}[Separated presheaf]
+The uniqueness half alone: $\sF(U)\to\prod_{x\in U}\sF_x$ is injective --- a section is
+determined by its germs.\hfill\Tag{007A}
+\end{defbox}
+
+\begin{defbox}[Stalk $\sF_x$ \& germ $s_x$]
+$\sF_x=\colim_{x\in U}\sF(U)$, the filtered colimit over neighborhoods of $x$ (reverse
+inclusion). A \textbf{germ} $s_x$ is a section seen arbitrarily near $x$:
+$(U,s)\sim(U',s')$ iff they agree on some smaller $U''\ni x$. For the structure sheaf,
+$\O_{X,\fp}=R_{\fp}$.\hfill\Tag{0078}
+\end{defbox}
+
+\begin{defbox}[Sheafification $\sF^{\#}$]
+The best sheaf approximating a presheaf $\sF$ (left adjoint to the inclusion of sheaves), built
+from compatible germs; $\sF^{\#}_x=\sF_x$. E.g.\ the constant \emph{sheaf} $\underline A$ is the
+sheafification of the constant presheaf.\hfill\Tag{007X}
+\end{defbox}
+
+\begin{defbox}[(Pre)sheaf on a basis]
+A (pre)sheaf defined only on a basis $\mathcal B$ of opens (e.g.\ the $D(f)$). A sheaf on
+$\mathcal B$ \textbf{extends to a unique sheaf} on $X$, with $\Sh(X)\simeq\Sh(\mathcal B)$ and
+unchanged stalks --- the mechanism that builds $\O_{\Spec R}$.\hfill\Tag{009H}, extend-off-basis \Tag{009N}
+\end{defbox}
+
+\begin{defbox}[Locally ringed space]
+A space with a sheaf of rings $\O_X$ \emph{all of whose stalks are local rings}. The ``locally''
+is exactly the stalks $R_{\fp}$ being local. Affine schemes, and hence schemes, are locally
+ringed spaces.\hfill\Tag{01HB}
+\end{defbox}
+
+\section{The algebra \texorpdfstring{$\leftrightarrow$}{<->} geometry dictionary}
+
+The engine of scheme theory: every algebraic notion has a geometric shadow, and vice versa.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}L{0.32\linewidth} L{0.30\linewidth} L{0.30\linewidth}@{}}
+\toprule
+\textbf{\alg{Algebra (ring $R$)}} & \textbf{\geo{Geometry ($\Spec R$)}} & \textbf{Note} \\
+\midrule
+\alg{prime ideal $\fp$} & \geo{a point} & the defining correspondence \\
+\alg{maximal ideal $\fm$} & \geo{a closed point} & closure is just itself \\
+\alg{minimal prime} & \geo{generic point of a component} & dense in a component \\
+\alg{radical ideal $I=\sqrt I$} & \geo{closed set $V(I)$} & order-reversing bijection \\
+\alg{$I\subseteq J$} & \geo{$V(I)\supseteq V(J)$} & inclusion reverses \\
+\alg{nilradical $\sqrt{(0)}$} & \geo{whole space $V(0)$} & nilpotents ``vanish everywhere'' \\
+\alg{$R$ is a domain} & \geo{$\Spec R$ irreducible} & has a generic point $(0)$ \\
+\alg{$R$ reduced (no nilpotents)} & \geo{reduced scheme} & functions determined by values \\
+\alg{localization $R_f$} & \geo{restriction to $D(f)$} & opens $\leftrightarrow$ localizations \\
+\alg{localization $R_{\fp}$} & \geo{germ / stalk at $\fp$} & local behavior near a point \\
+\alg{ring map $R\to S$} & \geo{map $\Spec S\to\Spec R$} & contravariant; $\fq\mapsto\varphi^{-1}(\fq)$ \Tag{00E2} \\
+\alg{residue field $\res(\fp)=\Frac(R/\fp)$} & \geo{``value field'' at the point} & where $f$ takes its value $f(\fp)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Worked Spec examples (memorize these shapes)}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}L{0.22\linewidth} L{0.44\linewidth} L{0.28\linewidth}@{}}
+\toprule
+\textbf{Ring $R$} & \textbf{$\Spec(R)$ --- its points} & \textbf{Picture} \\
+\midrule
+a field $k$ & one point: $(0)$ & a single dot \\
+$k[x]/(x^2)$ & one point: $(x)$ (with nilpotents) & a ``fat'' double point \\
+$\ZZ$ & generic $(0)$ + closed $(p)$ for each prime $p$ & a line of primes + 1 generic \\
+$k[x]$, $k=\bar k$ & generic $(0)$ + closed $(x-a)$, $a\in k$ & the affine line $\AA^1_k$ \\
+$\RR[x]$ & $(0)$, $(x-a)$, and $(x^2+bx+c)$ irreducible & line + ``conjugate-pair'' points \\
+$k[x,y]$, $k=\bar k$ & $(0)$; height-1 primes $(f)$; maximal $(x-a,y-b)$ & the plane $\AA^2_k$: 2D \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[h]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[>=Stealth,font=\footnotesize]
+  % --- a field k : a single point ---
+  \begin{scope}[shift={(0,0)}]
+    \node[font=\small\bfseries\color{accent}] at (0,1.05) {$\Spec k$};
+    \fill[accentB] (0,0) circle (2.6pt);
+    \node[below=4pt] at (0,0) {$(0)$};
+  \end{scope}
+
+  % --- k[x]/(x^2) : a fat double point ---
+  \begin{scope}[shift={(2.6,0)}]
+    \node[font=\small\bfseries\color{accent}] at (0,1.05) {$\Spec k[x]/(x^2)$};
+    \fill[accentB!25] (0,0) circle (6pt);
+    \fill[accentB] (0,0) circle (2.6pt);
+    \node[below=6pt] at (0,0) {$(x)$};
+  \end{scope}
+
+  % --- Z : line of closed primes + generic ---
+  \begin{scope}[shift={(6.4,0)}]
+    \node[font=\small\bfseries\color{accent}] at (1.3,1.05) {$\Spec \mathbb Z$};
+    \draw[rulec,thick] (-0.1,0) -- (2.7,0);
+    \foreach \x/\p in {0.2/2,0.7/3,1.2/5,1.7/7,2.2/{\cdots}} {
+      \fill[accentB] (\x,0) circle (2pt);
+      \node[below=3pt,font=\scriptsize] at (\x,0) {$(\p)$};
+    }
+    \node[algc,font=\scriptsize] at (1.3,0.55) {generic $(0)$};
+    \draw[algc,->,shorten >=2pt] (1.3,0.42) -- (1.3,0.08);
+  \end{scope}
+\end{tikzpicture}}
+
+\vspace{1.4em}
+
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[>=Stealth,font=\footnotesize]
+  % --- affine line A^1_k ---
+  \begin{scope}[shift={(0,0)}]
+    \node[font=\small\bfseries\color{accent}] at (1.5,1.15) {$\AA^1_k=\Spec k[x]$};
+    \draw[rulec,thick,->] (-0.2,0) -- (3.2,0);
+    \foreach \x in {0.3,0.9,1.5,2.1,2.7} \fill[accentB] (\x,0) circle (1.8pt);
+    \node[below=3pt,font=\scriptsize] at (0.9,0) {$(x{-}a)$};
+    \node[algc,font=\scriptsize] at (2.4,0.5) {generic $(0)$};
+    \draw[algc,->,shorten >=2pt] (2.4,0.37) -- (2.1,0.06);
+  \end{scope}
+
+  % --- affine plane A^2_k ---
+  \begin{scope}[shift={(5.6,-0.4)}]
+    \node[font=\small\bfseries\color{accent}] at (1.5,1.7) {$\AA^2_k=\Spec k[x,y]$};
+    % a 2D region
+    \fill[accentB!8] (-0.1,-0.1) rectangle (3.0,1.4);
+    \draw[rulec,thick] (-0.1,-0.1) rectangle (3.0,1.4);
+    % a height-1 curve V(f)
+    \draw[accent,thick] plot[smooth] coordinates {(0.1,0.2)(0.9,0.9)(1.8,0.6)(2.8,1.25)};
+    \node[accent,font=\scriptsize] at (2.55,0.7) {$(f)$};
+    % maximal (closed) points
+    \fill[accentB] (1.0,0.4) circle (1.8pt) node[below=2pt,font=\scriptsize]{$(x{-}a,y{-}b)$};
+    \fill[accentB] (2.2,1.05) circle (1.8pt);
+    \node[algc,font=\scriptsize] at (0.7,1.2) {generic $(0)$};
+  \end{scope}
+\end{tikzpicture}}
+\caption{The shapes of $\Spec$ in the worked examples: a point, a fat double point, a line of
+primes with a generic point, the affine line, and the affine plane with a height-$1$ curve.}
+\end{figure}
+
+\bigskip
+{\small\itshape\noindent Reference for the Schemes self-study course. Tags resolve at
+\href{https://stacks.math.columbia.edu/}{\nolinkurl{stacks.math.columbia.edu/tag/XXXX}}.
+Ask your teacher (the agent) to expand any entry.\par}

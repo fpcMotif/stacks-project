@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheaves — Cheat Sheet</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Reference</p>
+  <h1>Sheaves — cheat sheet</h1>
+  <p style="color:var(--ink-soft)">The compressed essence of Lessons
+  <a href="../lessons/0002-presheaves-and-the-sheaf-condition.html">0002</a>–<a href="../lessons/0004-sheaves-on-a-basis.html">0004</a>,
+  built to print on a page. Terms match the <a href="glossary.html">Glossary</a>; tags resolve at
+  <code>stacks.math.columbia.edu/tag/XXXX</code>.</p>
+
+  <h2>The two definitions</h2>
+  <div class="box def"><span class="label">Presheaf <a href="https://stacks.math.columbia.edu/tag/006E">006E</a></span>
+  $\mathcal F\colon U\mapsto\mathcal F(U)$ with restriction $\rho^U_V\colon\mathcal F(U)\to\mathcal F(V)$
+  for $V\subseteq U$; $\ \rho^U_U=\mathrm{id}$, $\ \rho^V_W\rho^U_V=\rho^U_W$. A contravariant functor on
+  opens. $s|_V:=\rho^U_V(s)$.</div>
+
+  <div class="box def"><span class="label">Sheaf <a href="https://stacks.math.columbia.edu/tag/006T">006T</a></span>
+  Presheaf $+$ for every cover $U=\bigcup U_i$ and compatible $s_i$ ($s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}$),
+  a <strong>unique</strong> $s$ with $s|_{U_i}=s_i$. Equivalently exactness of
+  $$\mathcal F(U)\;\longrightarrow\;\prod_i\mathcal F(U_i)\;\rightrightarrows\;\prod_{i,j}\mathcal F(U_i\cap U_j).$$
+  </div>
+
+  <table class="dict">
+    <thead><tr><th class="geo">Clause</th><th class="alg">Meaning</th><th>Fails for…</th></tr></thead>
+    <tbody>
+      <tr><td class="geo">uniqueness</td><td class="alg">separatedness / locality (inject into $\prod$ stalks, <a href="https://stacks.math.columbia.edu/tag/007A">007A</a>)</td><td>rarely; holds for any sub-presheaf of a sheaf</td></tr>
+      <tr><td class="geo">existence</td><td class="alg">gluing — compatible local data patch</td><td>bounded fns, extendable fns</td></tr>
+    </tbody>
+  </table>
+  <div class="box warn"><span class="label">Forced conventions <a href="https://stacks.math.columbia.edu/tag/006U">006U</a></span>
+  $\mathcal F(\varnothing)=\{*\}$ (terminal); $\ \mathcal F(U\sqcup V)=\mathcal F(U)\times\mathcal F(V)$.</div>
+
+  <h2>Is it a sheaf? — reflexes</h2>
+  <table class="ex">
+    <thead><tr><th>Presheaf</th><th>Sheaf?</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>continuous / holomorphic / smooth fns; $k$-forms</td><td>✓</td><td>the condition is local</td></tr>
+      <tr><td>sections of $p\colon E\to X$</td><td>✓</td><td>the prototype</td></tr>
+      <tr><td>locally constant fns $\underline A$ <a href="https://stacks.math.columbia.edu/tag/006W">006W</a></td><td>✓</td><td>= constant <em>sheaf</em></td></tr>
+      <tr><td>bounded continuous fns</td><td>✗</td><td>gluing: pieces glue to $f(x)=x$</td></tr>
+      <tr><td>globally-extendable fns</td><td>✗</td><td>gluing: $1/x$ is local but won't extend</td></tr>
+      <tr><td>constant presheaf $A$, $|A|\ge2$</td><td>✗</td><td>both: $\varnothing$ and disconnected opens</td></tr>
+      <tr><td>$D(f)\mapsto R_f$ on $\operatorname{Spec} R$</td><td>✓ (on basis)</td><td>localization exact sequence</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Stalks &amp; germs <a href="https://stacks.math.columbia.edu/tag/0078">0078</a></h2>
+  <div class="box def"><span class="label">Stalk recipe</span>
+  $\mathcal F_x=\operatorname*{colim}_{x\in U}\mathcal F(U)$, filtered colimit over nbhds (reverse inclusion).
+  Germ $s_x$: $(U,s)\sim(U',s')$ iff $s|_{U''}=s'|_{U''}$ on some $U''\ni x$.</div>
+  <ul>
+    <li><strong>The identity to memorize:</strong> $\ \mathcal O_{\operatorname{Spec} R,\,\mathfrak p}=\operatorname*{colim}_{f\notin\mathfrak p}R_f=R_{\mathfrak p}$. Stalk $=$ localization (<a href="https://stacks.math.columbia.edu/tag/01HV">01HV</a>).</li>
+    <li>All stalks local $\Rightarrow$ <em>locally ringed space</em>; value at $x$ lives in $\kappa(x)=R_{\mathfrak p}/\mathfrak pR_{\mathfrak p}$.</li>
+    <li>Sheaf $\Rightarrow$ $\mathcal F(U)\hookrightarrow\prod_{x}\mathcal F_x$ (section $=$ its germs).</li>
+  </ul>
+
+  <h2>Sheaves on a basis <a href="https://stacks.math.columbia.edu/tag/009H">009H</a></h2>
+  <ul>
+    <li>$D(f)$ form a basis closed under $\cap$ ($D(f)\cap D(g)=D(fg)$).</li>
+    <li>Presheaf on $\mathcal B$ <a href="https://stacks.math.columbia.edu/tag/009I">009I</a> carries <em>less</em> data than on all opens; sheaf-on-$\mathcal B$ axiom <a href="https://stacks.math.columbia.edu/tag/009J">009J</a>.</li>
+    <li>Quasi-compactness $\Rightarrow$ check only <strong>finite</strong> covers (cofinal, <a href="https://stacks.math.columbia.edu/tag/009K">009K</a>).</li>
+    <li><strong>Extend-off-basis <a href="https://stacks.math.columbia.edu/tag/009N">009N</a>:</strong> a sheaf on $\mathcal B$ extends to a unique sheaf on $X$; $\operatorname{Sh}(X)\simeq\operatorname{Sh}(\mathcal B)$ (<a href="https://stacks.math.columbia.edu/tag/009O">009O</a>); stalks unchanged.</li>
+  </ul>
+
+  <h2>Assembling $\mathcal O_{\operatorname{Spec} R}$ (4 steps) <a href="https://stacks.math.columbia.edu/tag/01HU">01HU</a></h2>
+  <table class="ex">
+    <tbody>
+      <tr><td>1</td><td>define $\mathcal O(D(f))=R_f$ on the basis</td></tr>
+      <tr><td>2</td><td>$D(f)=\bigcup D(g_i)\Leftrightarrow (g_i)$ generate the unit ideal in $R_f$; gluing $=$ exactness of $0\to R_f\to\prod R_{g_i}\rightrightarrows\prod R_{g_ig_j}$</td></tr>
+      <tr><td>3</td><td>stalk $\mathcal O_{\mathfrak p}=R_{\mathfrak p}$ (local)</td></tr>
+      <tr><td>4</td><td>extend-off-basis $\Rightarrow$ unique $\mathcal O_{\operatorname{Spec} R}$; the pair is an <strong>affine scheme</strong> <a href="https://stacks.math.columbia.edu/tag/01HW">01HW</a></td></tr>
+    </tbody>
+  </table>
+
+  <footer class="course">
+    Reference for the <a href="../lessons/0002-presheaves-and-the-sheaf-condition.html">Schemes self-study course</a>.
+    Ask your teacher (the agent) to expand any line.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+\chapter{Sheaves cheat-sheet}\label{ch:refB-sheaves}
+
+\noindent\emph{Schemes Self-Study $\cdot$ Reference.} The compressed essence of
+Lessons \href{../lessons/0002-presheaves-and-the-sheaf-condition.html}{0002}--\href{../lessons/0004-sheaves-on-a-basis.html}{0004},
+built to print on a page. Terms match the Glossary; tags resolve at
+\texttt{stacks.math.\allowbreak columbia.edu/\allowbreak tag/XXXX}.
+
+\section{The two definitions}
+
+\begin{defbox}[Presheaf --- \Tag{006E}]
+$\sF\colon U\mapsto\sF(U)$ with restriction $\rho^U_V\colon\sF(U)\to\sF(V)$
+for $V\subseteq U$;\ \ $\rho^U_U=\mathrm{id}$,\ \ $\rho^V_W\rho^U_V=\rho^U_W$. A
+contravariant functor on opens. $s|_V:=\rho^U_V(s)$.
+\end{defbox}
+
+\begin{defbox}[Sheaf --- \Tag{006T}]
+Presheaf $+$ for every cover $U=\bigcup U_i$ and compatible $s_i$
+($s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}$), a \textbf{unique} $s$ with
+$s|_{U_i}=s_i$. Equivalently, exactness of the equalizer diagram
+\[
+\begin{tikzcd}[ampersand replacement=\&, column sep=large]
+\sF(U) \arrow[r]
+\& \displaystyle\prod_i\sF(U_i)
+  \arrow[r, shift left=0.6ex]
+  \arrow[r, shift right=0.6ex]
+\& \displaystyle\prod_{i,j}\sF(U_i\cap U_j).
+\end{tikzcd}
+\]
+\end{defbox}
+
+\begin{center}
+\begin{tabular}{@{}L{0.18\linewidth} L{0.45\linewidth} L{0.27\linewidth}@{}}
+\toprule
+\geo{\textbf{Clause}} & \alg{\textbf{Meaning}} & \textbf{Fails for\ldots} \\
+\midrule
+\geo{uniqueness} & \alg{separatedness / locality (inject into $\prod$ stalks, \Tag{007A})} & rarely; holds for any sub-presheaf of a sheaf \\
+\addlinespace
+\geo{existence}  & \alg{gluing --- compatible local data patch} & bounded fns, extendable fns \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warnbox}[Forced conventions --- \Tag{006U}]
+$\sF(\varnothing)=\{*\}$ (terminal);\ \ $\sF(U\sqcup V)=\sF(U)\times\sF(V)$.
+\end{warnbox}
+
+\section{Is it a sheaf? --- reflexes}
+
+\begin{center}
+\begin{tabular}{@{}L{0.40\linewidth} c L{0.38\linewidth}@{}}
+\toprule
+\textbf{Presheaf} & \textbf{Sheaf?} & \textbf{Reason} \\
+\midrule
+continuous / holomorphic / smooth fns; $k$-forms & \textcolor{good}{$\checkmark$} & the condition is local \\
+\addlinespace
+sections of $p\colon E\to X$ & \textcolor{good}{$\checkmark$} & the prototype \\
+\addlinespace
+locally constant fns $\underline A$ \ \Tag{006W} & \textcolor{good}{$\checkmark$} & $=$ constant \emph{sheaf} \\
+\addlinespace
+bounded continuous fns & \textcolor{bad}{$\times$} & gluing: pieces glue to $f(x)=x$ \\
+\addlinespace
+globally-extendable fns & \textcolor{bad}{$\times$} & gluing: $1/x$ is local but won't extend \\
+\addlinespace
+constant presheaf $A$, $|A|\ge2$ & \textcolor{bad}{$\times$} & both: $\varnothing$ and disconnected opens \\
+\addlinespace
+$D(f)\mapsto R_f$ on $\Spec R$ & \textcolor{good}{$\checkmark$} (on basis) & localization exact sequence \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Stalks \& germs \ \Tag{0078}}
+
+\begin{defbox}[Stalk recipe]
+$\sF_x=\colim_{x\in U}\sF(U)$, filtered colimit over neighbourhoods (reverse
+inclusion). Germ $s_x$: $(U,s)\sim(U',s')$ iff $s|_{U''}=s'|_{U''}$ on some
+$U''\ni x$.
+\end{defbox}
+
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{The identity to memorize:}\ \
+$\O_{\Spec R,\,\fp}=\colim_{f\notin\fp}R_f=R_{\fp}$. Stalk $=$ localization
+(\Tag{01HV}).
+\item All stalks local $\Rightarrow$ \emph{locally ringed space}; value at $x$
+lives in $\res(x)=R_{\fp}/\fp R_{\fp}$.
+\item Sheaf $\Rightarrow$ $\sF(U)\hookrightarrow\prod_{x}\sF_x$ (section $=$ its
+germs).
+\end{itemize}
+
+\section{Sheaves on a basis \ \Tag{009H}}
+
+\begin{itemize}[leftmargin=1.4em]
+\item $D(f)$ form a basis closed under $\cap$ ($D(f)\cap D(g)=D(fg)$).
+\item Presheaf on $\mathcal B$ \Tag{009I} carries \emph{less} data than on all
+opens; sheaf-on-$\mathcal B$ axiom \Tag{009J}.
+\item Quasi-compactness $\Rightarrow$ check only \textbf{finite} covers
+(cofinal, \Tag{009K}).
+\item \textbf{Extend-off-basis \Tag{009N}:} a sheaf on $\mathcal B$ extends to a
+unique sheaf on $X$; $\Sh(X)\simeq\Sh(\mathcal B)$ (\Tag{009O}); stalks
+unchanged.
+\end{itemize}
+
+\section{Assembling $\O_{\Spec R}$ (4 steps) \ \Tag{01HU}}
+
+\begin{center}
+\begin{tabular}{@{}c L{0.86\linewidth}@{}}
+\toprule
+\textbf{\#} & \textbf{Step} \\
+\midrule
+1 & define $\O(D(f))=R_f$ on the basis \\
+\addlinespace
+2 & $D(f)=\bigcup D(g_i)\Leftrightarrow (g_i)$ generate the unit ideal in
+    $R_f$; gluing $=$ exactness of
+    $0\to R_f\to\prod R_{g_i}\rightrightarrows\prod R_{g_ig_j}$ \\
+\addlinespace
+3 & stalk $\O_{\fp}=R_{\fp}$ (local) \\
+\addlinespace
+4 & extend-off-basis $\Rightarrow$ unique $\O_{\Spec R}$; the pair is an
+    \textbf{affine scheme} \Tag{01HW} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The gluing step is precisely the exactness of the localization
+sequence:
+\[
+\begin{tikzcd}[ampersand replacement=\&, column sep=large]
+0 \arrow[r]
+\& R_f \arrow[r]
+\& \displaystyle\prod_i R_{g_i}
+  \arrow[r, shift left=0.6ex]
+  \arrow[r, shift right=0.6ex]
+\& \displaystyle\prod_{i,j} R_{g_ig_j}.
+\end{tikzcd}
+\]

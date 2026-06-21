@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — Schemes Self-Study</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Reference</p>
+  <h1>Glossary &amp; the Algebra↔Geometry Dictionary</h1>
+  <p style="color:var(--ink-soft)">The canonical vocabulary for this course. Terms here are
+  used consistently across all lessons. Every entry links to the
+  <a href="https://stacks.math.columbia.edu/">Stacks Project</a> tag that pins it down precisely.
+  Built to print on one or two pages for quick reference.</p>
+
+  <h2>Core terms</h2>
+
+  <div class="box def"><span class="label">Spectrum &nbsp;$\operatorname{Spec}(R)$</span>
+  The set of all <strong>prime ideals</strong> of a (commutative, unital) ring $R$, equipped
+  with the Zariski topology. The fundamental object: it turns a ring into a space.
+  <em class="term">A point of $\operatorname{Spec}(R)$ is a prime ideal $\mathfrak p$.</em>
+  <a href="https://stacks.math.columbia.edu/tag/00DZ">Tag 00DZ</a></div>
+
+  <div class="box def"><span class="label">$V(I)$ — vanishing / closed set</span>
+  For an ideal (or subset) $I\subseteq R$, $V(I)=\{\mathfrak p\in\operatorname{Spec}(R)\mid I\subseteq\mathfrak p\}$.
+  These are exactly the <strong>closed sets</strong> of the Zariski topology. Think "points where every
+  function in $I$ vanishes." <a href="https://stacks.math.columbia.edu/tag/00E0">Tag 00E0</a></div>
+
+  <div class="box def"><span class="label">$D(f)$ — distinguished / standard open</span>
+  $D(f)=\{\mathfrak p\mid f\notin\mathfrak p\}=\operatorname{Spec}(R)\setminus V(f)$: the locus where
+  $f$ is "nonzero." The $D(f)$ form a <strong>basis</strong> for the topology, and
+  $D(f)\cong\operatorname{Spec}(R_f)$. <a href="https://stacks.math.columbia.edu/tag/00E4">Tag 00E4</a></div>
+
+  <div class="box def"><span class="label">Zariski topology</span>
+  The topology on $\operatorname{Spec}(R)$ whose closed sets are the $V(I)$. It is generally
+  <strong>not Hausdorff</strong>; it is always quasi-compact.
+  <a href="https://stacks.math.columbia.edu/tag/00E0">Tag 00E0</a></div>
+
+  <div class="box def"><span class="label">Generic point</span>
+  A point whose closure is a whole irreducible closed set. For an integral domain, the
+  prime $(0)$ is a generic point dense in all of $\operatorname{Spec}(R)$. Irreducible closed
+  subsets $\leftrightarrow$ their unique generic points. <a href="https://stacks.math.columbia.edu/tag/00ES">Tag 00ES</a></div>
+
+  <div class="box def"><span class="label">Closed point</span>
+  A point $\{\mathfrak p\}$ that is closed, i.e. $\mathfrak p$ is a <strong>maximal ideal</strong>.
+  In $\operatorname{Spec}(R)$, $\overline{\{\mathfrak p\}}=V(\mathfrak p)$. <a href="https://stacks.math.columbia.edu/tag/00E5">Tag 00E5</a></div>
+
+  <div class="box def"><span class="label">Quasi-compact</span>
+  Every open cover has a finite subcover (the term "compact" is reserved for quasi-compact +
+  Hausdorff in this field). $\operatorname{Spec}(R)$ is always quasi-compact.
+  <a href="https://stacks.math.columbia.edu/tag/00E8">Tag 00E8</a></div>
+
+  <div class="box def"><span class="label">Structure sheaf $\mathcal O_X$ &nbsp;(<em>preview, lesson 0002</em>)</span>
+  The sheaf of rings on $X=\operatorname{Spec}(R)$ with $\mathcal O_X(D(f))=R_f$; its stalk at
+  $\mathfrak p$ is the local ring $R_{\mathfrak p}$. Makes $X$ a <strong>locally ringed space</strong>.
+  <a href="https://stacks.math.columbia.edu/tag/01HR">Tag 01HR</a></div>
+
+  <div class="box def"><span class="label">Affine scheme &nbsp;(<em>preview, lesson 0002</em>)</span>
+  A locally ringed space isomorphic to $(\operatorname{Spec}(R),\mathcal O_{\operatorname{Spec}(R)})$.
+  A <strong>scheme</strong> is a space locally isomorphic to affine schemes.
+  <a href="https://stacks.math.columbia.edu/tag/01HW">Tag 01HW</a></div>
+
+  <h2>Sheaf terms</h2>
+
+  <div class="box def"><span class="label">Presheaf</span>
+  An assignment $U\mapsto\mathcal F(U)$ (sections) on opens, with restriction maps
+  $\rho^U_V\colon\mathcal F(U)\to\mathcal F(V)$ for $V\subseteq U$ satisfying $\rho^U_U=\mathrm{id}$ and
+  $\rho^V_W\rho^U_V=\rho^U_W$ — a contravariant functor on opens. $s|_V:=\rho^U_V(s)$.
+  <a href="https://stacks.math.columbia.edu/tag/006E">Tag 006E</a></div>
+
+  <div class="box def"><span class="label">Sheaf</span>
+  A presheaf in which compatible local sections glue <strong>uniquely</strong>: for any cover
+  $U=\bigcup U_i$ and $s_i$ agreeing on overlaps, a unique $s\in\mathcal F(U)$ restricts to each $s_i$.
+  Two clauses: <em>gluing</em> (existence) and <em>separatedness/locality</em> (uniqueness).
+  <a href="https://stacks.math.columbia.edu/tag/006T">Tag 006T</a></div>
+
+  <div class="box def"><span class="label">Separated presheaf</span>
+  The uniqueness half alone: $\mathcal F(U)\to\prod_{x\in U}\mathcal F_x$ is injective — a section is
+  determined by its germs. <a href="https://stacks.math.columbia.edu/tag/007A">Tag 007A</a></div>
+
+  <div class="box def"><span class="label">Stalk $\mathcal F_x$ &amp; germ $s_x$</span>
+  $\mathcal F_x=\operatorname*{colim}_{x\in U}\mathcal F(U)$, the filtered colimit over neighborhoods of
+  $x$ (reverse inclusion). A <strong>germ</strong> $s_x$ is a section seen arbitrarily near $x$:
+  $(U,s)\sim(U',s')$ iff they agree on some smaller $U''\ni x$. For the structure sheaf,
+  $\mathcal O_{X,\mathfrak p}=R_{\mathfrak p}$. <a href="https://stacks.math.columbia.edu/tag/0078">Tag 0078</a></div>
+
+  <div class="box def"><span class="label">Sheafification $\mathcal F^{\#}$</span>
+  The best sheaf approximating a presheaf $\mathcal F$ (left adjoint to the inclusion of sheaves),
+  built from compatible germs; $\mathcal F^{\#}_x=\mathcal F_x$. E.g. the constant <em>sheaf</em>
+  $\underline A$ is the sheafification of the constant presheaf. <a href="https://stacks.math.columbia.edu/tag/007X">Tag 007X</a></div>
+
+  <div class="box def"><span class="label">(Pre)sheaf on a basis</span>
+  A (pre)sheaf defined only on a basis $\mathcal B$ of opens (e.g. the $D(f)$). A sheaf on $\mathcal B$
+  <strong>extends to a unique sheaf</strong> on $X$, with $\operatorname{Sh}(X)\simeq\operatorname{Sh}(\mathcal B)$
+  and unchanged stalks — the mechanism that builds $\mathcal O_{\operatorname{Spec} R}$.
+  <a href="https://stacks.math.columbia.edu/tag/009H">Tag 009H</a>, extend-off-basis
+  <a href="https://stacks.math.columbia.edu/tag/009N">Tag 009N</a></div>
+
+  <div class="box def"><span class="label">Locally ringed space</span>
+  A space with a sheaf of rings $\mathcal O_X$ <em>all of whose stalks are local rings</em>. The
+  "locally" is exactly the stalks $R_{\mathfrak p}$ being local. Affine schemes, and hence schemes,
+  are locally ringed spaces. <a href="https://stacks.math.columbia.edu/tag/01HB">Tag 01HB</a></div>
+
+  <h2>The algebra ↔ geometry dictionary</h2>
+  <p>The engine of scheme theory: every algebraic notion has a geometric shadow, and vice versa.</p>
+  <table class="dict">
+    <thead><tr><th class="alg">Algebra (ring $R$)</th><th class="geo">Geometry ($\operatorname{Spec}R$)</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="alg">prime ideal $\mathfrak p$</td><td class="geo">a point</td><td>the defining correspondence</td></tr>
+      <tr><td class="alg">maximal ideal $\mathfrak m$</td><td class="geo">a closed point</td><td>closure is just itself</td></tr>
+      <tr><td class="alg">minimal prime</td><td class="geo">generic point of a component</td><td>dense in a component</td></tr>
+      <tr><td class="alg">radical ideal $I=\sqrt I$</td><td class="geo">closed set $V(I)$</td><td>order-reversing bijection</td></tr>
+      <tr><td class="alg">$I\subseteq J$</td><td class="geo">$V(I)\supseteq V(J)$</td><td>inclusion reverses</td></tr>
+      <tr><td class="alg">nilradical $\sqrt{(0)}$</td><td class="geo">whole space $V(0)$</td><td>nilpotents "vanish everywhere"</td></tr>
+      <tr><td class="alg">$R$ is a domain</td><td class="geo">$\operatorname{Spec}R$ irreducible</td><td>has a generic point $(0)$</td></tr>
+      <tr><td class="alg">$R$ reduced (no nilpotents)</td><td class="geo">reduced scheme</td><td>functions determined by values</td></tr>
+      <tr><td class="alg">localization $R_f$</td><td class="geo">restriction to $D(f)$</td><td>opens $\leftrightarrow$ localizations</td></tr>
+      <tr><td class="alg">localization $R_{\mathfrak p}$</td><td class="geo">germ / stalk at $\mathfrak p$</td><td>local behavior near a point</td></tr>
+      <tr><td class="alg">ring map $R\to S$</td><td class="geo">map $\operatorname{Spec}S\to\operatorname{Spec}R$</td><td>contravariant; $\mathfrak q\mapsto\varphi^{-1}(\mathfrak q)$ <a href="https://stacks.math.columbia.edu/tag/00E2">00E2</a></td></tr>
+      <tr><td class="alg">residue field $\kappa(\mathfrak p)=\operatorname{Frac}(R/\mathfrak p)$</td><td class="geo">"value field" at the point</td><td>where $f$ takes its value $f(\mathfrak p)$</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Worked Spec examples (memorize these shapes)</h2>
+  <table class="ex">
+    <thead><tr><th>Ring $R$</th><th>$\operatorname{Spec}(R)$ — its points</th><th>Picture</th></tr></thead>
+    <tbody>
+      <tr><td>a field $k$</td><td>one point: $(0)$</td><td>a single dot</td></tr>
+      <tr><td>$k[x]/(x^2)$</td><td>one point: $(x)$ (with nilpotents)</td><td>a "fat" double point</td></tr>
+      <tr><td>$\mathbb Z$</td><td>generic $(0)$ + closed $(p)$ for each prime $p$</td><td>a line of primes + 1 generic</td></tr>
+      <tr><td>$k[x]$, $k=\bar k$</td><td>generic $(0)$ + closed $(x-a)$, $a\in k$</td><td>the affine line $\mathbb A^1_k$</td></tr>
+      <tr><td>$\mathbb R[x]$</td><td>$(0)$, $(x-a)$, and $(x^2+bx+c)$ irreducible</td><td>line + "conjugate-pair" points</td></tr>
+      <tr><td>$k[x,y]$, $k=\bar k$</td><td>$(0)$; height-1 primes $(f)$; maximal $(x-a,y-b)$</td><td>the plane $\mathbb A^2_k$: 2D</td></tr>
+    </tbody>
+  </table>
+
+  <footer class="course">
+    Reference for the <a href="../lessons/0001-spec-as-a-space.html">Schemes self-study course</a> ·
+    Tags resolve at <code>stacks.math.columbia.edu/tag/XXXX</code> ·
+    Ask your teacher (the agent) to expand any entry.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+\chapter{Stalks and germs as directed colimits}\label{ch:ch03-stalks}
+
+\noindent\emph{Win:} compute a stalk as a colimit and recognize it as a localization $R_{\fp}$.\quad
+\emph{Time:} \textasciitilde15 min.\quad
+\emph{Needs:} Lesson 0002; localization.
+
+\bigskip
+
+A sheaf records data on every open set. To study behavior \emph{at a point} $x$, we zoom in: shrink the
+open set around $x$ and keep only what survives arbitrarily close to $x$. The result is the \term{stalk}
+$\sF_x$. This is the lesson where your commutative algebra pays a dividend: the stalk of the structure
+presheaf is exactly the localization $R_{\fp}$ --- no new object, just an old friend wearing a geometric
+hat.\scite{0078}{Stalks.}
+
+\section{The stalk is a colimit over neighborhoods}
+
+\begin{defbox}[Definition --- stalk]
+The \term{stalk} of a presheaf $\sF$ at $x\in X$ is
+\[
+  \sF_x \;=\; \colim_{x\in U}\ \sF(U),
+\]
+the colimit over all open neighborhoods $U\ni x$, ordered by \textbf{reverse inclusion}
+($U\ge U'$ iff $U\subseteq U'$), with transition maps the restriction maps of $\sF$.\scite{0078}{Defined in the running text of the \emph{Stalks} section.}
+\end{defbox}
+
+\begin{defbox}[Concrete model --- germs]
+$\sF_x=\{(U,s):x\in U,\ s\in\sF(U)\}/\!\sim$, where $(U,s)\sim(U',s')$ iff there is an open
+$U''\subseteq U\cap U'$ with $x\in U''$ and $s|_{U''}=s'|_{U''}$. The class $s_x$ is the
+\term{germ} of $s$ at $x$: it remembers $s$ only arbitrarily near $x$.
+\end{defbox}
+
+\begin{intubox}[Why ``directed'' (filtered) is the whole game]
+Any two neighborhoods $U,U'$ of $x$ contain a smaller common one ($U\cap U'$). So any two germs can be
+represented on a \emph{single} common $U''$ and then added/multiplied there. That is precisely the
+directedness that makes localization $S^{-1}R$ work --- the stalk colimit and the localization colimit
+are the same kind of limit-of-shrinking.
+\end{intubox}
+
+\section{The payoff: stalk \texorpdfstring{$=$}{=} localization}
+
+Take the structure presheaf on $\Spec R$: $\ \sF(D(f))=R_f$, with restriction $R_f\to R_g$ when
+$D(g)\subseteq D(f)$. Fix a prime $\fp$.
+
+\begin{defbox}[The computation to own]
+The neighborhoods $D(f)$ of $\fp$ are exactly those with $f\notin\fp$, and $D(f)\cap D(g)=D(fg)$ keeps
+the system directed. Hence
+\[
+  \sF_{\fp}\;=\;\colim_{f\notin\fp} R_f\;=\;R_{\fp},
+\]
+the localization at $\fp$. Identically for a module: $\widetilde M_{\fp}=M_{\fp}$.\scite{01HV}{This is the load-bearing step of the affine-scheme definition: $\O_{\Spec R,\,\fp}=R_{\fp}$.}
+\end{defbox}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth]
+  % real line of Spec
+  \draw[rulec!140!gray, line width=1pt] (-0.4,0) -- (7.2,0);
+  % nested neighborhoods shrinking toward p
+  \draw[accentB, line width=1pt] (1.5,0) ellipse (1.55cm and 0.85cm);
+  \draw[accentB, line width=1pt] (2.35,0) ellipse (0.95cm and 0.55cm);
+  \draw[accentB, line width=1pt] (2.85,0) ellipse (0.45cm and 0.30cm);
+  % the prime point
+  \fill[accent] (3.1,0) circle (2.2pt);
+  \node[accent, font=\itshape, above=1pt] at (3.1,0.30) {$\fp$};
+  \node[accentB, font=\small] at (1.0,0) {$D(f)$};
+  \node[accentB, font=\footnotesize] at (2.05,0) {$D(g)$};
+  % arrow: shrink U down to p
+  \node[inksoft, font=\itshape\footnotesize] at (5.0,0.45) {shrink $U\searrow\fp$};
+  \draw[->, inksoft, line width=0.8pt] (3.7,0) -- (4.6,0);
+  % rings mapping forward to the stalk
+  \node[algc, font=\small] at (1.5,-1.45) {$R_f$};
+  \node[algc, font=\small] at (2.85,-1.45) {$\longrightarrow\ \cdots\ \longrightarrow$};
+  \node[accent, font=\small] at (5.2,-1.45) {$\colim = R_{\fp}$};
+\end{tikzpicture}
+\caption{Smaller neighborhoods $\Rightarrow$ more localized rings; the colimit is $R_{\fp}$.}
+\end{figure}
+
+\subsection*{Play: shrink to the point}
+
+Slide to localize step by step at $\fp=(x)$ on the affine line $\AA^1=\Spec k[x]$. Each notch removes a
+point and inverts one more $(x-a)$; the directed colimit is the local ring $k[x]_{(x)}$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth]
+  % affine line A^1
+  \draw[rulec!140!gray, line width=1pt] (-0.3,0) -- (8.3,0);
+  % the point p = (x) kept (origin)
+  \fill[accent] (4,0) circle (2.4pt);
+  \node[accent, font=\itshape, below=2pt] at (4,0) {$(x)$};
+  % other points being removed, with crosses, inverting (x-a)
+  \foreach \X/\lab in {0.8/{(x{+}3)},2.2/{(x{+}1)},5.8/{(x{-}1)},7.2/{(x{-}3)}}{%
+    \draw[bad, line width=0.9pt] (\X,-0.16) -- (\X,0.16);
+    \draw[bad, line width=0.9pt] (\X-0.12,-0.12) -- (\X+0.12,0.12);
+    \node[inksoft, font=\scriptsize, above=4pt] at (\X,0) {\lab};
+  }
+  % bracket shrinking around p
+  \draw[accentB, line width=1pt] (2.8,0) ellipse (2.0cm and 0.7cm);
+  \draw[accentB, line width=1pt] (3.5,0) ellipse (1.0cm and 0.45cm);
+  % caption arrow
+  \node[algc, font=\small] at (4,-1.5)
+    {$k[x] \;\rightsquigarrow\; k[x]_{x-a} \;\rightsquigarrow\; \cdots \;\rightsquigarrow\; k[x]_{(x)}$};
+\end{tikzpicture}
+\caption{Each notch inverts one more $(x-a)$; the directed colimit over shrinking neighborhoods of
+$(x)$ is the local ring $k[x]_{(x)}$.}
+\end{figure}
+
+\section{Stalks see the local ring --- and locality of sections}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=4pt]
+  \item \textbf{Every stalk is a local ring.} $R_{\fp}$ has the unique maximal ideal $\fp R_{\fp}$. That
+  is the literal reason $\Spec R$ is a \term{locally ringed space} --- the adjective ``locally'' refers
+  to the stalks being local rings.\footnote{The value of a function $s$ at $x$ lives in the residue field
+  $\res(x)=R_{\fp}/\fp R_{\fp}$ --- the same residue field from Lesson 0001. The stalk refines that
+  ``value'' to a whole germ.}
+  \item \textbf{A section is determined by its germs.} For a \emph{sheaf}, the map
+  $\sF(U)\to\prod_{x\in U}\sF_x$ is injective --- this is exactly the separatedness clause from Lesson
+  0002. So two sections agreeing as germs everywhere are equal.\scite{007A}{Separatedness via stalks.}
+\end{itemize}
+
+\section{Retrieve it}
+
+Recall first. This quiz also re-touches Lesson 0002 (the sheaf condition) --- spacing on purpose.
+
+\begin{quizlist}[Stalks \& germs --- recall check]
+  \quizitem{The stalk $\sF_x$ is the \underline{\hspace{3em}} of $\sF(U)$ over neighborhoods of $x$.}
+    {colimit}{limit}{product}{kernel}{A}
+    {$\sF_x=\colim_{x\in U}\sF(U)$ --- a colimit (direct/filtered), not a limit. Limits glue, colimits localize.}
+  \quizitem{Neighborhoods of $x$ index the colimit ordered by \underline{\hspace{3em}} inclusion.}
+    {reverse}{forward}{strict}{total}{A}
+    {Smaller neighborhoods are `later' in the system ($U\ge U' \iff U\subseteq U'$), so transition maps are restrictions toward $x$.}
+  \quizitem{Two sections have the same germ at $x$ exactly when they agree on \underline{\hspace{3em}}.}
+    {a small neighborhood}{the entire space}{a single point}{every closed set}{A}
+    {$(U,s)\sim(U',s')$ iff $s|_{U''}=s'|_{U''}$ on some open $U''\ni x$. A germ is a section seen arbitrarily near $x$.}
+  \quizitem{For the structure presheaf $D(f)\mapsto R_f$, the stalk at $\fp$ equals \underline{\hspace{3em}}.}
+    {the localization $R_{\fp}$}{the quotient $R/\fp$}{the fraction $\Frac(R)$}{the completion $\hat R$}{A}
+    {$\colim_{f\notin\fp} R_f = R_{\fp}$. Stalk $=$ localization at the prime --- the same colimit you know from algebra.}
+  \quizitem{$\Spec R$ is a \textsc{locally} ringed space because every stalk $R_{\fp}$ is \underline{\hspace{3em}}.}
+    {a local ring}{a global ring}{a quotient field}{a polynomial ring}{A}
+    {$R_{\fp}$ has the unique maximal ideal $\fp R_{\fp}$ --- that's what `locally' in `locally ringed space' means.}
+  \quizitem{In a sheaf, a section over $U$ is completely determined by its \underline{\hspace{3em}}.}
+    {germs}{values}{zeros}{covers}{A}
+    {Separatedness: $\sF(U)\to\prod_{x\in U}\sF_x$ is injective. Germs at all points pin down the section.}
+  \quizitem{The stalk colimit is filtered because any two neighborhoods share a \underline{\hspace{3em}} one.}
+    {smaller}{larger}{disjoint}{closed}{A}
+    {$U\cap U'$ is a smaller common neighborhood, so any two germs live on a common open --- the directedness localization needs.}
+  \quizitem{The neighborhoods $D(f)$ of a prime $\fp$ are exactly those with \underline{\hspace{3em}}.}
+    {$f\notin\fp$}{$f\in\fp$}{$f=0$}{$\fp\subseteq(f)$}{A}
+    {$\fp\in D(f)\iff f\notin\fp$ (from Lesson 0001). These are the $f$ inverted in $R_{\fp}$.}
+\end{quizlist}
+
+\begin{primarybox}
+\textbf{\textsc{\color{accentB}Read next (primary source).}}\quad
+Ravi Vakil, \href{https://math.stanford.edu/~vakil/216blog/FOAGaug2922public.pdf}{\emph{The Rising Sea}},
+\S2.4 (stalks and germs). For the structure-sheaf computation $\O_{X,\fp}=R_{\fp}$ spelled out, see
+\Tag{01HV}.
+\end{primarybox}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0001 · Spec(R): From a Ring to a Space</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] },
+                     svg: { fontCache: "global" } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Lesson 0001</p>
+  <h1>$\operatorname{Spec}(R)$: from a ring to a space</h1>
+  <div class="lesson-meta">
+    <span><b>Win:</b> turn any ring into a topological space &amp; read off its points</span>
+    <span><b>Time:</b> ~15 min</span>
+    <span><b>Needs:</b> prime ideals, radicals, localization</span>
+    <span><b>Ref:</b> <a href="../reference/glossary.html">Glossary</a></span>
+  </div>
+
+  <p>You already know the algebra of a commutative ring $R$ — primes, radicals, localization.
+  This lesson installs the one idea that converts <em>all</em> of that knowledge into geometry:
+  the <strong>spectrum</strong> $\operatorname{Spec}(R)$. Everything in scheme theory is built on
+  top of this single move, so it's the right first brick.<sup class="ref">1</sup></p>
+
+  <div class="note"><span class="num">1.</span> Primary reference: Stacks Project, <em>Algebra</em> §
+  "The spectrum of a ring," <a href="https://stacks.math.columbia.edu/tag/00DZ">Tag&nbsp;00DZ</a>.</div>
+
+  <h2>1 · The points are the primes</h2>
+
+  <div class="box def"><span class="label">Definition — the spectrum</span>
+  $\operatorname{Spec}(R)$ is the <strong>set of prime ideals</strong> of $R$. Each prime
+  $\mathfrak p$ is a <em class="term">point</em> of the space.<sup class="ref">2</sup></div>
+
+  <div class="note"><span class="num">2.</span> <a href="https://stacks.math.columbia.edu/tag/00DZ">Tag&nbsp;00DZ</a>.
+  Recall a prime $\mathfrak p\neq R$ satisfies $ab\in\mathfrak p\Rightarrow a\in\mathfrak p$ or $b\in\mathfrak p$.</div>
+
+  <p>Why primes and not, say, maximal ideals? Because we want the construction to be
+  <strong>functorial</strong>: a ring map $\varphi\colon R\to S$ should give a map of spaces.
+  It does — $\mathfrak q\mapsto \varphi^{-1}(\mathfrak q)$ — precisely because the preimage of a
+  prime is always prime. (Preimages of maximal ideals need not be maximal.)<sup class="ref">3</sup>
+  Note the arrow <em>reverses</em>: $\operatorname{Spec}$ is contravariant.</p>
+
+  <div class="note"><span class="num">3.</span> Functoriality of $\operatorname{Spec}$:
+  <a href="https://stacks.math.columbia.edu/tag/00E2">Tag&nbsp;00E2</a>.</div>
+
+  <div class="box intuition"><span class="label">Intuition — a "point" is a way of evaluating</span>
+  Think of elements of $R$ as <em>functions</em> on the space. At a point $\mathfrak p$, the value of
+  $f$ lives in the residue field $\kappa(\mathfrak p)=\operatorname{Frac}(R/\mathfrak p)$, and
+  "$f(\mathfrak p)=0$" means exactly $f\in\mathfrak p$. A prime ideal is the set of functions
+  vanishing at that point — that's why primes deserve to be called points.</div>
+
+  <h2>2 · The closed sets are $V(I)$</h2>
+
+  <div class="box def"><span class="label">Definition — vanishing sets</span>
+  For an ideal $I\subseteq R$, $\;V(I)=\{\mathfrak p\in\operatorname{Spec}(R)\mid I\subseteq\mathfrak p\}$ —
+  the points where "every function in $I$ vanishes." The <strong>Zariski topology</strong> declares the
+  sets $V(I)$ to be exactly the closed sets.<sup class="ref">4</sup></div>
+
+  <div class="note"><span class="num">4.</span> These really form a topology (arbitrary $\cap$, finite $\cup$,
+  $\emptyset$ and the whole space): <a href="https://stacks.math.columbia.edu/tag/00E0">Tag&nbsp;00E0</a>.</div>
+
+  <p>Two facts make this a faithful dictionary back to algebra:</p>
+  <ul>
+    <li><strong>Only the radical matters:</strong> $V(I)=V(\sqrt I)$, since $\mathfrak p\supseteq I \iff \mathfrak p\supseteq\sqrt I$. So radical ideals $\leftrightarrow$ closed sets, order-<em>reversingly</em>.<sup class="ref">5</sup></li>
+    <li><strong>Inclusion reverses:</strong> $I\subseteq J \Rightarrow V(I)\supseteq V(J)$. More constraints = fewer points.</li>
+  </ul>
+
+  <div class="note"><span class="num">5.</span> $V(I)=V(\sqrt I)$ and the closed-set calculus:
+  <a href="https://stacks.math.columbia.edu/tag/00E5">Tag&nbsp;00E5</a>.</div>
+
+  <div class="box def"><span class="label">Definition — distinguished opens</span>
+  $D(f)=\{\mathfrak p\mid f\notin\mathfrak p\}=\operatorname{Spec}(R)\setminus V(f)$, the locus where $f$ is
+  "nonzero." These form a <strong>basis</strong> for the topology, and crucially
+  $D(f)\cong\operatorname{Spec}(R_f)$: <em>localizing the ring = restricting to an open</em>.<sup class="ref">6</sup></div>
+
+  <div class="note"><span class="num">6.</span> $D(f)$ a basis &amp; $D(f)\cong\operatorname{Spec}(R_f)$:
+  <a href="https://stacks.math.columbia.edu/tag/00E4">Tag&nbsp;00E4</a>. Also: $\operatorname{Spec}(R)$ is always
+  <em>quasi-compact</em>, <a href="https://stacks.math.columbia.edu/tag/00E8">Tag&nbsp;00E8</a>.</div>
+
+  <h2>3 · Two kinds of point: closed vs. generic</h2>
+  <p>The Zariski topology is <strong>not Hausdorff</strong> — points need not be closed, and that's a feature.</p>
+  <table class="dict">
+    <thead><tr><th class="geo">Point type</th><th class="alg">Which prime</th><th>Closure $\overline{\{\mathfrak p\}}=V(\mathfrak p)$</th></tr></thead>
+    <tbody>
+      <tr><td class="geo">closed point</td><td class="alg">maximal ideal $\mathfrak m$</td><td>just itself</td></tr>
+      <tr><td class="geo">generic point</td><td class="alg">minimal prime (e.g. $(0)$ in a domain)</td><td>a whole irreducible component</td></tr>
+    </tbody>
+  </table>
+  <p>For a domain, $(0)$ is prime and its closure is the entire space: a single <em>generic point</em>
+  whose "smear" is everywhere.<sup class="ref">7</sup> Irreducible closed sets correspond bijectively to
+  their unique generic points — geometry and algebra locked together.</p>
+
+  <div class="note"><span class="num">7.</span> Irreducible ↔ generic point:
+  <a href="https://stacks.math.columbia.edu/tag/00ES">Tag&nbsp;00ES</a>.</div>
+
+  <h2>4 · See it: four spectra</h2>
+  <table class="ex">
+    <thead><tr><th>$R$</th><th>$\operatorname{Spec}(R)$</th><th>Shape</th></tr></thead>
+    <tbody>
+      <tr><td>a field $k$</td><td>one point $(0)$</td><td>a dot</td></tr>
+      <tr><td>$\mathbb Z$</td><td>generic $(0)$ + one closed point $(p)$ per prime $p$</td><td>"arithmetic line"</td></tr>
+      <tr><td>$\mathbb C[x]$</td><td>generic $(0)$ + closed $(x-a)$ for each $a\in\mathbb C$</td><td>the affine line $\mathbb A^1$</td></tr>
+      <tr><td>$k[x]/(x^2)$</td><td>one point $(x)$ — but with nilpotents</td><td>a "fat" point</td></tr>
+    </tbody>
+  </table>
+  <p>The last one is the payoff of using <em>all</em> primes and remembering the ring: $k[x]/(x^2)$ and
+  $k$ have the same single point but are different schemes — the nilpotent $x$ records an infinitesimal
+  "thickening" invisible to the set of points alone. Hold onto that; it's where schemes beat classical varieties.</p>
+
+  <hr class="tufte">
+
+  <h2>Retrieve it</h2>
+  <p>Close your notes first — recall, don't reread. Each answer gives feedback instantly.</p>
+
+  <div class="quiz" data-title="Spec(R) — recall check">
+    <script type="application/json" class="quiz-data">
+[
+  {"stem": "The points of $\\operatorname{Spec}(R)$ are the ___ of $R$.",
+   "options": ["prime ideals", "maximal ideals", "radical ideals", "principal ideals"],
+   "answer": 0,
+   "why": "By definition a point is a prime ideal. Maximal ideals give only the closed points; $(0)$ in a domain is a point but not maximal."},
+  {"stem": "A closed set $V(I)$ depends on the ideal $I$ only through its ___.",
+   "options": ["radical", "nilradical", "generators", "dimension"],
+   "answer": 0,
+   "why": "$V(I)=V(\\sqrt I)$, because $\\mathfrak p\\supseteq I \\iff \\mathfrak p\\supseteq\\sqrt I$. Radical ideals biject with closed sets."},
+  {"stem": "$\\operatorname{Spec}$ of a field has exactly ___.",
+   "options": ["one point", "two points", "no points", "many points"],
+   "answer": 0,
+   "why": "A field's only prime ideal is $(0)$, so its spectrum is a single point."},
+  {"stem": "The distinguished opens $D(f)$ form a ___ for the topology.",
+   "options": ["basis", "subbasis", "filter", "cover"],
+   "answer": 0,
+   "why": "Every open is a union of $D(f)$'s, so they are a basis — and $D(f)\\cong\\operatorname{Spec}(R_f)$."},
+  {"stem": "If $I\\subseteq J$, then $V(I)$ ___ $V(J)$.",
+   "options": ["contains", "equals", "misses", "splits"],
+   "answer": 0,
+   "why": "More functions forced to vanish means fewer points: the correspondence reverses inclusions, so $V(I)\\supseteq V(J)$."},
+  {"stem": "For a domain $R$, the generic point of $\\operatorname{Spec}(R)$ is ___.",
+   "options": ["the zero ideal", "a maximal ideal", "the unit ideal", "every closed point"],
+   "answer": 0,
+   "why": "In a domain $(0)$ is prime and its closure is the whole space, so $(0)$ is the dense generic point."},
+  {"stem": "The closed points of $\\operatorname{Spec}(\\mathbb Z)$ correspond to ___.",
+   "options": ["the prime numbers", "all the integers", "the zero ideal", "the unit ideals"],
+   "answer": 0,
+   "why": "Maximal ideals of $\\mathbb Z$ are $(p)$ for $p$ prime; $(0)$ is the (non-closed) generic point."},
+  {"stem": "$\\operatorname{Spec}\\big(k[x]/(x^2)\\big)$ has exactly ___.",
+   "options": ["one point", "two points", "no points", "four points"],
+   "answer": 0,
+   "why": "The only prime is $(x)$ — one point — but the nilpotent $x$ makes it a 'fat' point, a different scheme from $\\operatorname{Spec}(k)$."}
+]
+    </script>
+  </div>
+
+  <div class="primary-source">
+    <span class="label">Read next (primary source)</span>
+    <p style="margin:.4rem 0 0">Ravi Vakil, <a href="https://math.stanford.edu/~vakil/216blog/"><em>The Rising Sea</em></a>,
+    the chapter <strong>"The spectrum of a ring"</strong> (§3.2–3.5). Do at least the
+    exercises on computing $\operatorname{Spec}$ for small rings — that's where the picture sticks.
+    Ground truth in the <a href="https://stacks.math.columbia.edu/tag/00DZ">Stacks Project, Tag&nbsp;00DZ</a>.</p>
+  </div>
+
+  <div class="ask">
+    <strong>Stuck or curious?</strong> I'm your teacher — ask me anything: "draw me $\operatorname{Spec}\,\mathbb Z[x]$,"
+    "why isn't it Hausdorff?", "what's the residue field at $(p)$?", or "quiz me again with harder rings."
+    Followup questions are how the lesson finishes the job.
+  </div>
+
+  <div class="nav">
+    <span><b>Deep-dive:</b> <a href="../reference/spec-zx-three-questions.html">Three questions about Spec, answered visually</a> — $\operatorname{Spec}\mathbb Z[x]$, Hausdorff, residue fields</span>
+    <span><b>Next:</b> <a href="0002-presheaves-and-the-sheaf-condition.html">0002 · Presheaves &amp; the sheaf condition</a></span>
+  </div>
+
+  <footer class="course">
+    Lesson 0001 · Schemes self-study · See the <a href="../reference/glossary.html">Glossary &amp; dictionary</a>
+    for the durable summary. Citations resolve at <code>stacks.math.columbia.edu/tag/XXXX</code>.
+  </footer>
+</div>
+
+<script src="../assets/quiz.js"></script>
+</body>
+</html>
