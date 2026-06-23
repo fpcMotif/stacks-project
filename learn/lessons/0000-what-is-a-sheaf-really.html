@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0000 · What is a sheaf, really?</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Schemes Self-Study · Lesson 0000 · The Big Picture</p>
+  <h1>What is a sheaf, <em>really</em>?</h1>
+  <div class="lesson-meta">
+    <span><b>Win:</b> see <em>one</em> idea — local data, global truth — behind weather, logarithms, and the structure sheaf</span>
+    <span><b>Time:</b> ~20 min</span>
+    <span><b>Needs:</b> nothing (a curious mind)</span>
+    <span><b>Leads to:</b> <a href="0002-presheaves-and-the-sheaf-condition.html">Lesson 0002</a></span>
+  </div>
+
+  <div class="primary-source">
+    <span class="label">The muse &amp; the ground truth</span>
+    The stories here are borrowed, with gratitude, from Daniel Rosiak's
+    <em>Sheaf Theory Through Examples</em> (arXiv:2012.08669) — the friendliest book on the subject,
+    and the source of the figures. Every <em>precise</em> claim is checked against the
+    <a href="https://stacks.math.columbia.edu/">Stacks Project</a> and cited by tag. Read the first half
+    with no mathematics at all; the second half hands you to the rigorous lessons that follow.
+  </div>
+
+  <p>Sheaf theory is rumored to be the most abstract room in mathematics. The rumor was started by
+  people who write \(\mathcal F(U)\) before they draw a picture. The truth is older and far more
+  physical: <strong>a sheaf is the exact bookkeeping of how local data does — or stubbornly does
+  <em>not</em> — assemble into global data.</strong> You have been quarreling with one since the first
+  time you tried to take a square root.</p>
+
+  <h2>1 · The square root that won't sit still</h2>
+
+  <p>Take \(\sqrt{z}\) on the punctured plane \(\mathbb C^\times=\mathbb C\setminus\{0\}\). On any small
+  disc you can choose an honest, single-valued branch — a genuine function with \((\sqrt z)^2=z\). These
+  local choices are <em>real, rigorous objects</em>. Yet walk once around the origin and your branch
+  comes back <em>negated</em>: \(\sqrt z \mapsto -\sqrt z\). There is <strong>no</strong> continuous
+  square root on all of \(\mathbb C^\times\). The local solutions are flawless; the obstruction to
+  fusing them is the <em class="term">monodromy</em> around \(0\).</p>
+
+  <figure class="fig">
+    <img src="../assets/img/AnalyticContination.png" alt="A chain of overlapping discs D-alpha-1 through D-alpha-6 strung along a path through a complex domain, illustrating analytic continuation around a point.">
+    <figcaption>Analytic continuation: a function defined on one disc is carried along a chain of
+    overlapping discs \(D_{\alpha_1},\dots,D_{\alpha_6}\). Continue all the way around a branch point and
+    you may not return to where you started — Riemann's confession that to make a multivalued function
+    single-valued, you must change the space beneath it. <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <p>This is the <strong>local-to-global principle</strong>, and the sheaf is its ledger. Riemann's
+  entire theory of surfaces grew from it. Once you have the eye for it, you see it everywhere — and a
+  sheaf gives you two superpowers at once:</p>
+
+  <div class="box intuition"><span class="label">The two superpowers</span>
+  <strong>(1) It glues.</strong> Hand it local pieces that <em>agree wherever they overlap</em>, and it
+  returns one global piece — and only one. &nbsp;<strong>(2) It sounds an alarm.</strong> When the pieces
+  <em>can't</em> be fused, a sheaf doesn't shrug; it pinpoints <em>exactly where</em> and <em>how badly</em>
+  the assembly fails. Grown up, that alarm is called <em class="term">cohomology</em> — how mathematicians
+  measure the holes in everything from doughnuts to the universe.</p>
+
+  <h2>2 · The definition, stated like an adult</h2>
+
+  <p>Don't memorize the axiom — ask what it is <em>for</em>. It is for making one little word,
+  <em>locally</em>, completely honest. Here is the whole machine in three moves.</p>
+
+  <div class="box def"><span class="label">Definition — presheaf</span>
+  Let \(X\) be a space and \(\mathrm{Op}(X)\) its open sets. A <strong>presheaf</strong> \(\mathcal F\)
+  attaches to every open \(U\) a set \(\mathcal F(U)\) of <em>sections</em>, and to every inclusion
+  \(V\subseteq U\) a <strong>restriction</strong> \(\rho^U_V\colon\mathcal F(U)\to\mathcal F(V)\),
+  compatibly (\(\rho^U_U=\mathrm{id}\), \(\rho^V_W\circ\rho^U_V=\rho^U_W\)). In one breath: a functor
+  \(\mathcal F\colon\mathrm{Op}(X)^{\mathrm{op}}\to\mathbf{Set}\).<sup class="ref">1</sup>
+  Write \(s|_V:=\rho^U_V(s)\). That is <strong>Move 1: RESTRICT</strong> — zoom in.</div>
+
+  <div class="note"><span class="num">1.</span> A presheaf of sets:
+  <a href="https://stacks.math.columbia.edu/tag/006E">Tag&nbsp;006E</a>. (Say "functor on
+  \(\mathrm{Op}(X)^{\mathrm{op}}\)" <em>or</em> "contravariant functor on \(\mathrm{Op}(X)\)" — not both;
+  they mean the same thing.)</div>
+
+  <p>A presheaf is a filing cabinet: it can only look <em>down</em>. It becomes a <strong>sheaf</strong>
+  when it can also build <em>up</em> — when local truths that match can be stitched into one global truth.</p>
+
+  <div class="box def"><span class="label">Definition — sheaf</span>
+  A presheaf \(\mathcal F\) is a <strong>sheaf</strong> if for every open cover \(U=\bigcup_i U_i\) and every
+  family \(s_i\in\mathcal F(U_i)\) that agree on overlaps — <strong>Move 2: MATCH</strong>,
+  \(s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}\) for all \(i,j\) — there is a <strong>unique</strong>
+  \(s\in\mathcal F(U)\) with \(s|_{U_i}=s_i\). That is <strong>Move 3: GLUE</strong>.<sup class="ref">2</sup>
+  Compactly, this says one diagram is an <em>equalizer</em>:
+  $$\mathcal F(U)\;\longrightarrow\;\prod_i \mathcal F(U_i)\;\rightrightarrows\;\prod_{i,j}\mathcal F(U_i\cap U_j).$$
+  </div>
+
+  <div class="note"><span class="num">2.</span> Sheaf condition:
+  <a href="https://stacks.math.columbia.edu/tag/006T">Tag&nbsp;006T</a>. The two parallel arrows are the two
+  restrictions \(\mathcal F(U_i)\to\mathcal F(U_i\cap U_j)\) and \(\mathcal F(U_j)\to\mathcal F(U_i\cap U_j)\).</div>
+
+  <p>Two words hide in that single diagram, and you need both:</p>
+  <table class="dict">
+    <thead><tr><th class="geo">Clause</th><th class="alg">What it buys you</th><th>Name</th></tr></thead>
+    <tbody>
+      <tr><td class="geo">at most one glue</td><td class="alg">a section is pinned down by its restrictions — match the arrows</td><td>separatedness<sup class="ref">3</sup></td></tr>
+      <tr><td class="geo">at least one glue</td><td class="alg">matching local data actually patches together</td><td>gluing / existence</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><span class="num">3.</span> Separated presheaf (injective into the product of stalks):
+  <a href="https://stacks.math.columbia.edu/tag/007A">Tag&nbsp;007A</a>. Feed the axiom the <em>empty</em> cover
+  of \(\varnothing\) and it forces \(\mathcal F(\varnothing)\) to be a single point — the bookkeeping's zero.</div>
+
+  <figure class="fig narrow">
+    <img src="../assets/img/covering2.png" alt="Two overlapping open regions V1 and V2 inside a larger region U, with their intersection shaded.">
+    <figcaption>The whole drama lives on the <em>overlap</em>: cover \(U\) by \(V_1,V_2\); the gluing
+    question is whether what you chose on \(V_1\) and on \(V_2\) agree on \(V_1\cap V_2\).
+    <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <p>Here is the picture to keep forever — the prototype every later abstraction must answer to: pieces of a
+  curve drawn over little intervals, agreeing where they meet, patched into one curve over the whole.</p>
+
+  <figure class="fig">
+    <img src="../assets/img/SheafofContinuousFunctions.png" alt="Five graphs of functions over the sub-intervals (0,2),(1,2),(1,3),(2,3),(2,4) labelled 'Local Sections', and a single graph over (0,4) labelled 'Global Section'.">
+    <figcaption>The sheaf of continuous functions on the line. Five <em>local sections</em> over a cover of
+    \((0,4)\), agreeing on overlaps, glue to a unique <em>global section</em> \(s\in\mathcal F\big((0,4)\big)\).
+    This single image is the entire idea. <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <div class="box intuition"><span class="label">Try it yourself</span>
+  Below: pick a rule, lay down compatible local pieces, and hit <em>Attempt to glue</em>. Some rules are
+  sheaves; some look like sheaves until you try. Watch which superpower fails.</div>
+
+  <div class="glue-lab"></div>
+
+  <h2>3 · Weather is a sheaf; wealth is its mirror image</h2>
+
+  <p>Picture the Earth. To each region attach its <strong>weather</strong> — the temperature at every point,
+  the wind, the pressure. Play the three moves. <em>Restrict:</em> the weather over Asia, looked at only over
+  Japan, is just Japan's weather. <em>Match:</em> your map and mine agree on the strip where they overlap.
+  <em>Glue:</em> they fuse into one seamless global map. Temperature is a <strong>field</strong> — a number
+  <em>at each point</em> — and fields are the soul of a sheaf.<sup class="ref">4</sup> A <strong>global
+  section</strong> here is exactly the meteorologist's dream: one consistent weather map of the whole planet.</p>
+
+  <div class="note"><span class="num">4.</span> "Continuity is local," so compatible continuous (or smooth,
+  or holomorphic) pieces glue uniquely — the prototypical sheaf of \(\mathbb R\)-algebras. This is the
+  example to test every abstract claim against.</div>
+
+  <p>Now try the same trick with <strong>wealth</strong>, and watch it fail — beautifully. The number you
+  actually want is the <em>total</em> wealth in a region. But a total is a <strong>sum</strong>, and a sum
+  refuses both superpowers. It can't <em>restrict</em>: knowing the world holds \(400\) trillion tells you
+  nothing about your town. And it can't <em>glue</em>; it can only be <strong>added up</strong>. The arrows
+  literally point the other way — from the small region <em>into</em> the big one — and on disjoint regions
+  the totals just sum. That backwards, additive bookkeeping is not a sheaf at all; it is its categorical
+  mirror, a <em class="term">cosheaf</em> (a measure).<sup class="ref">5</sup></p>
+
+  <div class="note"><span class="num">5.</span> A finitely-additive measure is <em>covariant</em>:
+  \(U\subseteq V\) gives an extension \(\mu(U)\to\mu(V)\), with \(\mu(U\sqcup V)=\mu(U)+\mu(V)\). Its precise
+  axiom is the <em>dual</em> of the sheaf equalizer (a coequalizer — inclusion–exclusion over overlaps), so it
+  is genuinely a cosheaf, not a sheaf.</div>
+
+  <table class="dict">
+    <thead><tr><th>Quantity</th><th class="geo">Sheaf — e.g. weather</th><th class="alg">Cosheaf — e.g. wealth</th></tr></thead>
+    <tbody>
+      <tr><td>lives…</td><td class="geo">at every point (intensive)</td><td class="alg">as a lump total (extensive)</td></tr>
+      <tr><td>arrows…</td><td class="geo">restrict: big → small</td><td class="alg">extend: small → big</td></tr>
+      <tr><td>functor…</td><td class="geo">contravariant</td><td class="alg">covariant</td></tr>
+      <tr><td>assembles by…</td><td class="geo">gluing on overlaps</td><td class="alg">adding up pieces</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Fields glue; sums pile.</strong> The instant you feel that difference in your gut, you understand
+  what a sheaf is by feeling the precise edge of what it isn't. (You were right: wealth is no sheaf — and the
+  <em>reason</em> is a clean structural theorem, not an accident.)</p>
+
+  <h2>4 · When the global is poorer than the local</h2>
+
+  <p>A warehouse logs which products sit in stock through the year. To each time-interval, attach the set of
+  products present <em>the whole time</em>; restriction is honest (present over a long stretch ⇒ present over a
+  shorter one). Product <strong>B</strong> is there all year — it threads every interval and assembles into a
+  clean global section.</p>
+
+  <figure class="fig">
+    <img src="../assets/img/GlobalSectionTimeIntervalDiagram.png" alt="A lattice of product-sets over time intervals from January to June; product B is highlighted threading through every interval as a global section.">
+    <figcaption>Product <strong>B</strong> persists through \([\mathrm{Jan},\mathrm{Jun}]\): a global section,
+    visible as a consistent thread through the whole diagram of intervals.
+    <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <p>Now product <strong>C</strong>: present January–April, present May–June, but <strong>gone for two weeks
+  in between</strong>. So C is a perfectly good <em>local</em> section over the left stretch and another over
+  the right — and there is <em>no</em> global section "C, all year," because C genuinely vanishes in the gap.</p>
+
+  <figure class="fig">
+    <img src="../assets/img/LocalSectionTimeIntervalDiagram.png" alt="The same interval diagram, now tracing product C: present on the early and late intervals, with question-marked arrows across the missing middle interval where C is absent.">
+    <figcaption>Product <strong>C</strong>'s local sections on each end, with question-marked arrows across the
+    April gap where C is absent: there is no consistent thread, hence no global section.
+    <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <div class="box warn"><span class="label">Read this failure correctly</span>
+  This is <em>not</em> the gluing axiom breaking — those two stretches don't even <strong>cover</strong> the
+  year, so the axiom is silent. It is something subtler and deeper: a flawless local section that
+  <strong>no global section restricts to</strong>. The restriction map \(\mathcal F(\text{year})\to\mathcal
+  F(\text{stretch})\) is <em>not onto</em>. Counting exactly how badly "global → local" fails to be onto is
+  the entire job of the first cohomology group \(H^1\). The gap in April is a baby \(H^1\): an honest hole in
+  time, and the first whisper of §8.</div>
+
+  <h2>5 · Sheaves with no geometry at all</h2>
+
+  <p>Strip away space entirely. Take a bare <strong>graph</strong> — dots and lines — and to each subgraph
+  attach its proper colorings (no edge monochrome). Two colorings <em>match</em> when they agree on shared
+  vertices; they <em>glue</em> into one global coloring exactly when every shared vertex agrees. No distance,
+  no topology, and the sheaf logic is <em>identical</em>. A global section is a consistent coloring of the
+  whole — the engine behind Sudoku and map-coloring.</p>
+
+  <figure class="fig narrow">
+    <svg viewBox="0 0 360 210" role="img" aria-label="A triangle graph K3 with its three vertices colored blue, red, and green; a proper 3-coloring.">
+      <line x1="180" y1="40" x2="80" y2="170" stroke="#1a1814" stroke-width="3"/>
+      <line x1="180" y1="40" x2="280" y2="170" stroke="#1a1814" stroke-width="3"/>
+      <line x1="80" y1="170" x2="280" y2="170" stroke="#1a1814" stroke-width="3"/>
+      <circle cx="180" cy="40" r="24" fill="#2f5f8a" stroke="#1a1814" stroke-width="2"/>
+      <circle cx="80" cy="170" r="24" fill="#9a2b2b" stroke="#1a1814" stroke-width="2"/>
+      <circle cx="280" cy="170" r="24" fill="#2f6b3a" stroke="#1a1814" stroke-width="2"/>
+      <text x="180" y="46" text-anchor="middle" fill="#fff" font-family="Palatino,Georgia,serif" font-size="18" font-weight="bold">1</text>
+      <text x="80" y="176" text-anchor="middle" fill="#fff" font-family="Palatino,Georgia,serif" font-size="18" font-weight="bold">2</text>
+      <text x="280" y="176" text-anchor="middle" fill="#fff" font-family="Palatino,Georgia,serif" font-size="18" font-weight="bold">3</text>
+    </svg>
+    <figcaption>A proper 3-coloring of the triangle \(K_3\) is a <em>global section</em> of the coloring sheaf;
+    restrict it to any single edge and you get a local 2-coloring. (Rosiak builds exactly this sheaf on
+    \(K_3\).)</figcaption>
+  </figure>
+
+  <p>Or keep the network but ask a different question. On a real map of routes, "which towns can I
+  <em>possibly</em> reach, which must I <em>necessarily</em> pass" are themselves computed by sheaf-style
+  operators spreading along the edges — local reachability knitted into global reachability.</p>
+
+  <figure class="fig">
+    <img src="../assets/img/RoutesGraph3.png" alt="A graph of roads connecting northeastern cities, with a region X marked, used to compute reachability across the network.">
+    <figcaption>A real network (Rosiak's northeastern routes): a region \(X\) of the graph, from which
+    "necessity" and "possibility" of reaching other towns is propagated edge-by-edge — local-to-global on a
+    space with no geometry but its own combinatorics. <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <p>And the same idea governs whole jurisdictions: attach to each country the laws respected there; glue the
+  compatible ones across the map, and the <strong>global sections are the laws respected by everyone on
+  Earth</strong> — the handful of rules every society, in its own words, keeps. The sheaf turns "local rules"
+  into "universal values" and hands you the second for free.</p>
+
+  <h2>6 · Why it's even <em>called</em> a sheaf</h2>
+
+  <p>Look at a field of wheat tied into a bundle, or sediment layered over bedrock. Over each patch of ground,
+  stalks rise; gather one choice from each and you hold a single clean slice across the top. That is the literal
+  picture, and the mathematicians stole the farmers' word for it.</p>
+
+  <div class="fig-row">
+    <figure class="fig">
+      <img src="../assets/img/AgriculturalSheaf2.png" alt="A literal sheaf: vertical stalks rising from an elliptical base, gathered by a ring, with a 'selection' slice beneath.">
+      <figcaption>The literal sheaf: stalks over a base, gathered by a cross-section.
+      <span class="src">Rosiak, arXiv:2012.08669</span></figcaption>
+    </figure>
+    <figure class="fig">
+      <img src="../assets/img/CrossSectionBW.png" alt="Fibers Y_i,...,Y_m drawn as vertical ovals of dots over base points i,...,m, with a ribbon selecting one dot per fiber labelled 'Cross Section'.">
+      <figcaption>A <strong>section</strong> = one choice from each fiber, continuously. The ribbon is the
+      section. <span class="src">Rosiak, arXiv:2012.08669</span></figcaption>
+    </figure>
+  </div>
+
+  <p>Make this precise and you get a <strong>bundle</strong>: a space \(Y\) with a projection \(p\colon Y\to X\),
+  one <em>fiber</em> \(p^{-1}(x)\) sitting over each point \(x\). A <em>section over \(U\)</em> is a continuous
+  \(s\colon U\to Y\) with \(p\circ s=\mathrm{id}\) — a choice in each fiber. The sections of a bundle
+  <em>always</em> form a sheaf (they restrict; compatible ones glue). The deep fact runs the other way too:</p>
+
+  <div class="box intuition"><span class="label">Every sheaf is secretly a bundle of stalks</span>
+  From any (pre)sheaf, build the <em>espace étalé</em> \(\Lambda\mathcal F\) — the space of all <em>germs</em>
+  (data shrunk to a point), stacked over \(X\). Then \(\mathcal F\) is recovered as the sheaf of sections of
+  \(\Lambda\mathcal F\). Bundles \(\rightleftarrows\) sheaves is an adjunction \(\Lambda\dashv\Gamma\); a sheaf
+  is just "a bundle, described by its slices." Even satellite photos of a glacier are sections of such a
+  bundle — local images over overlapping regions, cropped (restricted) and patched (glued) into one.</div>
+
+  <figure class="fig">
+    <img src="../assets/img/GlacierSheafTopBW.png" alt="A diagram of satellite images of the Bering glacier arranged over a base, with arrows cropping them down and patching them back up into a single global image.">
+    <figcaption>A mosaic <em>is</em> a sheaf: overlapping satellite images of the Bering Glacier (local
+    sections) restrict by cropping and glue into one global image — image-data as an intensive field over the
+    terrain. <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <h2>7 · Sheaves you can <em>see</em>: vector bundles (geometry ⇄ algebra)</h2>
+
+  <p>Now make every fiber a <strong>vector space</strong>. The glued-together object is a <strong>vector
+  bundle</strong> — the most geometric thing in the world, and you can build one with paper. Take a strip, give
+  it a half-twist, tape the ends: a <strong>Möbius band</strong>, a line bundle over the circle. Glue the strip
+  straight instead and you get a plain cylinder. Same fibers, different gluing — and that difference is
+  <em>everything</em>.</p>
+
+  <p>Ask the sheaf question — <em>what are the global sections?</em> A section is a continuous choice of one
+  vector in every fiber. On the cylinder: easy, "height \(1\) all the way around," never zero. On the
+  <strong>Möbius band, every global section must hit zero somewhere</strong> — the twist won't let you choose a
+  nonzero vector consistently around the loop without it flipping sign and passing through nothing.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 250" role="img" aria-label="Two panels. Left: a cylinder with a green section curve staying above the zero axis, never touching it. Right: a Mobius band whose section curve is forced to cross the zero axis at a red dot.">
+      <!-- divider -->
+      <line x1="320" y1="20" x2="320" y2="230" stroke="#d8d2c4" stroke-width="1"/>
+      <!-- LEFT: cylinder -->
+      <text x="150" y="32" text-anchor="middle" font-family="Palatino,Georgia,serif" font-size="15" fill="#1a1814" font-weight="bold">Cylinder = trivial bundle</text>
+      <rect x="40" y="70" width="220" height="120" rx="60" fill="#eef4f4" stroke="#1f4e5f" stroke-width="2"/>
+      <line x1="40" y1="130" x2="260" y2="130" stroke="#9a9488" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="266" y="134" font-family="Palatino,Georgia,serif" font-size="12" fill="#9a9488">0</text>
+      <path d="M50,108 C100,86 160,86 210,104 250,118 250,118 250,108" fill="none" stroke="#2f6b3a" stroke-width="3.5"/>
+      <text x="150" y="214" text-anchor="middle" font-family="Palatino,Georgia,serif" font-size="13" fill="#2f6b3a">a section that is never zero ✓</text>
+      <!-- RIGHT: mobius -->
+      <text x="490" y="32" text-anchor="middle" font-family="Palatino,Georgia,serif" font-size="15" fill="#1a1814" font-weight="bold">Möbius = twisted bundle</text>
+      <path d="M380,70 C420,70 470,70 500,100 L560,160 C575,178 600,180 600,150 600,120 575,120 560,140 L500,196 C470,224 420,224 380,196 Z" fill="#fbf2ec" stroke="#b5651d" stroke-width="2"/>
+      <text x="572" y="120" font-family="Palatino,Georgia,serif" font-size="11" fill="#b5651d">½-twist</text>
+      <line x1="380" y1="133" x2="560" y2="133" stroke="#9a9488" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="566" y="137" font-family="Palatino,Georgia,serif" font-size="12" fill="#9a9488">0</text>
+      <!-- section forced through zero -->
+      <path d="M392,104 C430,92 470,118 500,133 525,146 545,158 556,166" fill="none" stroke="#2f6b3a" stroke-width="3.5"/>
+      <circle cx="500" cy="133" r="5.5" fill="#9a2b2b"/>
+      <text x="490" y="214" text-anchor="middle" font-family="Palatino,Georgia,serif" font-size="13" fill="#9a2b2b">every section must cross zero (the red dot)</text>
+    </svg>
+    <figcaption>Going around the Möbius loop, \(+1\) is carried to \(-1\); by the intermediate-value theorem any
+    continuous section crosses \(0\). That forced zero <em>is</em> the twist — the bundle's class
+    \(w_1\neq 0\) in \(H^1(S^1;\mathbb Z/2)\). Untwist it (the cylinder) and the nowhere-zero section returns.</figcaption>
+  </figure>
+
+  <p>That forced zero is detected by the same villain as the logarithm and the warehouse: a cohomology class.
+  And now the bridge you wanted becomes literal — the same object, read in two languages:</p>
+
+  <table class="dict">
+    <thead><tr><th class="geo">The geometer sees…</th><th class="alg">The algebraist sees…</th></tr></thead>
+    <tbody>
+      <tr><td class="geo">a vector bundle — a twisted space \(E\to X\), fibers you can picture</td><td class="alg">its <strong>sheaf of sections</strong> \(\mathcal E\), an \(\mathcal O_X\)-module</td></tr>
+      <tr><td class="geo"><em>locally</em> it looks like \(U\times k^n\) (trivial)</td><td class="alg"><em>locally</em> \(\mathcal E\cong\mathcal O_X^{\,\oplus n}\) — <strong>finite locally free</strong><sup class="ref">6</sup></td></tr>
+      <tr><td class="geo">the bundle is twisted (Möbius)</td><td class="alg">the module is locally free but <em>not globally</em> free</td></tr>
+      <tr><td class="geo">the tangent bundle, line bundles, the Möbius band</td><td class="alg">finitely generated <strong>projective</strong> modules</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><span class="num">6.</span> Finite locally free sheaf:
+  <a href="https://stacks.math.columbia.edu/tag/01C6">Tag&nbsp;01C6</a>. In algebraic geometry one
+  <em>defines</em> a vector bundle to be such a sheaf — no compactness needed.</div>
+
+  <p>These two columns are the <strong>same object</strong>. In topology or differential geometry that identity
+  has a famous name — the <strong>Serre–Swan theorem</strong>: over a compact (resp. paracompact) base, vector
+  bundles correspond to finitely generated projective modules over the ring of functions.<sup class="ref">7</sup>
+  In <em>algebraic</em> geometry the dictionary needs no such hypothesis — there, "vector bundle" simply
+  <em>means</em> "finite locally free \(\mathcal O_X\)-module." The structure sheaf \(\mathcal O_X\) itself is the
+  sections of the trivial line bundle; \(\mathcal O_X^{\,\oplus n}\) is the trivial rank-\(n\) bundle. And the
+  fact your commutative-algebra gut already knows — <em>finitely generated projective modules are exactly the
+  locally free ones</em><sup class="ref">8</sup> — reads, geometrically, as the single sentence: <strong>projective
+  modules are vector bundles.</strong> Algebra you can see; geometry you can compute.</p>
+
+  <div class="note"><span class="num">7.</span> Serre–Swan names the bundle ↔ projective-<em>module</em> side
+  (compact/paracompact base). It is distinct from the bundle ↔ locally-free-<em>sheaf</em> identity, which is
+  the algebraic definition.</div>
+  <div class="note"><span class="num">8.</span> For a <em>finitely presented</em> module the conditions
+  <em>projective</em>, <em>flat</em>, and <em>locally free of finite rank</em> coincide; over a Noetherian ring
+  "finitely generated" already gives finite presentation. The rank is locally constant — globally constant iff
+  \(\operatorname{Spec}R\) is connected.</div>
+
+  <h2>8 · One villain runs the whole show: \(H^1\)</h2>
+
+  <p>Here is the rigor that makes the playground cohere. Every "can't glue" in this lesson is the <em>same</em>
+  obstruction, living in the first cohomology of a sheaf. <strong>Local solvability minus global solvability is
+  a class in \(H^1\).</strong></p>
+
+  <ul>
+    <li><strong>The logarithm.</strong> On a complex manifold the <em>exponential sequence</em> of sheaves is
+    exact:
+    $$0\to\underline{\mathbb Z}\xrightarrow{\,\cdot\,2\pi i\,}\mathcal O\xrightarrow{\exp}\mathcal O^{\times}\to 0.$$
+    Its connecting map \(\delta\colon H^0(\mathbb C^\times,\mathcal O^{\times})\to H^1(\mathbb C^\times,\underline{\mathbb Z})\cong\mathbb Z\)
+    sends the function \(z\) to its <strong>winding number</strong> \(1\neq 0\). That single nonzero integer
+    <em>is</em> the proof that \(z\) has no global logarithm.<sup class="ref">9</sup> Monodromy, made into an
+    exact sequence.</li>
+    <li><strong>The Möbius band.</strong> Its class \(w_1\in H^1(S^1;\mathbb Z/2)\) is nonzero — exactly why
+    every section crosses zero.</li>
+    <li><strong>The warehouse.</strong> Product \(C\), present at each end but absent between, is a local
+    section with no global extension — a baby \(H^1\), a hole in time.</li>
+  </ul>
+
+  <div class="note"><span class="num">9.</span> \(\mathbb C^\times\simeq S^1\), so
+  \(H^1(\mathbb C^\times,\mathbb Z)\cong\mathbb Z\) (fix an orientation). The classical <em>Mittag-Leffler</em>
+  and <em>Cousin</em> problems — prescribe poles or zeros locally, seek a global function — are governed the same
+  way, by \(H^1(X,\mathcal O)\) and \(H^1(X,\mathcal O^\times)\); they vanish on nice spaces, and then local
+  always assembles to global.</div>
+
+  <figure class="fig">
+    <img src="../assets/img/SheafCohomBW.png" alt="Three cylinders labelled Sheaf F over X, Sheaf G over Y, Sheaf H over Z above simplicial-complex bases, with induced sheaf morphisms and maps on cohomology H(X;F) ← H(Y;G) ← H(Z;H).">
+    <figcaption>Sheaf cohomology is functorial: maps of spaces induce maps of sheaves and hence of cohomology
+    \(H^\bullet(X;\mathcal F)\). The "alarm" was never a metaphor — it is the connecting homomorphism, the same
+    machine for the logarithm, the Möbius twist, and the warehouse. <span class="src">Figure: Rosiak, arXiv:2012.08669</span></figcaption>
+  </figure>
+
+  <h2>9 · The bridge home: a ring is a space, and it has weather</h2>
+
+  <p>Here is the secret that makes this <em>your</em> lesson and not a pop-science detour. <strong>Weather over
+  the Earth, continuous functions over a space, and rings over \(\operatorname{Spec}R\) are the same
+  shape.</strong> Swap "region of Earth" for the basic open \(D(f)\), swap "weather field" for the localization
+  \(R_f\), and the three moves become pure commutative algebra:</p>
+
+  <table class="dict">
+    <thead><tr><th class="geo">Sheaf idea (this lesson)</th><th class="alg">On \(\operatorname{Spec}R\) (your lessons)</th><th>Tag</th></tr></thead>
+    <tbody>
+      <tr><td class="geo">a region \(U\)</td><td class="alg">a basic open \(D(f)\)</td><td><a href="https://stacks.math.columbia.edu/tag/01HS">01HS</a></td></tr>
+      <tr><td class="geo">the field over \(U\)</td><td class="alg">\(\mathcal O\big(D(f)\big)=R_f\)</td><td><a href="https://stacks.math.columbia.edu/tag/01HU">01HU</a></td></tr>
+      <tr><td class="geo">RESTRICT (zoom in)</td><td class="alg">localize \(R\to R_f\)</td><td><a href="https://stacks.math.columbia.edu/tag/006E">006E</a></td></tr>
+      <tr><td class="geo">a cover \(U=\bigcup U_i\)</td><td class="alg">\(D(f)=\bigcup D(g_i)\iff (g_i)\) generate the unit ideal in \(R_f\)</td><td><a href="https://stacks.math.columbia.edu/tag/01HS">01HS</a></td></tr>
+      <tr><td class="geo">GLUE on overlaps</td><td class="alg">the localization exact sequence (sheaf axiom)</td><td><a href="https://stacks.math.columbia.edu/tag/006T">006T</a></td></tr>
+      <tr><td class="geo">data shrunk to a point (germ/stalk)</td><td class="alg">the stalk \(\mathcal O_{X,\mathfrak p}=R_{\mathfrak p}\)</td><td><a href="https://stacks.math.columbia.edu/tag/01HV">01HV</a></td></tr>
+      <tr><td class="geo">a module over the field</td><td class="alg">\(\widetilde M\), the quasi-coherent sheaf of an \(R\)-module \(M\)</td><td><a href="https://stacks.math.columbia.edu/tag/01BE">01BE</a></td></tr>
+    </tbody>
+  </table>
+
+  <p>The structure sheaf \(\mathcal O\) you are building toward is <strong>literally the weather of a ring</strong>:
+  on each basic open it reads off the localization \(R_f\), and the sheaf axiom is the localization exact
+  sequence in disguise. You don't even have to check it on every open set — only on the basic opens \(D(f)\),
+  then <em>extend off the basis</em>.<sup class="ref">10</sup> A scheme like \(\operatorname{Spec}R\) may be
+  impossible to <em>picture</em>, yet you can carry every bundle intuition — tangent spaces, twisting, "every
+  section vanishes" — straight across this dictionary and do it all in pure ring theory. A sheaf is the translator
+  that makes a geometric object speak algebra.</p>
+
+  <div class="note"><span class="num">10.</span> Sheaves on a basis &amp; extend-off-basis:
+  <a href="https://stacks.math.columbia.edu/tag/009N">Tag&nbsp;009N</a> — exactly the move
+  <a href="0004-sheaves-on-a-basis.html">Lesson 0004</a> makes rigorous.</div>
+
+  <div class="box def"><span class="label">Where to go next</span>
+  You now have the <em>why</em>. The rigorous <em>how</em> is three short lessons away:
+  <a href="0002-presheaves-and-the-sheaf-condition.html">0002 — presheaves &amp; the sheaf condition</a> (the
+  equalizer, made precise) → <a href="0003-stalks-and-germs.html">0003 — stalks &amp; germs</a>
+  (\(\mathcal O_{X,\mathfrak p}=R_{\mathfrak p}\)) → <a href="0004-sheaves-on-a-basis.html">0004 — sheaves on a
+  basis</a> (the bridge) → <a href="0002-presheaves-and-the-sheaf-condition.html">0005 — the structure sheaf</a>,
+  pure assembly.</div>
+
+  <h2>10 · Check yourself</h2>
+
+  <div class="quiz" data-title="Retrieval practice — the one idea, five ways">
+    <script type="application/json" class="quiz-data">
+    [
+      {
+        "stem": "Which of these is <em>not</em> a sheaf?",
+        "options": [
+          "The total wealth contained in each region of the Earth",
+          "The temperature field over each region of the Earth",
+          "The continuous real functions on each open set",
+          "The regular functions on each open set of a variety"
+        ],
+        "answer": 0,
+        "why": "A total is a sum: it has no restriction maps (you can't read a town's wealth off the world's) and assembles by adding, not gluing. That is a cosheaf / measure — the covariant mirror of a sheaf. The other three are fields: intensive, restrictable, gluable."
+      },
+      {
+        "stem": "In the warehouse, product $C$ is present on $[\\text{Jan},\\text{Apr}]$ and on $[\\text{May},\\text{Jun}]$ but absent between. What does this illustrate?",
+        "options": [
+          "A local section that no global section restricts to (a baby $H^1$)",
+          "A violation of the gluing axiom on a cover",
+          "A presheaf that fails to have restriction maps",
+          "A cosheaf masquerading as a sheaf"
+        ],
+        "answer": 0,
+        "why": "Those two stretches don't cover the year, so the gluing axiom is silent. The real lesson: 'global → local' restriction is not onto — a flawless local section with no global extension. Measuring that gap is exactly what H¹ does."
+      },
+      {
+        "stem": "A <em>global section</em> of a sheaf of fields over a space is best described as…",
+        "options": [
+          "one consistent global choice that restricts to each local datum",
+          "the sum of all the local data over a cover",
+          "any single local section over a small open set",
+          "the largest open set on which the sheaf is defined"
+        ],
+        "answer": 0,
+        "why": "A global section is a section over all of X — a coherent worldwide choice (the planet's weather map, the laws everyone keeps) that restricts correctly to every region. Global sections are often scarcer than local ones; that scarcity is cohomology."
+      },
+      {
+        "stem": "Why is there no continuous logarithm on all of $\\mathbb{C}\\setminus\\{0\\}$?",
+        "options": [
+          "Going once around $0$ adds $2\\pi i$ — a nonzero winding class in $H^1$",
+          "The logarithm is not defined at the origin only",
+          "Holomorphic functions never glue on overlaps",
+          "$\\mathbb{C}\\setminus\\{0\\}$ has no open cover by discs"
+        ],
+        "answer": 0,
+        "why": "Local branches exist on every simply connected disc, but the monodromy around the puncture is nonzero: the exponential sequence sends z to winding number 1 in H¹(ℂˣ,ℤ)≅ℤ. Local solvability, global obstruction — the H¹ alarm."
+      },
+      {
+        "stem": "In algebraic geometry, a <em>vector bundle</em> on a scheme $X$ is defined as…",
+        "options": [
+          "a finite locally free $\\mathcal{O}_X$-module",
+          "any sheaf of abelian groups on $X$",
+          "a finitely generated module that is never projective",
+          "the total wealth functor over $\\operatorname{Spec} R$"
+        ],
+        "answer": 0,
+        "why": "Geometry ⇄ algebra: a vector bundle IS a finite locally free sheaf (Tag 01C6). Over Spec R these correspond to finitely generated projective modules — the slogan 'projective modules are vector bundles.' Serre–Swan names the bundle ↔ projective-module side in the topological/smooth setting."
+      },
+      {
+        "stem": "The sheaf axiom lets you glue local sections $s_i$ into a unique global $s$ precisely when the $s_i$…",
+        "options": [
+          "agree on every overlap $U_i \\cap U_j$ of the cover",
+          "are defined on disjoint open sets",
+          "are all equal to the same constant",
+          "extend the total measure additively"
+        ],
+        "answer": 0,
+        "why": "Match on overlaps ⇒ glue, uniquely. That single equalizer condition — F(U) → ∏F(Uᵢ) ⇉ ∏F(Uᵢ∩Uⱼ) — is the whole definition (Tag 006T), and the reason 'locally' is an honest word."
+      }
+    ]
+    </script>
+  </div>
+
+  <div class="ask">
+    <strong>One question to carry forward.</strong> You met the stalk twice here — the germ in the espace
+    étalé (§6) and \(\mathcal O_{X,\mathfrak p}=R_{\mathfrak p}\) (§9). Before <a href="0003-stalks-and-germs.html">Lesson 0003</a>,
+    ask yourself: <em>why should "data shrunk to a point" be a localization of a ring?</em> That is the hinge of
+    the whole algebra–geometry dictionary.
+  </div>
+
+  <nav class="nav">
+    <span>← You are at the start of the course</span>
+    <span><a href="0002-presheaves-and-the-sheaf-condition.html">Lesson 0002 · Presheaves &amp; the sheaf condition →</a></span>
+  </nav>
+
+  <footer class="course">
+    Schemes Self-Study · Lesson 0000. Stories &amp; figures after Daniel Rosiak,
+    <em>Sheaf Theory Through Examples</em> (arXiv:2012.08669), used here for personal study. Precise statements
+    verified against the <a href="https://stacks.math.columbia.edu/">Stacks Project</a> and cited by tag.
+  </footer>
+
+</div>
+<script src="../assets/sheaf-explorer.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

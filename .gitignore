@@ -16,3 +16,6 @@
 *.foo
 *.bar
 auto
+
+# Intermediate droid wiki — synced separately to GitHub wiki and droid cloud
+droid-wiki/

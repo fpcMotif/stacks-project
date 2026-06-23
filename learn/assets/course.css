@@ -102,6 +102,25 @@ table.ex thead th { background: var(--paper-2); font-variant: small-caps; }
 
 code, .mono { font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace; font-size: .9em; background: var(--code-bg); padding: .05em .35em; border-radius: 3px; }
 
+/* ---- Figures (Rosiak gallery + bespoke SVG) ---- */
+figure.fig { margin: 1.6rem 0; }
+figure.fig img, figure.fig svg {
+  width: 100%; height: auto; display: block;
+  background: #fcfaf4; border: 1px solid var(--rule); border-radius: 8px;
+}
+figure.fig img { padding: .5rem; }
+figure.fig.narrow { max-width: 28rem; margin-left: auto; margin-right: auto; }
+figure.fig figcaption {
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.46;
+  margin-top: .5rem; padding-left: .15rem;
+}
+figure.fig figcaption .src {
+  font-variant: small-caps; letter-spacing: .04em; color: var(--accent-2);
+}
+.fig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.6rem 0; align-items: start; }
+.fig-row figure.fig { margin: 0; }
+@media (max-width: 600px) { .fig-row { grid-template-columns: 1fr; } }
+
 /* ---- Quiz widget (consumed by quiz.js) ---- */
 .quiz { margin: 1.5rem 0; }
 .quiz-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .4rem; }

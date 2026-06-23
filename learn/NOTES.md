@@ -21,12 +21,17 @@
   - `quiz.js` — retrieval-practice MCQ with instant feedback (`.quiz` + JSON).
   - `sheaf-explorer.js` — "gluing lab" (`.glue-lab`): pick a presheaf, attempt to glue.
   - `stalk-demo.js` — "shrink to a point" colimit slider (`.stalk-demo`).
+- Figures: `figure.fig` (and `.fig.narrow`, `.fig-row` for side-by-side). Borrowed
+  Rosiak images live in `assets/img/` and MUST be attributed via `figcaption .src`;
+  source PNGs are in the untracked `arXiv-2012.08669v1-sheaf-examples/`.
 - Visual deep-dives (companions to lessons) live in `reference/`:
   `spec-zx-three-questions.html`, `spec-kxy-affine-plane.html`.
 - Math via MathJax CDN. Reference docs in `reference/` are the durable,
   printable distillations; the glossary is canonical — adhere to its terms.
 
 ## Lesson map
+- 0000 what is a sheaf, really? ✓ — intuitive front door (Arnold/Shafarevich voice,
+  Rosiak examples, max-visual); rigorous bridge to Spec. Accessible→deep; NOT a prereq.
 - 0001 Spec(R) as a space ✓
 - 0002 presheaves & sheaf condition ✓ · 0003 stalks & germs ✓ · 0004 sheaves on a basis ✓
 - 0005 (next) structure sheaf & affine scheme — pure assembly, no new sheaf theory.
